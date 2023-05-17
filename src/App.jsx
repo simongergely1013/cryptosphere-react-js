@@ -1,65 +1,87 @@
 import React from "react";
+import NavBar from "./components/NavBar";
 import Coins from "./pages/Coins";
-import Portfolio from "./newpages/Portfolio";
+import Portfolio from "./pages/Coins/Portfolio";
 import Coin from "./pages/Coins/Coin";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle,ThemeProvider } from "styled-components";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import { MainWrapper, MainContainer, NavBar, Search, CurrencySelector, ThemeSwitch, MacroIndexes } from "./components";
+import { SubNavBar } from "./components/NavBar/NavBar.styles";
 
-const CoinsLink = styled(Link)`
-  text-decoration: none;
-`;
-const PortfolioLink = styled(Link)`
-  text-decoration: none;
-`;
+const GlobalStyle = createGlobalStyle`
+  * {
+    // border: 1px solid red;
+    margin: 0;
+    padding: 0; 
+  }
+  body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background: ${(props) => props.theme.main};
+    color: ${(props) => props.theme.text};
+  }
+  ::placeholder {
+    color: ${(props) => props.theme.text};
+  }
 
-export default function App() {
+  :-ms-input-placeholder {
+    color: ${(props) => props.theme.text};
+  }
+
+  ::-ms-input-placeholder {
+    color: ${(props) => props.theme.text};
+  }
+  `;
+  const MainWrapper = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: ${(props) => props.theme.background};
+   `;
+  const darkMode = {
+    main: "#191B1F",
+    text: "#FAFBFB",
+    background: "#424242",
+    moonIconFill: "white"
+  };
+  const lightMode = {
+    main: "white",
+    text: "#191B1F",
+    background: "#E0E0E0",
+    moonIconFill: "black"
+  }
+export default class App extends React.Component {
+  state = {
+    darkMode: true,
+    coins: true,
+    portfolio: false
+  }
+handleThemeColor = () => {
+    this.setState({darkMode: !this.state.darkMode})
+}
+  render(){
   return (
-    <ThemeProvider>
+  <ThemeProvider theme={this.state.darkMode ? darkMode : lightMode}>
     <Router>
+      <GlobalStyle/>
       <MainWrapper>
-        <MainContainer>
-        <NavBar>
-         <ul>
-            <li>
-              <CoinsLink to="/">Coins</CoinsLink>
-            </li>
-            <li>
-              <PortfolioLink to="/portfolio">Portfolio</PortfolioLink>
-            </li>
-          </ul>
-        <Search />
-        <CurrencySelector/>
-        <ThemeSwitch/>
-        </NavBar>
-        <MacroIndexes/>
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+        <NavBar onClick={this.handleThemeColor}/>
+        <SubNavBar/>
         <Switch>
           <Route exact path="/" component={Coins} />
           <Route exact path="/portfolio" component={Portfolio} />
           <Route exact path="/coin/:id" component={Coin} />
         </Switch>
-      </MainContainer>
-      </MainWrapper>
+        </MainWrapper>
     </Router>
-    </ThemeProvider>
-  );
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
+   </ThemeProvider>
+  )}
+};
