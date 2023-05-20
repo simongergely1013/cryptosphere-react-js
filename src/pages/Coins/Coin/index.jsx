@@ -1,11 +1,9 @@
 import React from "react";
 
 export default class Coin extends React.Component {
-    state={}
+  state = {};
 
-    render(){
-        return (
-            <div>individual coin page</div>
-        )
-    }
+  render() {
+    return <div>individual coin page</div>;
+  }
 }
