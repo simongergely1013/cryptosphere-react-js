@@ -40,7 +40,7 @@ const TotalVolumeProgressBar = styled.div`
   margin-left: 2px;
 `;
 
-const BtcDominanceProgeressBar = styled.div`
+const BtcDominanceProgressBar = styled.div`
   height: 100%;
   width: ${(props) => props.percent.btcDominancePercent}%;
   border-radius: 20px;
@@ -175,7 +175,7 @@ export default class NavBar extends React.Component {
                   </BitcoinLogoSubNav>
                   {progressBarsData.btcDominancePercent}% BTC{" "}
                   <ProgressBar>
-                    <BtcDominanceProgeressBar percent={progressBarsData} />
+                    <BtcDominanceProgressBar percent={progressBarsData} />
                   </ProgressBar>
                 </ListItemWithProgress>
                 <ListItemWithProgress>

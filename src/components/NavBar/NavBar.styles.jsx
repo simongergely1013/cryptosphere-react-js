@@ -99,7 +99,7 @@ export const Search = (props) => {
   );
 };
 export const CurrencyDiv = styled.div`
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 25px;
   z-index: 10;
 `;
 export const CurrencySelect = styled.select`
