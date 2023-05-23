@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     background: ${(props) => props.theme.main};
     color: ${(props) => props.theme.text};
+    place-items: start;
   }
   ::placeholder {
     color: ${(props) => props.theme.text};
