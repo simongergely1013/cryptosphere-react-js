@@ -1,7 +1,11 @@
-export const getCurrentPrice = (currency, price) => {
-  return new Intl.NumberFormat("en", {
+export const formatNumber = (currency, number) => {
+  const formattedNumber = new Intl.NumberFormat("en", {
     style: "currency",
     currency: currency,
-  }).format(price);
+  }).format(number);
+  return formattedNumber;
 };
-export const getTotalVolumeFormatted = (totalVolume) => {};
+export const formatDate = (date) => {
+  const formattedDate = new Date(date).getHours() + ":" + "00";
+  return formattedDate;
+};

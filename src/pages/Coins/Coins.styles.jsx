@@ -24,3 +24,10 @@ export const CoinsTable = styled.table`
 export const CoinLogo = styled.img`
   width: 34px;
 `;
+export const ChartsWrapper = styled.div`
+  width: 92%;
+  display: flex;
+`;
+export const ChartContainer = styled.div`
+  width: 50%;
+`;

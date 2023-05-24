@@ -6,12 +6,19 @@ import {
   CoinsTableContainer,
   CoinsTable,
   CoinLogo,
+  ChartsWrapper,
+  ChartContainer,
 } from "./Coins.styles";
-import { formatNumber } from "../../utilities";
+import { formatNumber, formatDate } from "../../utilities";
+import { LineChart } from "../../components/LineChart";
+import { BarChart } from "../../components/BarChart";
 export default class Coins extends React.Component {
   state = {
     isLoading: false,
     coinsData: [],
+    chartHours: [],
+    btcPricesHourly: [],
+    btcVolumesHourly: [],
     currency: "usd",
   };
 
@@ -21,7 +28,21 @@ export default class Coins extends React.Component {
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
       );
       this.setState({ coinsData: data });
-      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getChartsData = async () => {
+    try {
+      const { data } = await axios(
+        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&interval=hourly"
+      );
+      this.setState({
+        btcPricesHourly: data.prices.map((el) => el[1]),
+        btcVolumesHourly: data.total_volumes.map((el) => el[1]),
+        chartHours: data.prices.map((el) => el[0]),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -29,16 +50,51 @@ export default class Coins extends React.Component {
 
   componentDidMount = () => {
     this.getCoinsData();
+    this.getChartsData();
   };
 
   render() {
     const coinsData = this.state.coinsData;
     const currency = this.state.currency;
+    const chartHours = this.state.chartHours
+      .map((el) => formatDate(el))
+      .slice(0, 24);
+
+    const btcPricesData = {
+      labels: chartHours,
+      datasets: [
+        {
+          label: "BTC Price",
+          data: this.state.btcPricesHourly.slice(0, 24),
+          borderColor: "#e76f51",
+          backgroundColor: "#edede9",
+        },
+      ],
+    };
+    const btcVolumesData = {
+      labels: chartHours,
+      datasets: [
+        {
+          label: "BTC Volume",
+          data: this.state.btcVolumesHourly.slice(0, 24),
+          borderColor: "#e76f51",
+          backgroundColor: "#edede9",
+        },
+      ],
+    };
     return (
       <CoinsPageWrapper>
         <HeaderDiv>
           <h3>Your overview</h3>
         </HeaderDiv>
+        <ChartsWrapper>
+          <ChartContainer>
+            <LineChart data={btcPricesData} />
+          </ChartContainer>
+          <ChartContainer>
+            <BarChart data={btcVolumesData} />
+          </ChartContainer>
+        </ChartsWrapper>
         <HeaderDiv>
           <h3>Your overview</h3>
         </HeaderDiv>
@@ -58,7 +114,7 @@ export default class Coins extends React.Component {
             {coinsData.map((obj, index) => {
               return (
                 <tr>
-                  <td>{index}</td>
+                  <td>{index + 1}</td>
                   <td>
                     <CoinLogo src={obj.image} />
                     {obj.name} ({obj.symbol.toUpperCase()})
