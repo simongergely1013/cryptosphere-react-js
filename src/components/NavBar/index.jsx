@@ -24,6 +24,7 @@ import {
   BitcoinLogoSubNav,
   EthereumLogoSubNav,
 } from "./NavBar.styles";
+import { formatNumber } from "../../utilities";
 
 const ProgressBar = styled.div`
   width: 60px;
@@ -90,17 +91,10 @@ export default class NavBar extends React.Component {
     this.getGlobalData();
   }
   render() {
-    const totalMarketCap = new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: this.state.currency,
-    }).format(this.state.totalMarketCap);
-
-    const totalVolume = new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: this.state.currency,
-    }).format(this.state.totalVolume);
-
-    let progressBarsData = {
+    const currency = this.state.currency;
+    const totalMarketCap = formatNumber(currency, this.state.totalMarketCap);
+    const totalVolume = formatNumber(currency, this.state.totalVolume);
+    const progressBarsData = {
       totalVolumePercent: this.state.totalVolumePercentage,
       btcDominancePercent: this.state.btcDominance,
       ethDominancePercent: this.state.ethDominance,
@@ -180,7 +174,6 @@ export default class NavBar extends React.Component {
                 </ListItemWithProgress>
                 <ListItemWithProgress>
                   <EthereumLogoSubNav
-                    height="2500"
                     viewBox="420.1 80.7 1079.8 1758.6"
                     xmlns="http://www.w3.org/2000/svg"
                   >

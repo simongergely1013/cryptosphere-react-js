@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 ChartJS.register(
@@ -17,9 +18,40 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Chart.js Line Chart",
+    },
+  },
+  scales: {
+    y: {
+      display: false,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+    x: {
+      display: true,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+  },
+  tension: 0.5,
+};
+
 export const LineChart = (props) => {
-  return <Line data={props.data} />;
+  return <Line options={options} data={props.data} />;
 };

@@ -177,6 +177,7 @@ export const StyledListSubNav = styled.ul`
   justify-content: space-around;
   align-items: center;
   font-size: 16px;
+  // border: 1px solid red;
 `;
 export const StyledListItemSubNav = styled.li`
   list-style-type: none;

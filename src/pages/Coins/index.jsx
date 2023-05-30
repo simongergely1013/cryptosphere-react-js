@@ -1,17 +1,26 @@
 import React from "react";
 import axios from "axios";
+import CoinsPercentageBar from "../../components/CoinsTablePercentageBar";
 import {
   CoinsPageWrapper,
   HeaderDiv,
   CoinsTableContainer,
   CoinsTable,
+  TableHeader,
+  TableRow,
+  TableData,
+  CoinName,
   CoinLogo,
+  PercentageChangeDiv,
   ChartsWrapper,
   ChartContainer,
+  ArrowUp,
+  ArrowDown,
 } from "./Coins.styles";
-import { formatNumber, formatDate } from "../../utilities";
+import { formatNumber, formatDate, getRandomColor } from "../../utilities";
 import { LineChart } from "../../components/LineChart";
 import { BarChart } from "../../components/BarChart";
+
 export default class Coins extends React.Component {
   state = {
     isLoading: false,
@@ -47,27 +56,41 @@ export default class Coins extends React.Component {
       console.log(error);
     }
   };
+  getOneWeekHours = () => {
+    let hours = [];
+    for (let i = 0; i < 84; i++) {
+      hours.push(" ");
+    }
+    return hours;
+  };
 
   componentDidMount = () => {
     this.getCoinsData();
     this.getChartsData();
   };
-
   render() {
     const coinsData = this.state.coinsData;
     const currency = this.state.currency;
     const chartHours = this.state.chartHours
       .map((el) => formatDate(el))
       .slice(0, 24);
-
     const btcPricesData = {
       labels: chartHours,
       datasets: [
         {
           label: "BTC Price",
           data: this.state.btcPricesHourly.slice(0, 24),
-          borderColor: "#e76f51",
-          backgroundColor: "#edede9",
+          borderColor: "#00FF5F",
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, "rgba(0, 255, 95, .5)");
+            gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+            return gradient;
+          },
+          pointRadius: 0,
+          borderWidth: 3,
+          fill: true,
         },
       ],
     };
@@ -78,7 +101,7 @@ export default class Coins extends React.Component {
           label: "BTC Volume",
           data: this.state.btcVolumesHourly.slice(0, 24),
           borderColor: "#e76f51",
-          backgroundColor: "#edede9",
+          backgroundColor: "#2172e5",
         },
       ],
     };
@@ -100,42 +123,210 @@ export default class Coins extends React.Component {
         </HeaderDiv>
         <CoinsTableContainer>
           <CoinsTable>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>1h%</th>
-              <th>24h%</th>
-              <th>7d%</th>
-              <th>24h Volume/Market Cap</th>
-              <th>Circulating/Total Supply</th>
-              <th>Last 7d</th>
-            </tr>
+            <TableRow>
+              <TableHeader>#</TableHeader>
+              <TableHeader>Name</TableHeader>
+              <TableHeader>Price</TableHeader>
+              <TableHeader>1h%</TableHeader>
+              <TableHeader>24h%</TableHeader>
+              <TableHeader>7d%</TableHeader>
+              <TableHeader>24h Volume/Market Cap</TableHeader>
+              <TableHeader>Circulating/Total Supply</TableHeader>
+              <TableHeader>Last 7d</TableHeader>
+            </TableRow>
             {coinsData.map((obj, index) => {
+              const percentageChange1h =
+                obj.price_change_percentage_1h_in_currency.toFixed(2);
+              const percentageChange24h =
+                obj.price_change_percentage_24h.toFixed(2);
+              const percentageChange7d =
+                obj.price_change_percentage_7d_in_currency.toFixed(2);
+              const percentageVolume24h = (
+                (obj.total_volume / obj.market_cap) *
+                100
+              ).toFixed(2);
+              const percentageCirculating = (
+                (obj.circulating_supply / obj.total_supply) *
+                100
+              ).toFixed(2);
+              let circulatingSupply = Math.round(obj.circulating_supply);
+              switch (circulatingSupply.toString().length) {
+                case 7:
+                case 8:
+                case 9:
+                  circulatingSupply =
+                    (circulatingSupply / 1000000).toFixed(2).toString() + "M";
+                  break;
+                case 10:
+                case 11:
+                case 12:
+                  circulatingSupply =
+                    (circulatingSupply / 1000000000).toFixed(2).toString() +
+                    "B";
+                  break;
+                default:
+                  circulatingSupply =
+                    (circulatingSupply / 1000).toFixed(2).toString() + "K";
+                  break;
+              }
+              let totalSupply = Math.round(obj.total_supply);
+              switch (totalSupply.toString().length) {
+                case 7:
+                case 8:
+                case 9:
+                  totalSupply =
+                    (totalSupply / 1000000).toFixed(2).toString() + "M";
+                  break;
+                case 10:
+                case 11:
+                case 12:
+                  totalSupply =
+                    (totalSupply / 1000000000).toFixed(2).toString() + "B";
+                  break;
+                default:
+                  totalSupply =
+                    (totalSupply / 1000).toFixed(2).toString() + "K";
+                  break;
+              }
+              let totalVolume = obj.total_volume;
+              switch (totalVolume.toString().length) {
+                case 7:
+                case 8:
+                case 9:
+                  totalVolume =
+                    formatNumber(currency, (totalVolume / 1000000).toFixed(2)) +
+                    "M";
+                  break;
+                case 10:
+                case 11:
+                case 12:
+                  totalVolume =
+                    formatNumber(
+                      currency,
+                      (totalVolume / 1000000000).toFixed(2)
+                    ) + "B";
+                  break;
+                default:
+                  totalVolume =
+                    formatNumber(currency, (totalVolume / 1000).toFixed(2)) +
+                    "K";
+                  break;
+              }
+              let marketCap = obj.market_cap;
+              switch (marketCap.toString().length) {
+                case 7:
+                case 8:
+                case 9:
+                  marketCap =
+                    formatNumber(currency, (marketCap / 1000000).toFixed(2)) +
+                    "M";
+                  break;
+                case 10:
+                case 11:
+                case 12:
+                  marketCap =
+                    formatNumber(
+                      currency,
+                      (marketCap / 1000000000).toFixed(2)
+                    ) + "B";
+                  break;
+                default:
+                  marketCap =
+                    formatNumber(currency, (marketCap / 1000).toFixed(2)) + "K";
+                  break;
+              }
+              let color1 = getRandomColor();
+              let color2 = getRandomColor();
+              if (color1 === color2) {
+                color2 = getRandomColor();
+              }
+              const coinPricesData = {
+                labels: this.getOneWeekHours(),
+                datasets: [
+                  {
+                    label: "",
+                    data: obj.sparkline_in_7d.price.slice(84, 168),
+                    borderColor:
+                      obj.sparkline_in_7d.price[0] <
+                      obj.sparkline_in_7d.price[
+                        obj.sparkline_in_7d.price.length - 1
+                      ]
+                        ? "#00FF5F"
+                        : "red",
+                    pointRadius: 0,
+                    borderWidth: 3,
+                    // fill: true,
+                  },
+                ],
+              };
               return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>
+                <TableRow>
+                  <TableData>{index + 1}</TableData>
+                  <CoinName>
                     <CoinLogo src={obj.image} />
                     {obj.name} ({obj.symbol.toUpperCase()})
-                  </td>
-                  <td>{formatNumber(currency, obj.current_price)}</td>
-                  <td>
-                    {obj.price_change_percentage_1h_in_currency.toFixed(2)}%
-                  </td>
-                  <td>{obj.price_change_percentage_24h.toFixed(2)}%</td>
-                  <td>
-                    {obj.price_change_percentage_7d_in_currency.toFixed(2)}%
-                  </td>
-                  <td>
-                    {formatNumber(currency, obj.total_volume)} /{" "}
-                    {formatNumber(currency, obj.market_cap)}
-                  </td>
-                  <td>
-                    {obj.circulating_supply} / {obj.total_supply}
-                  </td>
-                  <td>Last 7d</td>
-                </tr>
+                  </CoinName>
+                  <TableData>
+                    {formatNumber(currency, obj.current_price)}
+                  </TableData>
+                  <TableData
+                    style={{
+                      color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
+                    }}
+                  >
+                    <PercentageChangeDiv>
+                      {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
+                      {percentageChange1h}%
+                    </PercentageChangeDiv>
+                  </TableData>
+                  <TableData
+                    style={{
+                      color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
+                    }}
+                  >
+                    <PercentageChangeDiv>
+                      {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
+                      {percentageChange24h}%
+                    </PercentageChangeDiv>
+                  </TableData>
+                  <TableData
+                    style={{
+                      color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
+                    }}
+                  >
+                    <PercentageChangeDiv>
+                      {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
+                      {percentageChange7d}%
+                    </PercentageChangeDiv>
+                  </TableData>
+                  <TableData>
+                    <CoinsPercentageBar
+                      num1={totalVolume}
+                      num2={marketCap}
+                      width={percentageVolume24h.toString() + "%"}
+                      color1={color1}
+                      color2={color2}
+                      background1={color1}
+                      background2={color2}
+                    />
+                  </TableData>
+                  <TableData>
+                    <CoinsPercentageBar
+                      num1={circulatingSupply}
+                      num2={totalSupply}
+                      width={percentageCirculating.toString() + "%"}
+                      color1={color1}
+                      color2={color2}
+                      background1={color1}
+                      background2={color2}
+                    />
+                  </TableData>
+                  <TableData>
+                    <ChartsWrapper style={{ width: "80%" }}>
+                      <LineChart data={coinPricesData} />
+                    </ChartsWrapper>
+                  </TableData>
+                </TableRow>
               );
             })}
           </CoinsTable>
