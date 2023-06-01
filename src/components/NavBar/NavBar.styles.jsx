@@ -153,6 +153,7 @@ export const SubNavContainer = styled.div`
   width: 100%;
   height: 43px;
   display: flex;
+  margin-bottom: 20px;
 `;
 export const SubNavEmptyDiv = styled.div`
   width: 25%;

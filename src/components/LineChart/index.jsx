@@ -43,6 +43,38 @@ const options = {
     },
     x: {
       display: true,
+      min: 5,
+      max: 20,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+  },
+  tension: 0.5,
+};
+
+const options2 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Chart.js Line Chart",
+    },
+  },
+  scales: {
+    y: {
+      display: false,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+    x: {
+      display: true,
       grid: {
         display: false,
         drawBorder: false,
@@ -54,4 +86,7 @@ const options = {
 
 export const LineChart = (props) => {
   return <Line options={options} data={props.data} />;
+};
+export const SmallLineChart = (props) => {
+  return <Line options={options2} data={props.data} />;
 };

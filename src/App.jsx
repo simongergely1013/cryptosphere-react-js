@@ -11,7 +11,8 @@ const GlobalStyle = createGlobalStyle`
   * {
     // border: 1px solid red;
     margin: 0;
-    padding: 0; 
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
   }
   body{
     width: 100vw;

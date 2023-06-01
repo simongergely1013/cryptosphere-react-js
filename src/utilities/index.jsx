@@ -32,21 +32,41 @@ export const getRandomColor = () => {
   const index = Math.floor(Math.random() * 18);
   return colors[index];
 };
+export const formatSupply = (number) => {
+  let numberRounded = Math.round(number);
+  switch (numberRounded.toString().length) {
+    case 7:
+    case 8:
+    case 9:
+      return (numberRounded / 1000000).toFixed(2).toString() + "M";
+    case 10:
+    case 11:
+    case 12:
+      return (numberRounded / 1000000000).toFixed(2).toString() + "B";
+    default:
+      return (numberRounded / 1000).toFixed(2).toString() + "K";
+  }
+};
 
-export const checkNumLengthAndFormat = (num) => {
+export const formatVolumeMarketCap = (number, currency) => {
+  let num = number;
   switch (num.toString().length) {
     case 7:
     case 8:
     case 9:
       num = formatNumber(currency, (num / 1000000).toFixed(2)) + "M";
-      return num;
+      break;
     case 10:
     case 11:
     case 12:
       num = formatNumber(currency, (num / 1000000000).toFixed(2)) + "B";
-      return num;
+      break;
     default:
       num = formatNumber(currency, (num / 1000).toFixed(2)) + "K";
-      return num;
+      break;
   }
+  return num;
+};
+export const getDate = () => {
+  return new Date();
 };
