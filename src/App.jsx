@@ -11,7 +11,8 @@ const GlobalStyle = createGlobalStyle`
   * {
     // border: 1px solid red;
     margin: 0;
-    padding: 0; 
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
   }
   body{
     width: 100vw;
@@ -21,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     background: ${(props) => props.theme.main};
     color: ${(props) => props.theme.text};
+    place-items: start;
   }
   ::placeholder {
     color: ${(props) => props.theme.text};
