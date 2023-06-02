@@ -51,6 +51,12 @@ const darkMode = {
   moonIconFill: "white",
   bulletPointBackground: "white",
   progressBarsBackground: "white",
+  btcPriceChartBorderColorGain: "#00FF5F",
+  btcPriceChartGradienColorGain: "rgba(0, 255, 95, .5)",
+  btcPriceChartBorderColorLoss: "#FE1040",
+  btcPriceChartGradienColorLoss: "#ad2843",
+  btcVolumeChartBackgroundColor: "#2172E5",
+  darkMode: true,
 };
 const lightMode = {
   main: "white",
@@ -59,6 +65,12 @@ const lightMode = {
   moonIconFill: "black",
   bulletPointBackground: "black",
   progressBarsBackground: "black",
+  btcPriceChartBorderColorGain: "#2172E5",
+  btcPriceChartGradienColorGain: "RGBA(37,80,234,0.56 )",
+  btcPriceChartBorderColorLoss: "#FE1040",
+  btcPriceChartGradienColorLoss: "#ad2843",
+  btcVolumeChartBackgroundColor: "#1AD761",
+  darkMode: false,
 };
 export default class App extends React.Component {
   state = {
@@ -71,13 +83,18 @@ export default class App extends React.Component {
     this.setState({ darkMode: !this.state.darkMode });
   };
 
-  setColorTheme = () => {
-    //localStorage.setItem()
+  setColorTheme = (theme) => {
+    localStorage.setItem("theme", JSON.stringify(theme));
   };
 
   componentDidMount() {}
 
   render() {
+    if (this.state.darkMode) {
+      this.setColorTheme(darkMode);
+    } else {
+      this.setColorTheme(lightMode);
+    }
     return (
       <ThemeProvider theme={this.state.darkMode ? darkMode : lightMode}>
         <Router>

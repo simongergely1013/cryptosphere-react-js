@@ -65,16 +65,22 @@ export const ChartsWrapper = styled.div`
 export const TopChartHeader = styled.div`
   position: absolute;
   z-index: 10;
-  margin-top: -85px;
-  margin-left: -30px;
+  margin-top: -420px;
+  margin-left: -590px;
 `;
 export const ChartContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50%;
   height: 350px;
   padding: 100px 50px 0px 50px;
   background: ${(props) => props.theme.main};
   margin: 20px;
   border-radius: 10px;
+`;
+export const TopChartDiv = styled.div`
+  width: 100%;
 `;
 export const ArrowUp = styled.div`
   width: 0;
