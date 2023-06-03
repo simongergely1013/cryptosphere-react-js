@@ -16,6 +16,7 @@ import {
   ChartsWrapper,
   TopChartHeader,
   ChartContainer,
+  TopChartDiv,
   ArrowUp,
   ArrowDown,
   SmallChartWrapper,
@@ -85,7 +86,14 @@ export default class Coins extends React.Component {
     this.getCoinsData();
     this.getChartsData();
   };
+
+  getThemeColors = () => {
+    const theme = localStorage.getItem("theme");
+    return JSON.parse(theme);
+  };
+
   render() {
+    const theme = this.getThemeColors();
     const btcCurrentVolume = parseInt(this.state.btcCurrentVolume);
     const day = this.state.day;
     const month = this.state.month;
@@ -101,11 +109,14 @@ export default class Coins extends React.Component {
         {
           label: "BTC Price",
           data: this.state.btcPricesHourly.slice(0, 24),
-          borderColor: "#00FF5F",
+          borderColor:
+            this.state.btcPricesHourly[0] < this.state.btcPricesHourly[24]
+              ? theme.btcPriceChartBorderColorGain
+              : theme.btcPriceChartBorderColorLoss,
           backgroundColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, "rgba(0, 255, 95, .5)");
+            gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
             gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
             return gradient;
           },
@@ -122,7 +133,7 @@ export default class Coins extends React.Component {
           label: "BTC Volume",
           data: this.state.btcVolumesHourly.slice(0, 24),
           borderColor: "#e76f51",
-          backgroundColor: "#2172E5",
+          backgroundColor: theme.btcVolumeChartBackgroundColor,
         },
       ],
     };
@@ -140,7 +151,9 @@ export default class Coins extends React.Component {
                 {day} {month},{year}
               </h3>
             </TopChartHeader>
-            <LineChart data={btcPricesData} />
+            <TopChartDiv>
+              <LineChart data={btcPricesData} />
+            </TopChartDiv>
           </ChartContainer>
           <ChartContainer>
             <TopChartHeader>
@@ -150,7 +163,9 @@ export default class Coins extends React.Component {
                 {day} {month},{year}
               </h3>
             </TopChartHeader>
-            <BarChart data={btcVolumesData} />
+            <TopChartDiv>
+              <BarChart data={btcVolumesData} />
+            </TopChartDiv>
           </ChartContainer>
         </ChartsWrapper>
         <HeaderDiv>
