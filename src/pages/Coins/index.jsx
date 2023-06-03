@@ -94,7 +94,6 @@ export default class Coins extends React.Component {
 
   render() {
     const theme = this.getThemeColors();
-    console.log(theme);
     const btcCurrentVolume = parseInt(this.state.btcCurrentVolume);
     const day = this.state.day;
     const month = this.state.month;

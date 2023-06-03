@@ -70,3 +70,6 @@ export const formatVolumeMarketCap = (number, currency) => {
 export const getDate = () => {
   return new Date();
 };
+export const getPriceChartColor = () => {
+  
+}
