@@ -1,10 +1,10 @@
-import React from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import NavBar from "./components/NavBar";
 import Coins from "./pages/Coins";
 import Portfolio from "./pages/Coins/Portfolio";
 import Coin from "./pages/Coins/Coin";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
@@ -55,6 +55,7 @@ const darkMode = {
   btcPriceChartBorderColorLoss: "#FE1040",
   btcPriceChartGradienColorLoss: "#ad2843",
   btcVolumeChartBackgroundColor: "#2172E5",
+  coinsPercentageBarColor: "#ECEFF1",
   darkMode: true,
 };
 const lightMode = {
@@ -69,14 +70,18 @@ const lightMode = {
   btcPriceChartBorderColorLoss: "#FE1040",
   btcPriceChartGradienColorLoss: "#ad2843",
   btcVolumeChartBackgroundColor: "#1AD761",
+  coinsPercentageBarColor: "#546E7A",
   darkMode: false,
 };
+
+export const CurrencyContext = React.createContext();
 export default class App extends React.Component {
   state = {
     darkMode: true,
     coins: true,
     portfolio: false,
     isLoading: false,
+    currency: "",
   };
   handleThemeColor = () => {
     this.setState({ darkMode: !this.state.darkMode });
@@ -86,7 +91,19 @@ export default class App extends React.Component {
     localStorage.setItem("theme", JSON.stringify(theme));
   };
 
-  componentDidMount() {}
+  handleCurrency = (currency) => {
+    this.setState({ currency });
+  };
+
+  componentDidMount = () => {
+    this.setState({ currency: "usd" });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.currency !== prevState.currency) {
+      localStorage.setItem("currency", this.state.currency);
+    }
+  }
 
   render() {
     if (this.state.darkMode) {
@@ -99,7 +116,10 @@ export default class App extends React.Component {
         <Router>
           <GlobalStyle />
           <MainWrapper>
-            <NavBar onClick={this.handleThemeColor} />
+            <NavBar
+              onClick={this.handleThemeColor}
+              onChange={this.handleCurrency}
+            />
             <Switch>
               <Route exact path="/" component={Coins} />
               <Route exact path="/portfolio" component={Portfolio} />

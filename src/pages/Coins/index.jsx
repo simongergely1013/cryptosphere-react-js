@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import CoinsPercentageBar from "../../components/CoinsTablePercentageBar";
 import {
@@ -39,15 +39,19 @@ export default class Coins extends React.Component {
     chartHours: [],
     btcPricesHourly: [],
     btcVolumesHourly: [],
-    currency: "usd",
+    currency: "",
   };
-
   getCoinsData = async () => {
     try {
-      const { data } = await axios(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
-      );
+      const currency = this.getCurrency();
+      const base =
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
+      const search =
+        "&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
+      const fullURL = `${base}${currency}${search}`;
+      const { data } = await axios(fullURL);
       this.setState({
+        currency: currency,
         coinsData: data,
         btcCurrentPrice: data[0].current_price,
         btcCurrentVolume: data[0].total_volume,
@@ -62,9 +66,12 @@ export default class Coins extends React.Component {
 
   getChartsData = async () => {
     try {
-      const { data } = await axios(
-        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1&interval=hourly"
-      );
+      const base =
+        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=";
+      const currency = this.getCurrency();
+      const search = "&days=1&interval=hourly";
+      const fullURL = `${base}${currency}${search}`;
+      const { data } = await axios(fullURL);
       this.setState({
         btcPricesHourly: data.prices.map((el) => el[1]),
         btcVolumesHourly: data.total_volumes.map((el) => el[1]),
@@ -82,9 +89,12 @@ export default class Coins extends React.Component {
     return days;
   };
 
-  componentDidMount = () => {
-    this.getCoinsData();
-    this.getChartsData();
+  getCurrency = () => {
+    return localStorage.getItem("currency");
+  };
+
+  setCurrency = () => {
+    this.setState({ currency: this.getCurrency() });
   };
 
   getThemeColors = () => {
@@ -92,14 +102,27 @@ export default class Coins extends React.Component {
     return JSON.parse(theme);
   };
 
+  componentDidMount = () => {
+    console.log("Coins mounting");
+    this.setCurrency();
+    this.getCoinsData();
+    this.getChartsData();
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Coins updating");
+    if (this.state.currency !== prevState.currency) {
+      this.getCoinsData;
+    }
+  }
+
   render() {
     const theme = this.getThemeColors();
+    const currency = this.getCurrency();
     const btcCurrentVolume = parseInt(this.state.btcCurrentVolume);
     const day = this.state.day;
     const month = this.state.month;
     const year = this.state.year;
-    const coinsData = this.state.coinsData;
-    const currency = this.state.currency;
     const chartHours = this.state.chartHours
       .map((el) => formatDate(el))
       .slice(0, 24);
@@ -116,7 +139,9 @@ export default class Coins extends React.Component {
           backgroundColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
+            this.state.btcPricesHourly[0] < this.state.btcPricesHourly[24]
+              ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
+              : gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss);
             gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
             return gradient;
           },
@@ -184,7 +209,7 @@ export default class Coins extends React.Component {
               <TableHeader>Circulating/Total Supply</TableHeader>
               <TableHeader style={{ textAlign: "center" }}>Last 7d</TableHeader>
             </TableRow>
-            {coinsData.map((obj, index) => {
+            {this.state.coinsData.map((obj, index) => {
               const percentageChange1h =
                 obj.price_change_percentage_1h_in_currency.toFixed(2);
               const percentageChange24h =
@@ -207,10 +232,7 @@ export default class Coins extends React.Component {
               );
               const marketCap = formatVolumeMarketCap(obj.market_cap, currency);
               let color1 = getRandomColor();
-              let color2 = getRandomColor();
-              if (color1 === color2) {
-                color2 = getRandomColor();
-              }
+              let color2 = theme.coinsPercentageBarColor;
               const sparklineData = [
                 obj.sparkline_in_7d.price[0],
                 obj.sparkline_in_7d.price[24],

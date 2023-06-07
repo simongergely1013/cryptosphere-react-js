@@ -10,6 +10,13 @@ import {
   Search,
   CurrencyDiv,
   CurrencySelect,
+  Option,
+  BlackCircle,
+  DollarSvg,
+  SterlingSvg,
+  EuroSvg,
+  BitcoinSvg,
+  EthereumSvg,
   ThemeSwitch,
   SubNavContainer,
   SubNavEmptyDiv,
@@ -86,9 +93,16 @@ export default class NavBar extends React.Component {
   };
   handleCurrnecy = (e) => {
     this.setState({ currency: e.target.value });
+    const currency = e.target.value;
+    this.props.onChange(currency);
   };
   componentDidMount() {
     this.getGlobalData();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currency !== this.state.currency) {
+      this.getGlobalData();
+    }
   }
   render() {
     const currency = this.state.currency;
@@ -115,12 +129,25 @@ export default class NavBar extends React.Component {
             <Search />
           </form>
           <CurrencyDiv>
+            <BlackCircle>
+              {this.state.currency === "usd" ? (
+                <DollarSvg />
+              ) : this.state.currency === "gbp" ? (
+                <SterlingSvg />
+              ) : this.state.currency === "eur" ? (
+                <EuroSvg />
+              ) : this.state.currency === "btc" ? (
+                <BitcoinSvg />
+              ) : (
+                <EthereumSvg />
+              )}
+            </BlackCircle>
             <CurrencySelect onChange={this.handleCurrnecy}>
-              <option value="usd">USD</option>
-              <option value="gbp">GBP</option>
-              <option value="eur">EUR</option>
-              <option value="btc">BTC</option>
-              <option value="eth">ETH</option>
+              <Option value="usd">USD</Option>
+              <Option value="gbp">GBP</Option>
+              <Option value="eur">EUR</Option>
+              <Option value="btc">BTC</Option>
+              <Option value="eth">ETH</Option>
             </CurrencySelect>
           </CurrencyDiv>
           <ThemeSwitch onClick={this.props.onClick} />
