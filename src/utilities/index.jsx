@@ -1,4 +1,8 @@
-export const formatNumber = (currency, number) => {
+import { CurrencyContext } from "../contexts/CurrencyContext";
+import { useContext } from "react";
+
+export const formatNumber = (number) => {
+  const { currency } = useContext(CurrencyContext);
   const formattedNumber = new Intl.NumberFormat("en", {
     style: "currency",
     currency: currency,
@@ -43,21 +47,21 @@ export const formatSupply = (number) => {
   }
 };
 
-export const formatVolumeMarketCap = (number, currency) => {
+export const formatVolumeMarketCap = (number) => {
   let num = number;
   switch (num.toString().length) {
     case 7:
     case 8:
     case 9:
-      num = formatNumber(currency, (num / 1000000).toFixed(2)) + "M";
+      num = formatNumber((num / 1000000).toFixed(2)) + "M";
       break;
     case 10:
     case 11:
     case 12:
-      num = formatNumber(currency, (num / 1000000000).toFixed(2)) + "B";
+      num = formatNumber((num / 1000000000).toFixed(2)) + "B";
       break;
     default:
-      num = formatNumber(currency, (num / 1000).toFixed(2)) + "K";
+      num = formatNumber((num / 1000).toFixed(2)) + "K";
       break;
   }
   return num;
