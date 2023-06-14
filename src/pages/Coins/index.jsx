@@ -44,6 +44,7 @@ import { CurrencyContext } from "../../contexts/CurrencyContext";
 
 export const Coins = () => {
   const { currency } = useContext(CurrencyContext);
+  const [page, setPage] = useState(20);
   const [isLoading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [coinsData, setCoinsData] = useState([]);
@@ -60,8 +61,7 @@ export const Coins = () => {
     try {
       const base =
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
-      const search =
-        "&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
+      const search = `&order=market_cap_desc&per_page=${page}&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
       setCoinsData(data);
@@ -94,8 +94,8 @@ export const Coins = () => {
       return;
     }
     setTimeout(() => {
-      getCoinsData();
-    }, 1500);
+      setPage(page + 10);
+    }, 500);
   };
   const getOneWeekDays = () => {
     let days = [];
@@ -112,7 +112,7 @@ export const Coins = () => {
   useEffect(() => {
     getCoinsData();
     getChartsData();
-  }, [currency]);
+  }, [currency, page]);
 
   const theme = getThemeColors();
   const btcCurrentVolumeFormatted = parseInt(btcCurrentVolume);
@@ -206,133 +206,135 @@ export const Coins = () => {
             <TableHeader2>Circulating/Total Supply</TableHeader2>
             <TableHeader3>Last 7d</TableHeader3>
           </TableHeaderRow>
-          <CoinsRowsContainer id={"scrollableDiv"}>
-            {/* <InfiniteScroll
+          <CoinsRowsContainer>
+            <InfiniteScroll
               dataLength={coinsData.length}
               next={fetchMoreCoinsData}
               hasMore={hasMore}
               loader={<h3>Loading...</h3>}
               endMessage={<p>No more coins left</p>}
-              scrollableTarget="scrollableDiv"
-            > */}
-            {coinsData.map((obj, index) => {
-              const percentageChange1h =
-                obj.price_change_percentage_1h_in_currency.toFixed(2);
-              const percentageChange24h =
-                obj.price_change_percentage_24h.toFixed(2);
-              const percentageChange7d =
-                obj.price_change_percentage_7d_in_currency.toFixed(2);
-              const percentageVolume24h = (
-                (obj.total_volume / obj.market_cap) *
-                100
-              ).toFixed(2);
-              const percentageCirculating = (
-                (obj.circulating_supply / obj.total_supply) *
-                100
-              ).toFixed(2);
-              const circulatingSupply = formatSupply(obj.circulating_supply);
-              const totalSupply = formatSupply(obj.total_supply);
-              const totalVolume = formatVolumeMarketCap(
-                obj.total_volume,
-                currency
-              );
-              const marketCap = formatVolumeMarketCap(obj.market_cap, currency);
-              let color1 = getRandomColor();
-              let color2 = theme.coinsPercentageBarColor;
-              const sparklineData = [
-                obj.sparkline_in_7d.price[0],
-                obj.sparkline_in_7d.price[24],
-                obj.sparkline_in_7d.price[48],
-                obj.sparkline_in_7d.price[72],
-                obj.sparkline_in_7d.price[96],
-                obj.sparkline_in_7d.price[120],
-                obj.sparkline_in_7d.price[144],
-                obj.sparkline_in_7d.price[167],
-              ];
-              const coinPricesData = {
-                labels: getOneWeekDays(),
-                datasets: [
-                  {
-                    label: "",
-                    data: sparklineData,
-                    borderColor:
-                      sparklineData[0] < sparklineData[7] ? "#00FF5F" : "red",
-                    pointRadius: 0,
-                    borderWidth: 3,
-                  },
-                ],
-              };
-              return (
-                <TableRow key={obj.name}>
-                  <NumeroHeader>{index + 1}</NumeroHeader>
-                  <CoinName>
-                    <CoinNameInnerDiv>
-                      <CoinLogo src={obj.image} />
-                      {obj.name} ({obj.symbol.toUpperCase()})
-                    </CoinNameInnerDiv>
-                  </CoinName>
-                  <TableData>{formatNumber(obj.current_price)}</TableData>
-                  <TableData
-                    style={{
-                      color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange1h}%
-                    </PercentageChangeDiv>
-                  </TableData>
-                  <TableData
-                    style={{
-                      color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange24h}%
-                    </PercentageChangeDiv>
-                  </TableData>
-                  <TableData
-                    style={{
-                      color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange7d}%
-                    </PercentageChangeDiv>
-                  </TableData>
-                  <TableData2>
-                    <CoinsPercentageBar
-                      num1={totalVolume}
-                      num2={marketCap}
-                      width={percentageVolume24h.toString() + "%"}
-                      color1={color1}
-                      color2={color2}
-                      background1={color1}
-                      background2={color2}
-                    />
-                  </TableData2>
-                  <TableData2>
-                    <CoinsPercentageBar
-                      num1={circulatingSupply}
-                      num2={totalSupply}
-                      width={percentageCirculating.toString() + "%"}
-                      color1={color1}
-                      color2={color2}
-                      background1={color1}
-                      background2={color2}
-                    />
-                  </TableData2>
-                  <TableData3>
-                    <SmallChartWrapper>
-                      <SmallLineChart data={coinPricesData} />
-                    </SmallChartWrapper>
-                  </TableData3>
-                </TableRow>
-              );
-            })}
-            {/* </InfiniteScroll> */}
+            >
+              {coinsData.map((obj, index) => {
+                const percentageChange1h =
+                  obj.price_change_percentage_1h_in_currency.toFixed(2);
+                const percentageChange24h =
+                  obj.price_change_percentage_24h.toFixed(2);
+                const percentageChange7d =
+                  obj.price_change_percentage_7d_in_currency.toFixed(2);
+                const percentageVolume24h = (
+                  (obj.total_volume / obj.market_cap) *
+                  100
+                ).toFixed(2);
+                const percentageCirculating = (
+                  (obj.circulating_supply / obj.total_supply) *
+                  100
+                ).toFixed(2);
+                const circulatingSupply = formatSupply(obj.circulating_supply);
+                const totalSupply = formatSupply(obj.total_supply);
+                const totalVolume = formatVolumeMarketCap(
+                  obj.total_volume,
+                  currency
+                );
+                const marketCap = formatVolumeMarketCap(
+                  obj.market_cap,
+                  currency
+                );
+                let color1 = getRandomColor();
+                let color2 = theme.coinsPercentageBarColor;
+                const sparklineData = [
+                  obj.sparkline_in_7d.price[0],
+                  obj.sparkline_in_7d.price[24],
+                  obj.sparkline_in_7d.price[48],
+                  obj.sparkline_in_7d.price[72],
+                  obj.sparkline_in_7d.price[96],
+                  obj.sparkline_in_7d.price[120],
+                  obj.sparkline_in_7d.price[144],
+                  obj.sparkline_in_7d.price[167],
+                ];
+                const coinPricesData = {
+                  labels: getOneWeekDays(),
+                  datasets: [
+                    {
+                      label: "",
+                      data: sparklineData,
+                      borderColor:
+                        sparklineData[0] < sparklineData[7] ? "#00FF5F" : "red",
+                      pointRadius: 0,
+                      borderWidth: 3,
+                    },
+                  ],
+                };
+                return (
+                  <TableRow key={obj.name}>
+                    <NumeroHeader>{index + 1}</NumeroHeader>
+                    <CoinName>
+                      <CoinNameInnerDiv>
+                        <CoinLogo src={obj.image} />
+                        {obj.name} ({obj.symbol.toUpperCase()})
+                      </CoinNameInnerDiv>
+                    </CoinName>
+                    <TableData>{formatNumber(obj.current_price)}</TableData>
+                    <TableData
+                      style={{
+                        color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange1h}%
+                      </PercentageChangeDiv>
+                    </TableData>
+                    <TableData
+                      style={{
+                        color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange24h}%
+                      </PercentageChangeDiv>
+                    </TableData>
+                    <TableData
+                      style={{
+                        color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange7d}%
+                      </PercentageChangeDiv>
+                    </TableData>
+                    <TableData2>
+                      <CoinsPercentageBar
+                        num1={totalVolume}
+                        num2={marketCap}
+                        width={percentageVolume24h.toString() + "%"}
+                        color1={color1}
+                        color2={color2}
+                        background1={color1}
+                        background2={color2}
+                      />
+                    </TableData2>
+                    <TableData2>
+                      <CoinsPercentageBar
+                        num1={circulatingSupply}
+                        num2={totalSupply}
+                        width={percentageCirculating.toString() + "%"}
+                        color1={color1}
+                        color2={color2}
+                        background1={color1}
+                        background2={color2}
+                      />
+                    </TableData2>
+                    <TableData3>
+                      <SmallChartWrapper>
+                        <SmallLineChart data={coinPricesData} />
+                      </SmallChartWrapper>
+                    </TableData3>
+                  </TableRow>
+                );
+              })}
+            </InfiniteScroll>
           </CoinsRowsContainer>
         </CoinsTable>
       </CoinsTableContainer>
