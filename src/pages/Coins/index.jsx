@@ -45,6 +45,7 @@ import { CurrencyContext } from "../../contexts/CurrencyContext";
 export const Coins = () => {
   const { currency } = useContext(CurrencyContext);
   const [page, setPage] = useState(20);
+  const [activeCoins, setActiveCoins] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [coinsData, setCoinsData] = useState([]);
@@ -64,12 +65,17 @@ export const Coins = () => {
       const search = `&order=market_cap_desc&per_page=${page}&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
+      const globalData = await axios("https://api.coingecko.com/api/v3/global");
       setCoinsData(data);
       setBtcCurrentPrice(data[0].current_price);
       setBtcCurrentVolume(data[0].total_volume);
       setDay(getDate().toString().slice(8, 10));
       setMonth(getDate().toString().slice(4, 7));
       setYear(getDate().toString().slice(11, 15));
+      setActiveCoins(globalData.data.data.active_cryptocurrencies);
+      if (coinsData.length >= activeCoins) {
+        setHasMore(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -88,13 +94,9 @@ export const Coins = () => {
       console.log(error);
     }
   };
-  const fetchMoreCoinsData = () => {
-    if (coinsData.length >= 10000) {
-      setHasMore(false);
-      return;
-    }
+  const increasePage = () => {
     setTimeout(() => {
-      setPage(page + 10);
+      setPage(page + 1);
     }, 500);
   };
   const getOneWeekDays = () => {
@@ -162,7 +164,7 @@ export const Coins = () => {
   return (
     <CoinsPageWrapper>
       <HeaderDiv>
-        <h3>Overview</h3>
+        <h2>Overview</h2>
       </HeaderDiv>
       <ChartsWrapper>
         <ChartContainer>
@@ -209,7 +211,7 @@ export const Coins = () => {
           <CoinsRowsContainer>
             <InfiniteScroll
               dataLength={coinsData.length}
-              next={fetchMoreCoinsData}
+              next={increasePage}
               hasMore={hasMore}
               loader={<h3>Loading...</h3>}
               endMessage={<p>No more coins left</p>}
