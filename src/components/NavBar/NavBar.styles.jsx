@@ -273,6 +273,7 @@ export const SubNavDivCenter = styled.div`
 `;
 export const ListDiv = styled.div`
   width: 100%;
+  padding: 10px;
 `;
 export const StyledListSubNav = styled.ul`
   display: flex;
@@ -402,6 +403,19 @@ export const TotalVolumeProgressBar = styled.div`
   background: ${(props) => props.theme.progressBarsBackground};
   margin-left: 2px;
 `;
+const ProgressBarHover = styled.div`
+  width: 100%;
+  height: 14px;
+  border-radius: 20px;
+  background: #2172e5;
+`;
+const TotalVolumeProgressBarHover = styled.div`
+  height: 100%;
+  width: ${(props) => props.width}%;
+  border-radius: 20px;
+  background: ${(props) => props.theme.progressBarsBackground};
+  margin-left: 2px;
+`;
 export const BtcDominanceProgressBar = styled.div`
   height: 100%;
   width: ${(props) => props.percent.btcDominancePercent}%;
@@ -414,3 +428,264 @@ export const EthDominanceProgeressBar = styled.div`
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
 `;
+const BtcDominanceProgressBarHover = styled.div`
+  height: 100%;
+  width: ${(props) => props.width}%;
+  border-radius: 20px;
+  background: ${(props) => props.theme.progressBarsBackground};
+`;
+const EthDominanceProgressBarHover = styled.div`
+  height: 100%;
+  width: ${(props) => props.width}%;
+  border-radius: 20px;
+  background: ${(props) => props.theme.progressBarsBackground};
+`;
+export const HoverDivsContainer = styled.div`
+  display: flex;
+`;
+const HoverDiv1 = styled.div`
+  width: 400px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: -350px;
+  border: 1px solid red;
+`;
+const HoverDiv2 = styled.div`
+  width: 440px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-top: -50px;
+  border: 1px solid red;
+`;
+const HoverDiv3 = styled.div`
+  width: 350px;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-top: 50px;
+  border: 1px solid red;
+`;
+const HoverDiv4 = styled.div`
+  width: 350px;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: 400px;
+  border: 1px solid red;
+`;
+const HoverDiv5 = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: 770px;
+  border: 1px solid red;
+`;
+const HoverDiv6 = styled.div`
+  align-items: center;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: 1050px;
+  border: 1px solid red;
+`;
+const HoverDiv7 = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: 1410px;
+  border: 1px solid red;
+`;
+const HoverDiv8 = styled.div`
+  align-items: center;
+  padding: 10px;
+  background: ${(props) => props.theme.main};
+  border-radius: 10px;
+  z-index: 30;
+  position: absolute;
+  margin-left: 1700px;
+  border: 1px solid red;
+`;
+const StyledSpan = styled.span`
+  font-weigth: bold;
+  color: ${(props) => props.color};
+  margin-left: 8px;
+`;
+const HoverDivInner = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const CoinsHoverDiv = ({ coins }) => {
+  return (
+    <HoverDiv1>
+      <p>
+        Number of existing coins in the markget:{" "}
+        <span style={{ color: "#00FC2A", fontWeight: "bold" }}>{coins}</span>
+      </p>
+    </HoverDiv1>
+  );
+};
+export const ExchangesHoverDiv = ({ exchanges }) => {
+  return (
+    <HoverDiv2>
+      <p>
+        Number of existing exchange markets to trade at:{" "}
+        <span style={{ color: "gold", fontWeight: "bold" }}>{exchanges}</span>
+      </p>
+    </HoverDiv2>
+  );
+};
+export const TotalMarketCapHoverDiv = ({
+  totalMarketCap,
+  changePercentage,
+  color,
+}) => {
+  return (
+    <HoverDiv3>
+      <HoverDivInner>
+        <BulletPoint />
+        Total Market Cap:{" "}
+        <span style={{ fontWeight: "bold", marginLeft: "8px" }}>
+          {totalMarketCap}
+        </span>
+      </HoverDivInner>
+      <HoverDivInner>
+        <BulletPoint />
+        24h Change: <StyledSpan color={color}>{changePercentage}%</StyledSpan>
+        {changePercentage > 0 ? <TrendingUp /> : <TrendingDown />}
+      </HoverDivInner>
+    </HoverDiv3>
+  );
+};
+export const VolumeVsMarketCapDiv = ({
+  volume,
+  totalMarketCap,
+  totalVolumePercent,
+}) => {
+  return (
+    <HoverDiv4>
+      <p>24h Volume vs Total Market Cap</p>
+      <HoverDivInner>
+        <BulletPoint />
+        24h Volume:{" "}
+        <span style={{ fontWeight: "bold", marginLeft: "8px" }}>{volume}</span>
+      </HoverDivInner>
+      <HoverDivInner>
+        <BulletPoint />
+        Total Market Cap:
+        <span style={{ fontWeight: "bold", marginLeft: "8px" }}>
+          {totalMarketCap}
+        </span>
+      </HoverDivInner>
+      <ProgressBarHover>
+        <TotalVolumeProgressBarHover width={totalVolumePercent} />
+      </ProgressBarHover>
+      <p style={{ fontWeight: "bold" }}>{totalVolumePercent}%</p>
+    </HoverDiv4>
+  );
+};
+export const BtcDominanceHoverDiv1 = ({ btcDominance }) => {
+  return (
+    <HoverDiv5>
+      <BulletPoint />
+      <p>
+        Bitcoin(BTC) Dominance:{" "}
+        <span style={{ fontWeight: "bold" }}>{btcDominance}%</span>
+      </p>
+    </HoverDiv5>
+  );
+};
+export const BtcDominanceHoverDiv2 = ({
+  btcMarketCap,
+  totalMarketCap,
+  btcDominancePercent,
+}) => {
+  return (
+    <HoverDiv6>
+      BTC Market Cap vs Total Market Cap
+      <HoverDivInner>
+        <BulletPoint />
+        <p>
+          BTC Market Cap:{" "}
+          <span style={{ fontWeight: "bold" }}>{btcMarketCap}</span>
+        </p>
+      </HoverDivInner>
+      <HoverDivInner>
+        <BulletPoint />
+        <p>
+          Total Market Cap:{" "}
+          <span style={{ fontWeight: "bold" }}>{totalMarketCap}</span>
+        </p>
+      </HoverDivInner>
+      <ProgressBarHover>
+        <BtcDominanceProgressBarHover width={btcDominancePercent} />
+      </ProgressBarHover>
+      <p style={{ fontWeight: "bold" }}>{btcDominancePercent}%</p>
+    </HoverDiv6>
+  );
+};
+export const EthDominanceHoverDiv1 = ({ ethDominance }) => {
+  return (
+    <HoverDiv7>
+      <BulletPoint />
+      <p>
+        Ethereum(ETH) Dominance:{" "}
+        <span style={{ fontWeight: "bold" }}>{ethDominance}%</span>
+      </p>
+    </HoverDiv7>
+  );
+};
+export const EthDominanceHoverDiv2 = ({
+  ethMarketCap,
+  totalMarketCap,
+  ethDominancePercent,
+}) => {
+  return (
+    <HoverDiv8>
+      ETH Market Cap vs Total Market Cap
+      <HoverDivInner>
+        <BulletPoint />
+        <p>
+          ETC Market Cap:{" "}
+          <span style={{ fontWeight: "bold" }}>{ethMarketCap}</span>
+        </p>
+      </HoverDivInner>
+      <HoverDivInner>
+        <BulletPoint />
+        <p>
+          Total Market Cap:{" "}
+          <span style={{ fontWeight: "bold" }}>{totalMarketCap}</span>
+        </p>
+      </HoverDivInner>
+      <ProgressBarHover>
+        <EthDominanceProgressBarHover width={ethDominancePercent} />
+      </ProgressBarHover>
+      <p style={{ fontWeight: "bold" }}>{ethDominancePercent}%</p>
+    </HoverDiv8>
+  );
+};
