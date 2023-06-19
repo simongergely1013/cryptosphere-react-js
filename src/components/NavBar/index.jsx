@@ -66,7 +66,11 @@ export const NavBar = (props) => {
   const [isTotalMarketCapHovered, setTotalMarketCapHovered] = useState(false);
   const [isTotalVolumeHovered, setTotalVolumeHovered] = useState(false);
   const [isBtcDominanceHovered, setBtcDominanceHovered] = useState(false);
+  const [isBtcDominanceProgressBarHovered, setBtcDominanceProgressBarHovered] =
+    useState(false);
   const [isEthDominanceHovered, setEthDominanceHovered] = useState(false);
+  const [isEthDominanceProgressBarHovered, setEthDominanceProgressBarHovered] =
+    useState(false);
 
   const getGlobalData = async () => {
     try {
@@ -185,23 +189,34 @@ export const NavBar = (props) => {
                   <TotalVolumeProgressBar percent={progressBarsData} />
                 </ProgressBar>
               </ListItemWithProgress>
-              <ListItemWithProgress
-                onMouseEnter={() => setBtcDominanceHovered(true)}
-                onMouseLeave={() => setBtcDominanceHovered(false)}
-              >
+              <ListItemWithProgress>
                 <BitcoinSvgSubNav />
-                {progressBarsData.btcDominancePercent}% BTC{" "}
-                <ProgressBar>
+                <div
+                  onMouseEnter={() => setBtcDominanceHovered(true)}
+                  onMouseLeave={() => setBtcDominanceHovered(false)}
+                >
+                  {progressBarsData.btcDominancePercent}% BTC{" "}
+                </div>
+
+                <ProgressBar
+                  onMouseEnter={() => setBtcDominanceProgressBarHovered(true)}
+                  onMouseLeave={() => setBtcDominanceProgressBarHovered(false)}
+                >
                   <BtcDominanceProgressBar percent={progressBarsData} />
                 </ProgressBar>
               </ListItemWithProgress>
-              <ListItemWithProgress
-                onMouseEnter={() => setEthDominanceHovered(true)}
-                onMouseLeave={() => setEthDominanceHovered(false)}
-              >
+              <ListItemWithProgress>
                 <EthereumSvgSubNav />
-                {progressBarsData.ethDominancePercent}% ETH{" "}
-                <ProgressBar>
+                <div
+                  onMouseEnter={() => setEthDominanceHovered(true)}
+                  onMouseLeave={() => setEthDominanceHovered(false)}
+                >
+                  {progressBarsData.ethDominancePercent}% ETH{" "}
+                </div>
+                <ProgressBar
+                  onMouseEnter={() => setEthDominanceProgressBarHovered(true)}
+                  onMouseLeave={() => setEthDominanceProgressBarHovered(false)}
+                >
                   <EthDominanceProgeressBar percent={progressBarsData} />
                 </ProgressBar>
               </ListItemWithProgress>
@@ -211,34 +226,47 @@ export const NavBar = (props) => {
         <SubNavEmptyDiv></SubNavEmptyDiv>
       </SubNavContainer>
       <HoverDivsContainer>
-        <CoinsHoverDiv coins={coins} />
-        <ExchangesHoverDiv exchanges={markets} />
-        <TotalMarketCapHoverDiv
-          totalMarketCap={totalMarketCapLongFormatted}
-          changePercentage={marketCapChange24h.toFixed(2)}
-          color={marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"}
-        />
-        <VolumeVsMarketCapDiv
-          volume={totalVolumeLongFormatted}
-          totalMarketCap={totalMarketCapLongFormatted}
-          totalVolumePercent={progressBarsData.totalVolumePercent}
-        />
-        <BtcDominanceHoverDiv1
-          btcDominance={progressBarsData.btcDominancePercent}
-        />
-        <BtcDominanceHoverDiv2
-          btcMarketCap={btcMarketCapFormatted}
-          totalMarketCap={totalMarketCapLongFormatted}
-          btcDominancePercent={progressBarsData.btcDominancePercent}
-        />
-        <EthDominanceHoverDiv1
-          ethDominance={progressBarsData.ethDominancePercent}
-        />
-        <EthDominanceHoverDiv2
-          ethMarketCap={ethMarketCapFormatted}
-          totalMarketCap={totalMarketCapLongFormatted}
-          ethDominancePercent={progressBarsData.ethDominancePercent}
-        />
+        {isCoinsHovered && <CoinsHoverDiv coins={coins} />}
+        {isExchangesHovered && <ExchangesHoverDiv exchanges={markets} />}
+        {isTotalMarketCapHovered && (
+          <TotalMarketCapHoverDiv
+            totalMarketCap={totalMarketCapLongFormatted}
+            changePercentage={marketCapChange24h.toFixed(2)}
+            color={marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"}
+          />
+        )}
+        {isTotalVolumeHovered && (
+          <VolumeVsMarketCapDiv
+            volume={totalVolumeLongFormatted}
+            totalMarketCap={totalMarketCapLongFormatted}
+            totalVolumePercent={progressBarsData.totalVolumePercent}
+          />
+        )}
+        {isBtcDominanceHovered && (
+          <BtcDominanceHoverDiv1
+            btcDominance={progressBarsData.btcDominancePercent}
+          />
+        )}
+        {isBtcDominanceProgressBarHovered && (
+          <BtcDominanceHoverDiv2
+            btcMarketCap={btcMarketCapFormatted}
+            totalMarketCap={totalMarketCapLongFormatted}
+            btcDominancePercent={progressBarsData.btcDominancePercent}
+          />
+        )}
+
+        {isEthDominanceHovered && (
+          <EthDominanceHoverDiv1
+            ethDominance={progressBarsData.ethDominancePercent}
+          />
+        )}
+        {isEthDominanceProgressBarHovered && (
+          <EthDominanceHoverDiv2
+            ethMarketCap={ethMarketCapFormatted}
+            totalMarketCap={totalMarketCapLongFormatted}
+            ethDominancePercent={progressBarsData.ethDominancePercent}
+          />
+        )}
       </HoverDivsContainer>
     </>
   );

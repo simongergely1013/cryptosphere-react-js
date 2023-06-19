@@ -284,6 +284,7 @@ export const StyledListSubNav = styled.ul`
 `;
 export const StyledListItemSubNav = styled.li`
   list-style-type: none;
+  cursor: pointer;
 `;
 export const BulletPoint = styled.div`
   width: 10px;
@@ -297,6 +298,7 @@ export const ListItemWithProgress = styled.li`
   align-items: center;
   justify-content: center;
   list-style-type: disc;
+  cursor: pointer;
 `;
 export const ArrowTrendingDown = styled.svg`
   width: 25px;
@@ -453,8 +455,8 @@ const HoverDiv1 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: -350px;
-  border: 1px solid red;
+  margin-left: 250px;
+  margin-top: -15px;
 `;
 const HoverDiv2 = styled.div`
   width: 440px;
@@ -466,8 +468,8 @@ const HoverDiv2 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-top: -50px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 400px;
 `;
 const HoverDiv3 = styled.div`
   width: 350px;
@@ -476,8 +478,8 @@ const HoverDiv3 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-top: 50px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 550px;
 `;
 const HoverDiv4 = styled.div`
   width: 350px;
@@ -486,8 +488,8 @@ const HoverDiv4 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: 400px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 700px;
 `;
 const HoverDiv5 = styled.div`
   display: flex;
@@ -497,8 +499,8 @@ const HoverDiv5 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: 770px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 850px;
 `;
 const HoverDiv6 = styled.div`
   align-items: center;
@@ -507,8 +509,8 @@ const HoverDiv6 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: 1050px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 950px;
 `;
 const HoverDiv7 = styled.div`
   display: flex;
@@ -518,8 +520,8 @@ const HoverDiv7 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: 1410px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 1000px;
 `;
 const HoverDiv8 = styled.div`
   align-items: center;
@@ -528,8 +530,8 @@ const HoverDiv8 = styled.div`
   border-radius: 10px;
   z-index: 30;
   position: absolute;
-  margin-left: 1700px;
-  border: 1px solid red;
+  margin-top: -15px;
+  margin-left: 1050px;
 `;
 const StyledSpan = styled.span`
   font-weigth: bold;
