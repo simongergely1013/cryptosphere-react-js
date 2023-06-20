@@ -21,6 +21,7 @@ import {
   CoinName,
   CoinNameInnerDiv,
   CoinLogo,
+  CoinNameLink,
   PercentageChangeDiv,
   ChartsWrapper,
   TopChartHeader,
@@ -272,7 +273,13 @@ export const Coins = () => {
                     <CoinName>
                       <CoinNameInnerDiv>
                         <CoinLogo src={obj.image} />
-                        {obj.name} ({obj.symbol.toUpperCase()})
+                        <CoinNameLink
+                          name={obj.name}
+                          key={obj.name}
+                          to={`/coin/${obj.name.toLowerCase()}`}
+                        >
+                          {obj.name} ({obj.symbol.toUpperCase()})
+                        </CoinNameLink>
                       </CoinNameInnerDiv>
                     </CoinName>
                     <TableData>{formatNumber(obj.current_price)}</TableData>

@@ -6,7 +6,7 @@ export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   height: 97px;
-  padding-left: 20px;
+  padding-left: 10px;
   padding-right: 20px;
   background: ${(props) => props.theme.main};
   position: relative;
@@ -24,12 +24,12 @@ export const StyledList = styled.ul`
 `;
 export const ListItemCoins = styled.li`
   list-style-type: none;
-  width: 167px;
+  width: 100px;
   height: 53px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+  margin: 10px 40px 10px 10px;
   border-radius: 10px;
   z-index: 10;
   background: {
@@ -38,7 +38,7 @@ export const ListItemCoins = styled.li`
 `;
 export const ListItemPortfolio = styled.li`
   list-style-type: none;
-  width: 167px;
+  width: 100px;
   height: 53px;
   display: flex;
   justify-content: center;
@@ -48,7 +48,7 @@ export const ListItemPortfolio = styled.li`
   z-index: 10;
 `;
 const SearchDiv = styled.div`
-  margin: 10px 20px 10px 600px;
+  margin: 10px 20px 10px 700px;
   border: none;
   z-index: 10;
 `;
@@ -255,6 +255,7 @@ export const SubNavContainer = styled.div`
   height: 43px;
   display: flex;
   margin-bottom: 20px;
+  border-radius: 10px;
 `;
 export const SubNavEmptyDiv = styled.div`
   width: 25%;

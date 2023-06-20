@@ -37,7 +37,7 @@ export const App = () => {
             <Switch>
               <Route exact path="/" component={Coins} />
               <Route exact path="/portfolio" component={Portfolio} />
-              <Route exact path="/coin/:id" component={Coin} />
+              <Route exact path="/coin/:coinId" component={Coin} />
             </Switch>
           </MainWrapper>
         </Router>

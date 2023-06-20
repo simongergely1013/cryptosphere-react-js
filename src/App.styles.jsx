@@ -39,7 +39,7 @@ export const MainWrapper = styled.div`
 export const darkMode = {
   main: "#191B1F",
   text: "#FAFBFB",
-  background: "#424242",
+  background: "#212121",
   moonIconFill: "white",
   bulletPointBackground: "white",
   progressBarsBackground: "white",

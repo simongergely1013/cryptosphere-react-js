@@ -1,20 +1,19 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const CoinsPageWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  border-radius: 10px;
   color: ${(props) => props.theme.text};
 `;
 export const HeaderDiv = styled.div`
   margin-bottom: 30px;
-  width: 92%;
+  width: 98%;
 `;
 export const CoinsTableContainer = styled.div`
-  width: 92%;
+  width: 98%;
   height: 950px;
   display: flex;
   flex-direction: column;
@@ -97,9 +96,11 @@ export const TableData2 = styled.div`
   margin-right: 20px;
 `;
 export const TableData3 = styled.div`
-  width: 135px;
+  width: 250px;
+  height: 80px;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 export const PercentageChangeDiv = styled.div`
   width: 100%;
@@ -118,10 +119,14 @@ export const CoinNameInnerDiv = styled.div`
 `;
 export const CoinLogo = styled.img`
   width: 34px;
-  margin-right: 10px;
+  margin-right: 20px;
+`;
+export const CoinNameLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => props.theme.text};
 `;
 export const ChartsWrapper = styled.div`
-  width: 94%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,17 +136,17 @@ export const TopChartHeader = styled.div`
   position: absolute;
   z-index: 10;
   margin-top: -420px;
-  margin-left: -590px;
+  margin-left: -650px;
 `;
 export const ChartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 350px;
+  height: 380px;
   padding: 100px 50px 0px 50px;
   background: ${(props) => props.theme.main};
-  margin: 20px;
+  margin: 15px;
   border-radius: 10px;
 `;
 export const TopChartDiv = styled.div`
@@ -164,7 +169,7 @@ export const ArrowDown = styled.div`
   margin-right: 5px;
 `;
 export const SmallChartWrapper = styled.div`
-  width: 90%;
+  width: 75%;
   display: flex;
   justify-content: center;
   align-items: center;
