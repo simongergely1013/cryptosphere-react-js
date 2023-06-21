@@ -1,8 +1,10 @@
 import axios from "axios";
+import CoinsPercentageBar from "../../../components/CoinsTablePercentageBar";
 import { useState, useEffect, useContext } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { formatNumber } from "../../../utilities";
 import { ArrowUp, ArrowDown } from "../Coins.styles";
+import { getRandomColor } from "../../../utilities";
 import {
   CoinPageWrapper,
   HeaderDiv,
@@ -19,6 +21,19 @@ import {
   PriceCHangePercentageDiv,
   PriceChangePercentage,
   SquareStackIcon,
+  AllTimeContainer,
+  AllTimeDiv,
+  ArrowSvgDiv,
+  AllTimeP,
+  CoinDataRow,
+  SmallRectangleBlue,
+  PlusSmallSvg,
+  DescriptionWrapper,
+  CoinDescriptionDiv,
+  CoinUrlsRow,
+  UrlDiv,
+  CopyIcon,
+  UrlAddressDiv,
 } from "./Coin.styles";
 
 export const Coin = (props) => {
@@ -30,6 +45,25 @@ export const Coin = (props) => {
   const [coinHomePage, setCoinHomePage] = useState("");
   const [coinCurrentPrice, setCoinCurrentPrice] = useState(0);
   const [priceChangePercentage24h, setPriceChangePercentage24h] = useState(0);
+  const [coinAth, setcoinAth] = useState(0);
+  const [coinAthDate, setCoinAthDate] = useState("");
+  const [coinAtl, setCoinAtl] = useState(0);
+  const [coinAtlDate, setCoinAtlDate] = useState("");
+  const [coinMarketCap, setCoinMarketCap] = useState(0);
+  const [coinFullyDillutedValuation, setCoinFullyDillutedValuation] =
+    useState(0);
+  const [coinVolume24h, setCoinVolume24h] = useState(0);
+  const [coinVolumeOverMarketCap, setCoinVolumeOverMarketCap] = useState(0);
+  const [coinCirculatingSupply, setCoinCirculatingSupply] = useState(0);
+  const [coinTotalSupply, setCoinTotalSupply] = useState(0);
+  const [color1, setColor1] = useState(getRandomColor());
+  const [color2, setColor2] = useState(getRandomColor());
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [coinDescription, setCoinDescription] = useState("");
+  const [coinBlockChainSite1, setCoinBlockChainSite1] = useState("");
+  const [coinBlockChainSite2, setCoinBlockChainSite2] = useState("");
+  const [coinBlockChainSite3, setCoinBlockChainSite3] = useState("");
 
   const getCoinData = async (coinId) => {
     try {
@@ -43,6 +77,36 @@ export const Coin = (props) => {
       setCoinHomePage(data.links.homepage[0]);
       setCoinCurrentPrice(data.market_data.current_price[currency]);
       setPriceChangePercentage24h(data.market_data.price_change_percentage_24h);
+      setcoinAth(data.market_data.ath[currency]);
+      setCoinAthDate(data.market_data.ath_date[currency]);
+      setCoinAtl(data.market_data.atl[currency]);
+      setCoinAtlDate(data.market_data.atl_date[currency]);
+      setCoinMarketCap(data.market_data.market_cap[currency]);
+      setCoinFullyDillutedValuation(
+        data.market_data.fully_diluted_valuation[currency]
+      );
+      setCoinVolume24h(data.market_data.total_volume[currency]);
+      setCoinVolumeOverMarketCap(
+        data.market_data.total_volume[currency] /
+          data.market_data.market_cap[currency]
+      );
+      setCoinCirculatingSupply(data.market_data.circulating_supply);
+      setCoinTotalSupply(data.market_data.total_supply);
+      setNum1(
+        (data.market_data.total_volume[currency] /
+          data.market_data.market_cap[currency]) *
+          100
+      );
+      setNum2(
+        100 -
+          (data.market_data.total_volume[currency] /
+            data.market_data.market_cap[currency]) *
+            100
+      );
+      setCoinDescription(data.description["en"]);
+      setCoinBlockChainSite1(data.links.blockchain_site[0]);
+      setCoinBlockChainSite2(data.links.blockchain_site[1]);
+      setCoinBlockChainSite3(data.links.blockchain_site[2]);
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +135,7 @@ export const Coin = (props) => {
           </CoinUrlBox>
         </CoinBoxContainer>
         <PriceBoxContainer>
-          <h2>{formatNumber(coinCurrentPrice)}</h2>
+          <h2 style={{ fontSize: "44px" }}>{formatNumber(coinCurrentPrice)}</h2>
           <PriceCHangePercentageDiv>
             <PriceChangePercentage
               color={priceChangePercentage24h > 0 ? "#00fc2a" : "#fe1040"}
@@ -82,12 +146,123 @@ export const Coin = (props) => {
             {priceChangePercentage24h > 0 ? <ArrowUp /> : <ArrowDown />}
           </PriceCHangePercentageDiv>
           <SquareStackIcon />
+          <AllTimeContainer>
+            <ArrowSvgDiv>
+              <ArrowUp />
+            </ArrowSvgDiv>
+            <AllTimeDiv>
+              <AllTimeP>
+                All Time High: <span> {formatNumber(coinAth)}</span>
+              </AllTimeP>
+              <p>{coinAthDate.slice(0, 10)}</p>
+            </AllTimeDiv>
+          </AllTimeContainer>
+          <AllTimeContainer>
+            <ArrowSvgDiv>
+              <ArrowDown />
+            </ArrowSvgDiv>
+            <AllTimeDiv>
+              <AllTimeP>
+                All Time Low: <span> {formatNumber(coinAtl)}</span>
+              </AllTimeP>
+              <p>{coinAtlDate.slice(0, 10)}</p>
+            </AllTimeDiv>
+          </AllTimeContainer>
         </PriceBoxContainer>
-        <CoinDataBoxContainer></CoinDataBoxContainer>
+        <CoinDataBoxContainer>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Market Cap: <span>{formatNumber(coinMarketCap)}</span>{" "}
+            </p>
+          </CoinDataRow>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Fully Diluted Valuation:{" "}
+              <span>{formatNumber(coinFullyDillutedValuation)}</span>
+            </p>
+          </CoinDataRow>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Trading Volume 24h: <span>{formatNumber(coinVolume24h)}</span>
+            </p>
+          </CoinDataRow>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Volume / Market:{" "}
+              <span>{coinVolumeOverMarketCap.toFixed(2)}%</span>
+            </p>
+          </CoinDataRow>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Circulating Supply:{" "}
+              <span>
+                {coinCirculatingSupply} {coinSymbol.toUpperCase()}
+              </span>
+            </p>
+          </CoinDataRow>
+          <CoinDataRow>
+            <SmallRectangleBlue>
+              <PlusSmallSvg />
+            </SmallRectangleBlue>
+            <p>
+              Max Supply:{" "}
+              <span>
+                {coinTotalSupply} {coinSymbol.toUpperCase()}
+              </span>
+            </p>
+          </CoinDataRow>
+          <CoinDataRow style={{ width: "50%", marginLeft: "-180px" }}>
+            <CoinsPercentageBar
+              num1={num1.toFixed(2) + "%"}
+              num2={num2.toFixed(2) + "%"}
+              width={num1.toFixed(2) + "%"}
+              color1={color1}
+              color2={color2}
+              background1={color1}
+              background2={color2}
+            />
+          </CoinDataRow>
+        </CoinDataBoxContainer>
       </SummaryWrapper>
       <HeaderDiv>
         <h2>Description</h2>
       </HeaderDiv>
+      <DescriptionWrapper>
+        <SquareStackIcon />
+        <CoinDescriptionDiv>{coinDescription}</CoinDescriptionDiv>
+      </DescriptionWrapper>
+      <CoinUrlsRow>
+        <UrlDiv>
+          <UrlIcon />
+          <UrlAddressDiv>{coinBlockChainSite1}</UrlAddressDiv>
+          <CopyIcon />
+        </UrlDiv>
+        <UrlDiv>
+          <UrlIcon />
+          <UrlAddressDiv>{coinBlockChainSite2}</UrlAddressDiv>
+          <CopyIcon />
+        </UrlDiv>
+        <UrlDiv>
+          <UrlIcon />
+          <UrlAddressDiv>{coinBlockChainSite3}</UrlAddressDiv>
+          <CopyIcon />
+        </UrlDiv>
+      </CoinUrlsRow>
     </CoinPageWrapper>
   );
 };
