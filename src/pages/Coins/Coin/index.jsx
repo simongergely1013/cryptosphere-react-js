@@ -1,5 +1,6 @@
 import axios from "axios";
 import CoinsPercentageBar from "../../../components/CoinsTablePercentageBar";
+import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { useState, useEffect, useContext } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { formatNumber } from "../../../utilities";
@@ -34,6 +35,7 @@ import {
   UrlDiv,
   CopyIcon,
   UrlAddressDiv,
+  CurrencyConversionRow,
 } from "./Coin.styles";
 
 export const Coin = (props) => {
@@ -113,7 +115,8 @@ export const Coin = (props) => {
   };
   useEffect(() => {
     getCoinData(props.match.params.coinId);
-  }, []);
+  }, [currency]);
+  localStorage.setItem("coinCurrentPrice", coinCurrentPrice);
   return (
     <CoinPageWrapper>
       <HeaderDiv>
@@ -263,6 +266,9 @@ export const Coin = (props) => {
           <CopyIcon />
         </UrlDiv>
       </CoinUrlsRow>
+      <CurrencyConversionRow>
+        <CurrencyConverter coinSymbol={coinSymbol.toUpperCase()} />
+      </CurrencyConversionRow>
     </CoinPageWrapper>
   );
 };

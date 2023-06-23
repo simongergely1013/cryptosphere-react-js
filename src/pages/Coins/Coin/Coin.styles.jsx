@@ -225,6 +225,7 @@ export const CoinUrlsRow = styled.div`
   align-items: center;
   justify-content: space-between;
   border-radius: 20px;
+  margin-bottom: 50px;
 `;
 export const UrlDiv = styled.div`
   width: 32%;
@@ -258,3 +259,10 @@ export const CopyIcon = () => {
   );
 };
 export const UrlAddressDiv = styled.div``;
+export const CurrencyConversionRow = styled.div`
+  width: 98%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+`;
