@@ -50,6 +50,6 @@ const options = {
   tension: 0.5,
 };
 
-export const BarChart = (props) => {
-  return <Bar data={props.data} options={options} />;
+export const BarChart = ({ data }) => {
+  return <Bar data={data} options={options} />;
 };

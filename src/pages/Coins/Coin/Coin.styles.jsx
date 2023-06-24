@@ -266,3 +266,9 @@ export const CurrencyConversionRow = styled.div`
   justify-content: center;
   margin-bottom: 50px;
 `;
+export const BigChartWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

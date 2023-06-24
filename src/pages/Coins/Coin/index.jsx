@@ -3,9 +3,9 @@ import CoinsPercentageBar from "../../../components/CoinsTablePercentageBar";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { useState, useEffect, useContext } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
-import { formatNumber } from "../../../utilities";
+import { formatNumber, formatDate, getRandomColor } from "../../../utilities";
 import { ArrowUp, ArrowDown } from "../Coins.styles";
-import { getRandomColor } from "../../../utilities";
+import { LineChart } from "../../../components/LineChart";
 import {
   CoinPageWrapper,
   HeaderDiv,
@@ -36,6 +36,7 @@ import {
   CopyIcon,
   UrlAddressDiv,
   CurrencyConversionRow,
+  BigChartWrapper,
 } from "./Coin.styles";
 
 export const Coin = (props) => {
@@ -66,6 +67,16 @@ export const Coin = (props) => {
   const [coinBlockChainSite1, setCoinBlockChainSite1] = useState("");
   const [coinBlockChainSite2, setCoinBlockChainSite2] = useState("");
   const [coinBlockChainSite3, setCoinBlockChainSite3] = useState("");
+  const [days, setDays] = useState(1);
+  const [interval, setInterval] = useState("hourly");
+  const [chartHours, setChartHours] = useState([]);
+  const [coinPricesHourly, setCoinPricesHourly] = useState([]);
+  const [isChartToday, setIsChartToday] = useState(true);
+  const [isChartWeek, setIsChartWeek] = useState(false);
+  const [isChart1Month, setIsChart1Month] = useState(false);
+  const [isChart3Months, setIsChart3Months] = useState(false);
+  const [isChart1Year, setIsChart1Year] = useState(false);
+  const [isChartAllTime, setIsChartAllTime] = useState(false);
 
   const getCoinData = async (coinId) => {
     try {
@@ -113,10 +124,65 @@ export const Coin = (props) => {
       console.log(err);
     }
   };
+
+  const getCoinChartData = async (coinId) => {
+    try {
+      const base = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=`;
+      const search = `&days=${days}&interval=${interval}`;
+      const fullURL = `${base}${currency}${search}`;
+      const { data } = await axios(fullURL);
+      setCoinPricesHourly(data.prices.map((el) => el[1]));
+      setChartHours(data.prices.map((el) => el[0]));
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getThemeColors = () => {
+    const theme = localStorage.getItem("theme");
+    return JSON.parse(theme);
+  };
+
   useEffect(() => {
     getCoinData(props.match.params.coinId);
+    getCoinChartData(props.match.params.coinId);
   }, [currency]);
+
   localStorage.setItem("coinCurrentPrice", coinCurrentPrice);
+  const theme = getThemeColors();
+  const chartHoursFormatted = chartHours
+    .map((el) => formatDate(el))
+    .slice(0, 24);
+  const coinPricesData = {
+    labels: chartHoursFormatted,
+    datasets: [
+      {
+        label: `${props.match.params.coinId} Price`,
+        data: coinPricesHourly.slice(0, 24),
+        borderColor:
+          coinPricesHourly[0] < coinPricesHourly[24]
+            ? theme.btcPriceChartBorderColorGain
+            : coinPricesHourly[0] > coinPricesHourly[24]
+            ? theme.btcPriceChartBorderColorLoss
+            : theme.btcPriceChartBorderColorGain,
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+          coinPricesHourly[0] < coinPricesHourly[24]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
+            : coinPricesHourly[0] > coinPricesHourly[24]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
+            : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+          return gradient;
+        },
+        pointRadius: 0,
+        borderWidth: 3,
+        fill: true,
+      },
+    ],
+  };
   return (
     <CoinPageWrapper>
       <HeaderDiv>
@@ -269,6 +335,9 @@ export const Coin = (props) => {
       <CurrencyConversionRow>
         <CurrencyConverter coinSymbol={coinSymbol.toUpperCase()} />
       </CurrencyConversionRow>
+      <BigChartWrapper>
+        <LineChart data={coinPricesData} />
+      </BigChartWrapper>
     </CoinPageWrapper>
   );
 };
