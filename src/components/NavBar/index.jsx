@@ -7,6 +7,8 @@ import {
   StyledList,
   ListItemCoins,
   ListItemPortfolio,
+  NavInnerContainer,
+  SearchWrapper,
   Search,
   CurrencyDiv,
   CurrencySelect,
@@ -127,32 +129,37 @@ export const NavBar = (props) => {
             <StyledLink to="/portfolio">Portfolio</StyledLink>
           </ListItemPortfolio>
         </StyledList>
-        <form>
-          <Search />
-        </form>
-        <CurrencyDiv>
-          <BlackCircle>
-            {currency === "usd" ? (
-              <DollarSvg />
-            ) : currency === "gbp" ? (
-              <SterlingSvg />
-            ) : currency === "eur" ? (
-              <EuroSvg />
-            ) : currency === "btc" ? (
-              <BitcoinSvg />
-            ) : (
-              <EthereumSvg />
-            )}
-          </BlackCircle>
-          <CurrencySelect onChange={handleCurrnecy}>
-            <Option value="usd">USD</Option>
-            <Option value="gbp">GBP</Option>
-            <Option value="eur">EUR</Option>
-            <Option value="btc">BTC</Option>
-            <Option value="eth">ETH</Option>
-          </CurrencySelect>
-        </CurrencyDiv>
-        <ThemeSwitch onClick={props.onClick} />
+        <NavInnerContainer>
+          <SearchWrapper>
+            <form>
+              <Search />
+            </form>
+          </SearchWrapper>
+
+          <CurrencyDiv>
+            <BlackCircle>
+              {currency === "usd" ? (
+                <DollarSvg />
+              ) : currency === "gbp" ? (
+                <SterlingSvg />
+              ) : currency === "eur" ? (
+                <EuroSvg />
+              ) : currency === "btc" ? (
+                <BitcoinSvg />
+              ) : (
+                <EthereumSvg />
+              )}
+            </BlackCircle>
+            <CurrencySelect onChange={handleCurrnecy}>
+              <Option value="usd">USD</Option>
+              <Option value="gbp">GBP</Option>
+              <Option value="eur">EUR</Option>
+              <Option value="btc">BTC</Option>
+              <Option value="eth">ETH</Option>
+            </CurrencySelect>
+          </CurrencyDiv>
+          <ThemeSwitch onClick={props.onClick} />
+        </NavInnerContainer>
       </StyledNav>
       <SubNavContainer>
         <SubNavEmptyDiv></SubNavEmptyDiv>

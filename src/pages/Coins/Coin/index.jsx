@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { formatNumber, formatDate, getRandomColor } from "../../../utilities";
 import { ArrowUp, ArrowDown } from "../Coins.styles";
-import { LineChart } from "../../../components/LineChart";
+import { BigLineChart } from "../../../components/LineChart";
 import {
   CoinPageWrapper,
   HeaderDiv,
@@ -69,8 +69,8 @@ export const Coin = (props) => {
   const [coinBlockChainSite3, setCoinBlockChainSite3] = useState("");
   const [days, setDays] = useState(1);
   const [interval, setInterval] = useState("hourly");
-  const [chartHours, setChartHours] = useState([]);
-  const [coinPricesHourly, setCoinPricesHourly] = useState([]);
+  const [chartLabels, setChartLabels] = useState([]);
+  const [coinPrices, setCoinPrices] = useState([]);
   const [isChartToday, setIsChartToday] = useState(true);
   const [isChartWeek, setIsChartWeek] = useState(false);
   const [isChart1Month, setIsChart1Month] = useState(false);
@@ -131,9 +131,8 @@ export const Coin = (props) => {
       const search = `&days=${days}&interval=${interval}`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
-      setCoinPricesHourly(data.prices.map((el) => el[1]));
-      setChartHours(data.prices.map((el) => el[0]));
-      console.log(data);
+      setCoinPrices(data.prices.map((el) => el[1]));
+      setChartLabels(data.prices.map((el) => el[0]));
     } catch (error) {
       console.log(error);
     }
@@ -151,27 +150,25 @@ export const Coin = (props) => {
 
   localStorage.setItem("coinCurrentPrice", coinCurrentPrice);
   const theme = getThemeColors();
-  const chartHoursFormatted = chartHours
-    .map((el) => formatDate(el))
-    .slice(0, 24);
+  const chartLabelsFormatted = chartLabels.map((el) => formatDate(el));
   const coinPricesData = {
-    labels: chartHoursFormatted,
+    labels: chartLabelsFormatted,
     datasets: [
       {
         label: `${props.match.params.coinId} Price`,
-        data: coinPricesHourly.slice(0, 24),
+        data: coinPrices,
         borderColor:
-          coinPricesHourly[0] < coinPricesHourly[24]
+          coinPrices[0] < coinPrices[coinPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
-            : coinPricesHourly[0] > coinPricesHourly[24]
+            : coinPrices[0] > coinPrices[coinPrices.length - 1]
             ? theme.btcPriceChartBorderColorLoss
             : theme.btcPriceChartBorderColorGain,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-          coinPricesHourly[0] < coinPricesHourly[24]
+          coinPrices[0] < coinPrices[coinPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
-            : coinPricesHourly[0] > coinPricesHourly[24]
+            : coinPrices[0] > coinPrices[coinPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
             : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
           gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
@@ -336,7 +333,7 @@ export const Coin = (props) => {
         <CurrencyConverter coinSymbol={coinSymbol.toUpperCase()} />
       </CurrencyConversionRow>
       <BigChartWrapper>
-        <LineChart data={coinPricesData} />
+        <BigLineChart data={coinPricesData} />
       </BigChartWrapper>
     </CoinPageWrapper>
   );

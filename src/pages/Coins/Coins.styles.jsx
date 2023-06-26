@@ -128,29 +128,40 @@ export const CoinNameLink = styled(Link)`
 export const ChartsWrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
 `;
+export const ChartsWrapperInner = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+export const TopChartHeaderRow = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+  margin-bottom: -130px;
+`;
 export const TopChartHeader = styled.div`
-  position: absolute;
-  z-index: 10;
-  margin-top: -420px;
-  margin-left: -650px;
+  width: 50%;
+  padding-left: 55px;
 `;
 export const ChartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 380px;
-  padding: 100px 50px 0px 50px;
+  padding-top: 100px;
   background: ${(props) => props.theme.main};
   margin: 15px;
   border-radius: 10px;
 `;
 export const TopChartDiv = styled.div`
-  width: 100%;
+  width: 98%;
+  height: 75%;
 `;
 export const ArrowUp = styled.div`
   width: 0;

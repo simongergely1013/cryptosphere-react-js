@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const StyledNav = styled.nav`
+  max-width: 1720px;
   display: flex;
   align-items: center;
   height: 97px;
@@ -21,6 +22,7 @@ export const StyledLink = styled(Link)`
 export const StyledList = styled.ul`
   display: flex;
   z-index: 10;
+  width: 50%;
 `;
 export const ListItemCoins = styled.li`
   list-style-type: none;
@@ -47,9 +49,16 @@ export const ListItemPortfolio = styled.li`
   border-radius: 10px;
   z-index: 10;
 `;
+export const NavInnerContainer = styled.div`
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const SearchWrapper = styled.div`
+  width: 70%;
+`;
 const SearchDiv = styled.div`
-  margin: 10px 20px 10px 700px;
-  border: none;
   z-index: 10;
 `;
 const SearchInput = styled.input`
@@ -98,7 +107,6 @@ export const Search = (props) => {
   );
 };
 export const CurrencyDiv = styled.div`
-  margin: 10px 10px 10px 25px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -263,7 +271,7 @@ export const SubNavEmptyDiv = styled.div`
   background: ${(props) => props.theme.background};
 `;
 export const SubNavDivCenter = styled.div`
-  width: 50%;
+  width: 75%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -281,7 +289,6 @@ export const StyledListSubNav = styled.ul`
   justify-content: space-around;
   align-items: center;
   font-size: 16px;
-  // border: 1px solid red;
 `;
 export const StyledListItemSubNav = styled.li`
   list-style-type: none;

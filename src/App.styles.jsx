@@ -32,7 +32,8 @@ export const MainWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  width: 1720px;
+  width: 100vw;
+  max-width: 1720px;
   height: 100%;
   background: ${(props) => props.theme.background};
 `;

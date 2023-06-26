@@ -24,6 +24,8 @@ import {
   CoinNameLink,
   PercentageChangeDiv,
   ChartsWrapper,
+  ChartsWrapperInner,
+  TopChartHeaderRow,
   TopChartHeader,
   ChartContainer,
   TopChartDiv,
@@ -168,7 +170,7 @@ export const Coins = () => {
         <h2>Overview</h2>
       </HeaderDiv>
       <ChartsWrapper>
-        <ChartContainer>
+        <TopChartHeaderRow>
           <TopChartHeader>
             <h3>BTC</h3>
             <h2>{formatNumber(btcCurrentPrice)}</h2>
@@ -176,11 +178,6 @@ export const Coins = () => {
               {day} {month},{year}
             </h3>
           </TopChartHeader>
-          <TopChartDiv>
-            <LineChart data={btcPricesData} />
-          </TopChartDiv>
-        </ChartContainer>
-        <ChartContainer>
           <TopChartHeader>
             <h3>Volume 24h</h3>
             <h2>{formatVolumeMarketCap(btcCurrentVolumeFormatted)}</h2>
@@ -188,10 +185,19 @@ export const Coins = () => {
               {day} {month},{year}
             </h3>
           </TopChartHeader>
-          <TopChartDiv>
-            <BarChart data={btcVolumesData} />
-          </TopChartDiv>
-        </ChartContainer>
+        </TopChartHeaderRow>
+        <ChartsWrapperInner>
+          <ChartContainer>
+            <TopChartDiv>
+              <LineChart data={btcPricesData} />
+            </TopChartDiv>
+          </ChartContainer>
+          <ChartContainer>
+            <TopChartDiv>
+              <BarChart data={btcVolumesData} />
+            </TopChartDiv>
+          </ChartContainer>
+        </ChartsWrapperInner>
       </ChartsWrapper>
       <HeaderDiv>
         <h2>TOP 50 by Market Cap</h2>

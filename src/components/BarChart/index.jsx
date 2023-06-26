@@ -39,8 +39,8 @@ const options = {
     },
     x: {
       display: true,
-      min: 5,
-      max: 20,
+      min: 6,
+      max: 100,
       grid: {
         display: false,
         drawBorder: false,
