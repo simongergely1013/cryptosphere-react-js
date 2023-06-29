@@ -1,7 +1,7 @@
 import axios from "axios";
 import CoinsPercentageBar from "../../../components/CoinsTablePercentageBar";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext, useReducer } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { formatNumber, formatDate, getRandomColor } from "../../../utilities";
 import { ArrowUp, ArrowDown } from "../Coins.styles";
@@ -39,104 +39,117 @@ import {
   BigChartWrapper,
 } from "./Coin.styles";
 
+const ACTIONS = {
+  GET_COIN_DATA: "getCoinData",
+};
 export const Coin = (props) => {
   const { currency } = useContext(CurrencyContext);
-  const [coinData, setCoinData] = useState({});
-  const [coinName, setCoinName] = useState("");
-  const [coinSymbol, setCoinSymbol] = useState("");
-  const [coinImgSrc, setCoinImgSrc] = useState("");
-  const [coinHomePage, setCoinHomePage] = useState("");
-  const [coinCurrentPrice, setCoinCurrentPrice] = useState(0);
-  const [priceChangePercentage24h, setPriceChangePercentage24h] = useState(0);
-  const [coinAth, setcoinAth] = useState(0);
-  const [coinAthDate, setCoinAthDate] = useState("");
-  const [coinAtl, setCoinAtl] = useState(0);
-  const [coinAtlDate, setCoinAtlDate] = useState("");
-  const [coinMarketCap, setCoinMarketCap] = useState(0);
-  const [coinFullyDillutedValuation, setCoinFullyDillutedValuation] =
-    useState(0);
-  const [coinVolume24h, setCoinVolume24h] = useState(0);
-  const [coinVolumeOverMarketCap, setCoinVolumeOverMarketCap] = useState(0);
-  const [coinCirculatingSupply, setCoinCirculatingSupply] = useState(0);
-  const [coinTotalSupply, setCoinTotalSupply] = useState(0);
-  const [color1, setColor1] = useState(getRandomColor());
-  const [color2, setColor2] = useState(getRandomColor());
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [coinDescription, setCoinDescription] = useState("");
-  const [coinBlockChainSite1, setCoinBlockChainSite1] = useState("");
-  const [coinBlockChainSite2, setCoinBlockChainSite2] = useState("");
-  const [coinBlockChainSite3, setCoinBlockChainSite3] = useState("");
-  const [days, setDays] = useState(1);
-  const [interval, setInterval] = useState("hourly");
-  const [chartLabels, setChartLabels] = useState([]);
-  const [coinPrices, setCoinPrices] = useState([]);
-  const [isChartToday, setIsChartToday] = useState(true);
-  const [isChartWeek, setIsChartWeek] = useState(false);
-  const [isChart1Month, setIsChart1Month] = useState(false);
-  const [isChart3Months, setIsChart3Months] = useState(false);
-  const [isChart1Year, setIsChart1Year] = useState(false);
-  const [isChartAllTime, setIsChartAllTime] = useState(false);
 
-  const getCoinData = async (coinId) => {
+  const getCoinData = async (coinId, days, interval) => {
     try {
       const { data } = await axios(
         `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`
       );
-      setCoinData(data);
-      setCoinName(data.name);
-      setCoinSymbol(data.symbol);
-      setCoinImgSrc(data.image.large);
-      setCoinHomePage(data.links.homepage[0]);
-      setCoinCurrentPrice(data.market_data.current_price[currency]);
-      setPriceChangePercentage24h(data.market_data.price_change_percentage_24h);
-      setcoinAth(data.market_data.ath[currency]);
-      setCoinAthDate(data.market_data.ath_date[currency]);
-      setCoinAtl(data.market_data.atl[currency]);
-      setCoinAtlDate(data.market_data.atl_date[currency]);
-      setCoinMarketCap(data.market_data.market_cap[currency]);
-      setCoinFullyDillutedValuation(
-        data.market_data.fully_diluted_valuation[currency]
-      );
-      setCoinVolume24h(data.market_data.total_volume[currency]);
-      setCoinVolumeOverMarketCap(
-        data.market_data.total_volume[currency] /
-          data.market_data.market_cap[currency]
-      );
-      setCoinCirculatingSupply(data.market_data.circulating_supply);
-      setCoinTotalSupply(data.market_data.total_supply);
-      setNum1(
-        (data.market_data.total_volume[currency] /
-          data.market_data.market_cap[currency]) *
-          100
-      );
-      setNum2(
-        100 -
-          (data.market_data.total_volume[currency] /
-            data.market_data.market_cap[currency]) *
-            100
-      );
-      setCoinDescription(data.description["en"]);
-      setCoinBlockChainSite1(data.links.blockchain_site[0]);
-      setCoinBlockChainSite2(data.links.blockchain_site[1]);
-      setCoinBlockChainSite3(data.links.blockchain_site[2]);
+      const base = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=`;
+      const search = `&days=${days}&interval=${interval}`;
+      const fullURL = `${base}${currency}${search}`;
+      const response = await axios(fullURL);
+      const data2 = response.data;
+      const dataFull = { ...data, ...data2 };
+      dispatch({ type: ACTIONS.GET_COIN_DATA, payload: dataFull });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getCoinChartData = async (coinId) => {
-    try {
-      const base = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=`;
-      const search = `&days=${days}&interval=${interval}`;
-      const fullURL = `${base}${currency}${search}`;
-      const { data } = await axios(fullURL);
-      setCoinPrices(data.prices.map((el) => el[1]));
-      setChartLabels(data.prices.map((el) => el[0]));
-    } catch (error) {
-      console.log(error);
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case ACTIONS.GET_COIN_DATA:
+        const data = action.payload;
+        return {
+          coinData: data,
+          coinName: data.name,
+          coinSymbol: data.symbol.toUpperCase(),
+          coinImgSrc: data.image.large,
+          coinHomePage: data.links.homepage[0],
+          coinCurrentPrice: data.market_data.current_price[currency],
+          priceChangePercentage24h:
+            data.market_data.price_change_percentage_24h.toFixed(2),
+          coinAth: data.market_data.ath[currency],
+          coinAthDate: data.market_data.ath_date[currency].slice(0, 10),
+          coinAtl: data.market_data.atl[currency],
+          coinAtlDate: data.market_data.atl_date[currency].slice(0, 10),
+          coinMarketCap: data.market_data.market_cap[currency],
+          coinFullyDillutedValuation:
+            data.market_data.fully_diluted_valuation[currency],
+          coinVolume24h: data.market_data.total_volume[currency],
+          coinVolumeOverMarketCap: (
+            data.market_data.total_volume[currency] /
+            data.market_data.market_cap[currency]
+          ).toFixed(2),
+          coinCirculatingSupply: data.market_data.circulating_supply,
+          coinTotalSupply: data.market_data.total_supply,
+          num1:
+            (
+              data.market_data.total_volume[currency] /
+              data.market_data.market_cap[currency]
+            ).toFixed(2) * 100,
+          num2:
+            100 -
+            (
+              data.market_data.total_volume[currency] /
+              data.market_data.market_cap[currency]
+            ).toFixed(2) *
+              100,
+          coinDescription: data.description["en"],
+          coinBlockChainSite1: data.links.blockchain_site[0],
+          coinBlockChainSite2: data.links.blockchain_site[1],
+          coinBlockChainSite3: data.links.blockchain_site[2],
+          coinPrices: data.prices.map((el) => el[1]),
+          chartLabels: data.prices.map((el) => formatDate(el[0])),
+        };
+      default:
+        return state;
     }
   };
+
+  const [state, dispatch] = useReducer(reducer, {
+    coinData: {},
+    coinName: "",
+    coinSymbol: "",
+    coinImgSrc: "",
+    coinHomePage: "",
+    coinCurrentPrice: 0,
+    priceChangePercentage24h: 0,
+    coinAth: 0,
+    coinAthDate: "",
+    coinAtl: 0,
+    coinAtlDate: "",
+    coinMarketCap: 0,
+    coinFullyDillutedValuation: 0,
+    coinVolume24h: 0,
+    coinVolumeOverMarketCap: 0,
+    coinCirculatingSupply: 0,
+    coinTotalSupply: 0,
+    color1: getRandomColor(),
+    color2: getRandomColor(),
+    num1: 0,
+    num2: 0,
+    coinDescription: "",
+    coinBlockChainSite1: "",
+    coinBlockChainSite2: "",
+    coinBlockChainSite3: "",
+    days: 1,
+    interval: "hourly",
+    chartLabels: [],
+    coinPrices: [],
+    isChartToday: true,
+    isChartWeek: false,
+    isChart1Month: false,
+    isChart3Months: false,
+    isChart1Year: false,
+    isChartAllTime: false,
+  });
 
   const getThemeColors = () => {
     const theme = localStorage.getItem("theme");
@@ -144,31 +157,31 @@ export const Coin = (props) => {
   };
 
   useEffect(() => {
-    getCoinData(props.match.params.coinId);
-    getCoinChartData(props.match.params.coinId);
+    getCoinData(props.match.params.coinId, state.days, state.interval);
   }, [currency]);
 
-  localStorage.setItem("coinCurrentPrice", coinCurrentPrice);
+  localStorage.setItem("coinCurrentPrice", state.coinCurrentPrice);
   const theme = getThemeColors();
-  const chartLabelsFormatted = chartLabels.map((el) => formatDate(el));
   const coinPricesData = {
-    labels: chartLabelsFormatted,
+    labels: state.chartLabels,
     datasets: [
       {
         label: `${props.match.params.coinId} Price`,
-        data: coinPrices,
+        data: state.coinPrices,
         borderColor:
-          coinPrices[0] < coinPrices[coinPrices.length - 1]
+          state.coinPrices[0] < state.coinPrices[state.coinPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
-            : coinPrices[0] > coinPrices[coinPrices.length - 1]
+            : state.coinPrices[0] >
+              state.coinPrices[state.coinPrices.length - 1]
             ? theme.btcPriceChartBorderColorLoss
             : theme.btcPriceChartBorderColorGain,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-          coinPrices[0] < coinPrices[coinPrices.length - 1]
+          state.coinPrices[0] < state.coinPrices[state.coinPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
-            : coinPrices[0] > coinPrices[coinPrices.length - 1]
+            : state.coinPrices[0] >
+              state.coinPrices[state.coinPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
             : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
           gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
@@ -189,27 +202,29 @@ export const Coin = (props) => {
         <CoinBoxContainer>
           <CoinBox>
             <CoinBoxInner>
-              <CoinImage src={coinImgSrc} />
+              <CoinImage src={state.coinImgSrc} />
             </CoinBoxInner>
             <h2>
-              {coinName} ({coinSymbol.toUpperCase()})
+              {state.coinName} ({state.coinSymbol})
             </h2>
           </CoinBox>
           <CoinUrlBox>
             <UrlIcon />
-            <HomePageDiv>{coinHomePage}</HomePageDiv>
+            <HomePageDiv>{state.coinHomePage}</HomePageDiv>
           </CoinUrlBox>
         </CoinBoxContainer>
         <PriceBoxContainer>
-          <h2 style={{ fontSize: "44px" }}>{formatNumber(coinCurrentPrice)}</h2>
+          <h2 style={{ fontSize: "44px" }}>
+            {formatNumber(state.coinCurrentPrice)}
+          </h2>
           <PriceCHangePercentageDiv>
             <PriceChangePercentage
-              color={priceChangePercentage24h > 0 ? "#00fc2a" : "#fe1040"}
+              color={state.priceChangePercentage24h > 0 ? "#00fc2a" : "#fe1040"}
             >
               {" "}
-              {priceChangePercentage24h.toFixed(2)}%
+              {state.priceChangePercentage24h}%
             </PriceChangePercentage>
-            {priceChangePercentage24h > 0 ? <ArrowUp /> : <ArrowDown />}
+            {state.priceChangePercentage24h > 0 ? <ArrowUp /> : <ArrowDown />}
           </PriceCHangePercentageDiv>
           <SquareStackIcon />
           <AllTimeContainer>
@@ -218,9 +233,9 @@ export const Coin = (props) => {
             </ArrowSvgDiv>
             <AllTimeDiv>
               <AllTimeP>
-                All Time High: <span> {formatNumber(coinAth)}</span>
+                All Time High: <span> {formatNumber(state.coinAth)}</span>
               </AllTimeP>
-              <p>{coinAthDate.slice(0, 10)}</p>
+              <p>{state.coinAthDate}</p>
             </AllTimeDiv>
           </AllTimeContainer>
           <AllTimeContainer>
@@ -229,9 +244,9 @@ export const Coin = (props) => {
             </ArrowSvgDiv>
             <AllTimeDiv>
               <AllTimeP>
-                All Time Low: <span> {formatNumber(coinAtl)}</span>
+                All Time Low: <span> {formatNumber(state.coinAtl)}</span>
               </AllTimeP>
-              <p>{coinAtlDate.slice(0, 10)}</p>
+              <p>{state.coinAtlDate}</p>
             </AllTimeDiv>
           </AllTimeContainer>
         </PriceBoxContainer>
@@ -241,7 +256,7 @@ export const Coin = (props) => {
               <PlusSmallSvg />
             </SmallRectangleBlue>
             <p>
-              Market Cap: <span>{formatNumber(coinMarketCap)}</span>{" "}
+              Market Cap: <span>{formatNumber(state.coinMarketCap)}</span>{" "}
             </p>
           </CoinDataRow>
           <CoinDataRow>
@@ -250,7 +265,7 @@ export const Coin = (props) => {
             </SmallRectangleBlue>
             <p>
               Fully Diluted Valuation:{" "}
-              <span>{formatNumber(coinFullyDillutedValuation)}</span>
+              <span>{formatNumber(state.coinFullyDillutedValuation)}</span>
             </p>
           </CoinDataRow>
           <CoinDataRow>
@@ -258,7 +273,8 @@ export const Coin = (props) => {
               <PlusSmallSvg />
             </SmallRectangleBlue>
             <p>
-              Trading Volume 24h: <span>{formatNumber(coinVolume24h)}</span>
+              Trading Volume 24h:{" "}
+              <span>{formatNumber(state.coinVolume24h)}</span>
             </p>
           </CoinDataRow>
           <CoinDataRow>
@@ -266,8 +282,7 @@ export const Coin = (props) => {
               <PlusSmallSvg />
             </SmallRectangleBlue>
             <p>
-              Volume / Market:{" "}
-              <span>{coinVolumeOverMarketCap.toFixed(2)}%</span>
+              Volume / Market: <span>{state.coinVolumeOverMarketCap}%</span>
             </p>
           </CoinDataRow>
           <CoinDataRow>
@@ -277,7 +292,7 @@ export const Coin = (props) => {
             <p>
               Circulating Supply:{" "}
               <span>
-                {coinCirculatingSupply} {coinSymbol.toUpperCase()}
+                {state.coinCirculatingSupply} {state.coinSymbol}
               </span>
             </p>
           </CoinDataRow>
@@ -288,19 +303,19 @@ export const Coin = (props) => {
             <p>
               Max Supply:{" "}
               <span>
-                {coinTotalSupply} {coinSymbol.toUpperCase()}
+                {state.coinTotalSupply} {state.coinSymbol}
               </span>
             </p>
           </CoinDataRow>
           <CoinDataRow style={{ width: "50%", marginLeft: "-180px" }}>
             <CoinsPercentageBar
-              num1={num1.toFixed(2) + "%"}
-              num2={num2.toFixed(2) + "%"}
-              width={num1.toFixed(2) + "%"}
-              color1={color1}
-              color2={color2}
-              background1={color1}
-              background2={color2}
+              num1={state.num1 + "%"}
+              num2={state.num2 + "%"}
+              width={state.num1 + "%"}
+              color1={state.color1}
+              color2={state.color2}
+              background1={state.color1}
+              background2={state.color2}
             />
           </CoinDataRow>
         </CoinDataBoxContainer>
@@ -310,27 +325,27 @@ export const Coin = (props) => {
       </HeaderDiv>
       <DescriptionWrapper>
         <SquareStackIcon />
-        <CoinDescriptionDiv>{coinDescription}</CoinDescriptionDiv>
+        <CoinDescriptionDiv>{state.coinDescription}</CoinDescriptionDiv>
       </DescriptionWrapper>
       <CoinUrlsRow>
         <UrlDiv>
           <UrlIcon />
-          <UrlAddressDiv>{coinBlockChainSite1}</UrlAddressDiv>
+          <UrlAddressDiv>{state.coinBlockChainSite1}</UrlAddressDiv>
           <CopyIcon />
         </UrlDiv>
         <UrlDiv>
           <UrlIcon />
-          <UrlAddressDiv>{coinBlockChainSite2}</UrlAddressDiv>
+          <UrlAddressDiv>{state.coinBlockChainSite2}</UrlAddressDiv>
           <CopyIcon />
         </UrlDiv>
         <UrlDiv>
           <UrlIcon />
-          <UrlAddressDiv>{coinBlockChainSite3}</UrlAddressDiv>
+          <UrlAddressDiv>{state.coinBlockChainSite3}</UrlAddressDiv>
           <CopyIcon />
         </UrlDiv>
       </CoinUrlsRow>
       <CurrencyConversionRow>
-        <CurrencyConverter coinSymbol={coinSymbol.toUpperCase()} />
+        <CurrencyConverter coinSymbol={state.coinSymbol} />
       </CurrencyConversionRow>
       <BigChartWrapper>
         <BigLineChart data={coinPricesData} />

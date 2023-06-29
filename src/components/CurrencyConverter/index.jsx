@@ -10,8 +10,8 @@ import {
 
 export const CurrencyConverter = ({ coinSymbol }) => {
   const { currency } = useContext(CurrencyContext);
-  const [currencyValue, setCurrencyValue] = useState(null);
-  const [coinValue, setCoinValue] = useState(null);
+  const [currencyValue, setCurrencyValue] = useState("");
+  const [coinValue, setCoinValue] = useState("");
 
   const handleCurrencyChange = (e) => {
     setCurrencyValue(Number(e.target.value));

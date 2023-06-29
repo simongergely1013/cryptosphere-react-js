@@ -529,7 +529,7 @@ const HoverDiv7 = styled.div`
   z-index: 30;
   position: absolute;
   margin-top: -15px;
-  margin-left: 1000px;
+  margin-left: 1080px;
 `;
 const HoverDiv8 = styled.div`
   align-items: center;
@@ -539,7 +539,7 @@ const HoverDiv8 = styled.div`
   z-index: 30;
   position: absolute;
   margin-top: -15px;
-  margin-left: 1050px;
+  margin-left: 1130px;
 `;
 const StyledSpan = styled.span`
   font-weigth: bold;

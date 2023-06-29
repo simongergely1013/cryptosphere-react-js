@@ -7,6 +7,7 @@ import { Portfolio } from "./pages/Coins/Portfolio";
 import { Coin } from "./pages/Coins/Coin";
 import { GlobalStyle, MainWrapper, darkMode, lightMode } from "./App.styles";
 import { CurrencyContext } from "./contexts/CurrencyContext";
+import { connect } from "react-redux";
 
 export const App = () => {
   const [currency, setCurrency] = useState("usd");
