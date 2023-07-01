@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocalState } from "./hooks";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
@@ -10,7 +11,7 @@ import { CurrencyContext } from "./contexts/CurrencyContext";
 import { connect } from "react-redux";
 
 export const App = () => {
-  const [currency, setCurrency] = useState("usd");
+  const [currency, setCurrency] = useLocalState("currency", "usd");
   const [isDarkMode, setDarkMode] = useState(true);
   const [isLoading, setLoading] = useState(false);
 
