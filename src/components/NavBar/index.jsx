@@ -13,12 +13,6 @@ import {
   CurrencyDiv,
   CurrencySelect,
   Option,
-  BlackCircle,
-  DollarSvg,
-  SterlingSvg,
-  EuroSvg,
-  BitcoinSvg,
-  EthereumSvg,
   ThemeSwitch,
   SubNavContainer,
   SubNavEmptyDiv,
@@ -26,6 +20,7 @@ import {
   ListDiv,
   StyledListSubNav,
 } from "./NavBar.styles";
+import { BlackCircleCurrency } from "../BlackCircleCurrency";
 import { SubNavListItem1 } from "../SubNavListItem1";
 import { SubNavListItem2 } from "../SubNavListItem2";
 import { SubNavListItem3 } from "../SubNavListItem3";
@@ -111,21 +106,8 @@ export const NavBar = (props) => {
               <Search />
             </form>
           </SearchWrapper>
-
           <CurrencyDiv>
-            <BlackCircle>
-              {currency === "usd" ? (
-                <DollarSvg />
-              ) : currency === "gbp" ? (
-                <SterlingSvg />
-              ) : currency === "eur" ? (
-                <EuroSvg />
-              ) : currency === "btc" ? (
-                <BitcoinSvg />
-              ) : (
-                <EthereumSvg />
-              )}
-            </BlackCircle>
+            <BlackCircleCurrency />
             <CurrencySelect onChange={handleCurrnecy}>
               <Option value="usd">USD</Option>
               <Option value="gbp">GBP</Option>
