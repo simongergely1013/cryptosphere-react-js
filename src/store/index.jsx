@@ -1,8 +1,3 @@
-// This is what I tried before implementing useReducer
-// It wasn't working
-// I don't know if I need any of this now
-// Should I keep it?
-
 import { combineReducers } from "redux";
 import { legacy_createStore as createStore } from "redux";
 

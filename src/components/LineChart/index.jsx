@@ -11,6 +11,12 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import {
+  SmallChartWrapper,
+  ChartContainer,
+  TopChartDiv,
+  BigChartWrapper,
+} from "./LineChart.styles";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -115,11 +121,25 @@ const options3 = {
 };
 
 export const LineChart = ({ data }) => {
-  return <Line options={options} data={data} />;
+  return (
+    <ChartContainer>
+      <TopChartDiv>
+        <Line options={options} data={data} />
+      </TopChartDiv>
+    </ChartContainer>
+  );
 };
 export const SmallLineChart = ({ data }) => {
-  return <Line options={options2} data={data} />;
+  return (
+    <SmallChartWrapper>
+      <Line options={options2} data={data} />
+    </SmallChartWrapper>
+  );
 };
 export const BigLineChart = ({ data }) => {
-  return <Line options={options3} data={data} />;
+  return (
+    <BigChartWrapper>
+      <Line options={options3} data={data} />
+    </BigChartWrapper>
+  );
 };

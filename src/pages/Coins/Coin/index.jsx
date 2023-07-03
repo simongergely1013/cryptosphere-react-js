@@ -1,5 +1,5 @@
 import axios from "axios";
-import CoinsPercentageBar from "../../../components/CoinsTablePercentageBar";
+import { CoinsPercentageBar } from "../../../components/CoinsPercentageBar";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { useEffect, useContext, useReducer } from "react";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
@@ -36,7 +36,6 @@ import {
   CopyIcon,
   UrlAddressDiv,
   CurrencyConversionRow,
-  BigChartWrapper,
 } from "./Coin.styles";
 
 const ACTIONS = {
@@ -348,9 +347,7 @@ export const Coin = (props) => {
       <CurrencyConversionRow>
         <CurrencyConverter coinSymbol={state.coinData.coinSymbol} />
       </CurrencyConversionRow>
-      <BigChartWrapper>
-        <BigLineChart data={coinPricesData} />
-      </BigChartWrapper>
+      <BigLineChart data={coinPricesData} />
     </CoinPageWrapper>
   );
 };
