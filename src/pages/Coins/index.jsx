@@ -1,23 +1,24 @@
 import axios from "axios";
 import { CoinsTable } from "../../components/CoinsTable";
 import { useContext, useState, useEffect } from "react";
+import { PageHeader } from "../../components/PageHeader";
+import { TopChartTitlePrice } from "../../components/TopChartTitlePrice";
+import { TopChartTitleVolume } from "../../components/TopChartTitleVolume";
 import {
   CoinsPageWrapper,
-  HeaderDiv,
   ChartsWrapper,
   ChartsWrapperInner,
   TopChartHeaderRow,
-  TopChartHeader,
 } from "./Coins.styles";
-import {
-  formatNumber,
-  formatDate,
-  formatVolumeMarketCap,
-  getDate,
-} from "../../utilities";
 import { LineChart } from "../../components/LineChart";
 import { BarChart } from "../../components/BarChart";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
+import {
+  formatDate,
+  getDate,
+  btcPricesData,
+  btcVolumesData,
+} from "../../utilities";
 
 export const Coins = () => {
   const { currency } = useContext(CurrencyContext);
@@ -61,90 +62,41 @@ export const Coins = () => {
       console.log(error);
     }
   };
-  const getThemeColors = () => {
-    const theme = localStorage.getItem("theme");
-    return JSON.parse(theme);
-  };
   useEffect(() => {
     getCoinsData();
     getChartsData();
   }, [currency]);
-
-  const theme = getThemeColors();
-  const btcCurrentVolumeFormatted = parseInt(btcCurrentVolume);
   const chartHoursFormatted = chartHours
     .map((el) => formatDate(el))
     .slice(0, 24);
-  const btcPricesData = {
-    labels: chartHoursFormatted,
-    datasets: [
-      {
-        label: "BTC Price",
-        data: btcPricesHourly.slice(0, 24),
-        borderColor:
-          btcPricesHourly[0] < btcPricesHourly[24]
-            ? theme.btcPriceChartBorderColorGain
-            : btcPricesHourly[0] > btcPricesHourly[24]
-            ? theme.btcPriceChartBorderColorLoss
-            : theme.btcPriceChartBorderColorGain,
-        backgroundColor: (context) => {
-          const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-          btcPricesHourly[0] < btcPricesHourly[24]
-            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
-            : btcPricesHourly[0] > btcPricesHourly[24]
-            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
-            : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
-          gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
-          return gradient;
-        },
-        pointRadius: 0,
-        borderWidth: 3,
-        fill: true,
-      },
-    ],
-  };
-  const btcVolumesData = {
-    labels: chartHoursFormatted,
-    datasets: [
-      {
-        label: "BTC Volume",
-        data: btcVolumesHourly.slice(0, 24),
-        borderColor: "#e76f51",
-        backgroundColor: theme.btcVolumeChartBackgroundColor,
-      },
-    ],
-  };
   return (
     <CoinsPageWrapper>
-      <HeaderDiv>
-        <h2>Overview</h2>
-      </HeaderDiv>
+      <PageHeader text={"Overview"} />
       <ChartsWrapper>
         <TopChartHeaderRow>
-          <TopChartHeader>
-            <h3>BTC</h3>
-            <h2>{formatNumber(btcCurrentPrice)}</h2>
-            <h3>
-              {day} {month},{year}
-            </h3>
-          </TopChartHeader>
-          <TopChartHeader>
-            <h3>Volume 24h</h3>
-            <h2>{formatVolumeMarketCap(btcCurrentVolumeFormatted)}</h2>
-            <h3>
-              {day} {month},{year}
-            </h3>
-          </TopChartHeader>
+          <TopChartTitlePrice
+            btcPrice={btcCurrentPrice}
+            day={day}
+            month={month}
+            year={year}
+          />
+          <TopChartTitleVolume
+            btcVolume={btcCurrentVolume}
+            day={day}
+            month={month}
+            year={year}
+          />
         </TopChartHeaderRow>
         <ChartsWrapperInner>
-          <LineChart data={btcPricesData} />
-          <BarChart data={btcVolumesData} />
+          <LineChart
+            data={btcPricesData(chartHoursFormatted, btcPricesHourly)}
+          />
+          <BarChart
+            data={btcVolumesData(chartHoursFormatted, btcVolumesHourly)}
+          />
         </ChartsWrapperInner>
       </ChartsWrapper>
-      <HeaderDiv>
-        <h2>TOP 50 by Market Cap</h2>
-      </HeaderDiv>
+      <PageHeader text={"TOP 50 by Market Cap"} />
       <CoinsTable />
     </CoinsPageWrapper>
   );

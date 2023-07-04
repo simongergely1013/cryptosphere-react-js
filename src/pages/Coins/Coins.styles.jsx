@@ -7,10 +7,6 @@ export const CoinsPageWrapper = styled.div`
   align-items: center;
   color: ${(props) => props.theme.text};
 `;
-export const HeaderDiv = styled.div`
-  margin-bottom: 30px;
-  width: 98%;
-`;
 export const ChartsWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -30,10 +26,6 @@ export const TopChartHeaderRow = styled.div`
   align-items: center;
   z-index: 20;
   margin-bottom: -130px;
-`;
-export const TopChartHeader = styled.div`
-  width: 50%;
-  padding-left: 55px;
 `;
 export const ArrowUp = styled.div`
   width: 0;

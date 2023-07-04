@@ -1,11 +1,10 @@
-import { PortfolioPageWrapper, HeaderDiv } from "./Portfolio.styles";
+import { PortfolioPageWrapper } from "./Portfolio.styles";
+import { PageHeader } from "../../../components/PageHeader";
 
 export const Portfolio = () => {
   return (
     <PortfolioPageWrapper>
-      <HeaderDiv>
-        <h2>Your statistics</h2>
-      </HeaderDiv>
+      <PageHeader text={"Your statistics"} />
     </PortfolioPageWrapper>
   );
 };
