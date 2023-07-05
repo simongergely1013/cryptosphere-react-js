@@ -69,3 +69,91 @@ export const formatVolumeMarketCap = (number) => {
 export const getDate = () => {
   return new Date();
 };
+
+const getThemeColors = () => {
+  const theme = localStorage.getItem("theme");
+  return JSON.parse(theme);
+};
+
+export const btcPricesData = (chartHours, btcPrices) => {
+  const theme = getThemeColors();
+  const data = {
+    labels: chartHours,
+    datasets: [
+      {
+        label: "BTC Price",
+        data: btcPrices.slice(0, 24),
+        borderColor:
+          btcPrices[0] < btcPrices[24]
+            ? theme.btcPriceChartBorderColorGain
+            : btcPrices[0] > btcPrices[24]
+            ? theme.btcPriceChartBorderColorLoss
+            : theme.btcPriceChartBorderColorGain,
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+          btcPrices[0] < btcPrices[24]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
+            : btcPrices[0] > btcPrices[24]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
+            : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+          return gradient;
+        },
+        pointRadius: 0,
+        borderWidth: 3,
+        fill: true,
+      },
+    ],
+  };
+  return data;
+};
+export const btcVolumesData = (chartHours, btcVolumes) => {
+  const theme = getThemeColors();
+  const data = {
+    labels: chartHours,
+    datasets: [
+      {
+        label: "BTC Volume",
+        data: btcVolumes.slice(0, 24),
+        borderColor: "#e76f51",
+        backgroundColor: theme.btcVolumeChartBackgroundColor,
+      },
+    ],
+  };
+  return data;
+};
+
+export const coinPricesData = (chartLabels, coinId, coinPrices) => {
+  const theme = getThemeColors();
+  const data = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: `${coinId} Price`,
+        data: coinPrices,
+        borderColor:
+          coinPrices[0] < coinPrices[coinPrices.length - 1]
+            ? theme.btcPriceChartBorderColorGain
+            : coinPrices[0] > coinPrices[coinPrices.length - 1]
+            ? theme.btcPriceChartBorderColorLoss
+            : theme.btcPriceChartBorderColorGain,
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+          coinPrices[0] < coinPrices[coinPrices.length - 1]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
+            : coinPrices[0] > coinPrices[coinPrices.length - 1]
+            ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
+            : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+          return gradient;
+        },
+        pointRadius: 0,
+        borderWidth: 3,
+        fill: true,
+      },
+    ],
+  };
+  return data;
+};

@@ -11,6 +11,12 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import {
+  SmallChartWrapper,
+  ChartContainer,
+  TopChartDiv,
+  BigChartWrapper,
+} from "./LineChart.styles";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -43,8 +49,8 @@ const options = {
     },
     x: {
       display: true,
-      min: 5,
-      max: 20,
+      min: 6,
+      max: 100,
       grid: {
         display: false,
         drawBorder: false,
@@ -84,9 +90,56 @@ const options2 = {
   tension: 0.5,
 };
 
-export const LineChart = (props) => {
-  return <Line options={options} data={props.data} />;
+const options3 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Chart.js Line Chart",
+    },
+  },
+  scales: {
+    y: {
+      display: false,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+    x: {
+      display: true,
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
+  },
+  tension: 0.5,
 };
-export const SmallLineChart = (props) => {
-  return <Line options={options2} data={props.data} />;
+
+export const LineChart = ({ data }) => {
+  return (
+    <ChartContainer>
+      <TopChartDiv>
+        <Line options={options} data={data} />
+      </TopChartDiv>
+    </ChartContainer>
+  );
+};
+export const SmallLineChart = ({ data }) => {
+  return (
+    <SmallChartWrapper>
+      <Line options={options2} data={data} />
+    </SmallChartWrapper>
+  );
+};
+export const BigLineChart = ({ data }) => {
+  return (
+    <BigChartWrapper>
+      <Line options={options3} data={data} />
+    </BigChartWrapper>
+  );
 };

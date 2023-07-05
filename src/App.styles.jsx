@@ -32,14 +32,15 @@ export const MainWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  width: 1720px;
+  width: 100vw;
+  max-width: 1720px;
   height: 100%;
   background: ${(props) => props.theme.background};
 `;
 export const darkMode = {
   main: "#191B1F",
   text: "#FAFBFB",
-  background: "#424242",
+  background: "#212121",
   moonIconFill: "white",
   bulletPointBackground: "white",
   progressBarsBackground: "white",

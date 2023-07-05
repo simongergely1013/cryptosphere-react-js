@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocalState } from "./hooks";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
@@ -7,9 +8,10 @@ import { Portfolio } from "./pages/Coins/Portfolio";
 import { Coin } from "./pages/Coins/Coin";
 import { GlobalStyle, MainWrapper, darkMode, lightMode } from "./App.styles";
 import { CurrencyContext } from "./contexts/CurrencyContext";
+import { connect } from "react-redux";
 
 export const App = () => {
-  const [currency, setCurrency] = useState("usd");
+  const [currency, setCurrency] = useLocalState("currency", "usd");
   const [isDarkMode, setDarkMode] = useState(true);
   const [isLoading, setLoading] = useState(false);
 
@@ -37,7 +39,7 @@ export const App = () => {
             <Switch>
               <Route exact path="/" component={Coins} />
               <Route exact path="/portfolio" component={Portfolio} />
-              <Route exact path="/coin/:id" component={Coin} />
+              <Route exact path="/coin/:coinId" component={Coin} />
             </Switch>
           </MainWrapper>
         </Router>

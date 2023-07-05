@@ -7,6 +7,3 @@ export const PortfolioPageWrapper = styled.div`
   padding: 20px;
   color: ${(props) => props.theme.text};
 `;
-export const HeaderDiv = styled.div`
-  padding-left: 60px;
-`;

@@ -7,34 +7,26 @@ import {
   StyledList,
   ListItemCoins,
   ListItemPortfolio,
+  NavInnerContainer,
+  SearchWrapper,
   Search,
   CurrencyDiv,
   CurrencySelect,
   Option,
-  BlackCircle,
-  DollarSvg,
-  SterlingSvg,
-  EuroSvg,
-  BitcoinSvg,
-  EthereumSvg,
   ThemeSwitch,
   SubNavContainer,
   SubNavEmptyDiv,
   SubNavDivCenter,
   ListDiv,
   StyledListSubNav,
-  BulletPoint,
-  StyledListItemSubNav,
-  ListItemWithProgress,
-  TrendingDown,
-  TrendingUp,
-  BitcoinSvgSubNav,
-  EthereumSvgSubNav,
-  ProgressBar,
-  TotalVolumeProgressBar,
-  BtcDominanceProgressBar,
-  EthDominanceProgeressBar,
 } from "./NavBar.styles";
+import { BlackCircleCurrency } from "../BlackCircleCurrency";
+import { SubNavListItem1 } from "../SubNavListItem1";
+import { SubNavListItem2 } from "../SubNavListItem2";
+import { SubNavListItem3 } from "../SubNavListItem3";
+import { SubNavVolumeVsMarketCap } from "../SubNavVolumeVsMarketCap";
+import { SubNavBtcDominance } from "../SubNavBtcDominance";
+import { SubNavEthDominance } from "../SubNavEthDominance";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 
 export const NavBar = (props) => {
@@ -46,8 +38,12 @@ export const NavBar = (props) => {
   const [marketCapChange24h, setMarketCapChange24h] = useState(0);
   const [markets, setMarkets] = useState(0);
   const [totalMarketCap, setTotalMarketCap] = useState("");
+  const [totalMarketCapLong, setTotalMarketCapLong] = useState("");
   const [totalVolume, setTotalVolume] = useState("");
+  const [totalVolumeLong, setTotalVolumeLong] = useState("");
   const [totalVolumePercentage, setTotalVolumePercentage] = useState("");
+  const [btcMarketCap, setBtcMarketCap] = useState("");
+  const [ethMarketCap, setEthMarketCap] = useState("");
 
   const getGlobalData = async () => {
     try {
@@ -58,7 +54,11 @@ export const NavBar = (props) => {
       setMarkets(data.data.markets);
       setMarketCapChange24h(data.data.market_cap_change_percentage_24h_usd);
       setTotalMarketCap(data.data.total_market_cap[currency] / 1000000000000);
+      setTotalMarketCapLong(data.data.total_market_cap[currency]);
+      setBtcMarketCap(data.data.total_market_cap["btc"]);
+      setEthMarketCap(data.data.total_market_cap["eth"]);
       setTotalVolume(data.data.total_volume[currency] / 1000000000);
+      setTotalVolumeLong(data.data.total_volume[currency]);
       setTotalVolumePercentage(
         (
           (data.data.total_volume[currency] /
@@ -79,7 +79,11 @@ export const NavBar = (props) => {
   }, [currency]);
 
   const totalMarketCapFormatted = formatNumber(totalMarketCap);
+  const totalMarketCapLongFormatted = formatNumber(totalMarketCapLong);
+  const btcMarketCapFormatted = formatNumber(btcMarketCap);
+  const ethMarketCapFormatted = formatNumber(ethMarketCap);
   const totalVolumeFormatted = formatNumber(totalVolume);
+  const totalVolumeLongFormatted = formatNumber(totalVolumeLong);
   const progressBarsData = {
     totalVolumePercent: totalVolumePercentage,
     btcDominancePercent: btcDominance,
@@ -96,66 +100,62 @@ export const NavBar = (props) => {
             <StyledLink to="/portfolio">Portfolio</StyledLink>
           </ListItemPortfolio>
         </StyledList>
-        <form>
-          <Search />
-        </form>
-        <CurrencyDiv>
-          <BlackCircle>
-            {currency === "usd" ? (
-              <DollarSvg />
-            ) : currency === "gbp" ? (
-              <SterlingSvg />
-            ) : currency === "eur" ? (
-              <EuroSvg />
-            ) : currency === "btc" ? (
-              <BitcoinSvg />
-            ) : (
-              <EthereumSvg />
-            )}
-          </BlackCircle>
-          <CurrencySelect onChange={handleCurrnecy}>
-            <Option value="usd">USD</Option>
-            <Option value="gbp">GBP</Option>
-            <Option value="eur">EUR</Option>
-            <Option value="btc">BTC</Option>
-            <Option value="eth">ETH</Option>
-          </CurrencySelect>
-        </CurrencyDiv>
-        <ThemeSwitch onClick={props.onClick} />
+        <NavInnerContainer>
+          <SearchWrapper>
+            <form>
+              <Search />
+            </form>
+          </SearchWrapper>
+          <CurrencyDiv>
+            <BlackCircleCurrency />
+            <CurrencySelect onChange={handleCurrnecy}>
+              <Option value="usd">USD</Option>
+              <Option value="gbp">GBP</Option>
+              <Option value="eur">EUR</Option>
+              <Option value="btc">BTC</Option>
+              <Option value="eth">ETH</Option>
+            </CurrencySelect>
+          </CurrencyDiv>
+          <ThemeSwitch onClick={props.onClick} />
+        </NavInnerContainer>
       </StyledNav>
       <SubNavContainer>
         <SubNavEmptyDiv></SubNavEmptyDiv>
         <SubNavDivCenter>
           <ListDiv>
             <StyledListSubNav>
-              <StyledListItemSubNav>Coins: {coins}</StyledListItemSubNav>
-              <StyledListItemSubNav>Exchanges: {markets}</StyledListItemSubNav>
-              <ListItemWithProgress>
-                <BulletPoint />
-                {totalMarketCapFormatted}T{" "}
-                {marketCapChange24h > 0 ? <TrendingUp /> : <TrendingDown />}{" "}
-              </ListItemWithProgress>
-              <ListItemWithProgress>
-                <BulletPoint />
-                {totalVolumeFormatted}B{" "}
-                <ProgressBar>
-                  <TotalVolumeProgressBar percent={progressBarsData} />
-                </ProgressBar>
-              </ListItemWithProgress>
-              <ListItemWithProgress>
-                <BitcoinSvgSubNav />
-                {progressBarsData.btcDominancePercent}% BTC{" "}
-                <ProgressBar>
-                  <BtcDominanceProgressBar percent={progressBarsData} />
-                </ProgressBar>
-              </ListItemWithProgress>
-              <ListItemWithProgress>
-                <EthereumSvgSubNav />
-                {progressBarsData.ethDominancePercent}% ETH{" "}
-                <ProgressBar>
-                  <EthDominanceProgeressBar percent={progressBarsData} />
-                </ProgressBar>
-              </ListItemWithProgress>
+              <SubNavListItem1 text={"Coins:"} data={coins} coins={coins} />
+              <SubNavListItem2
+                text={"Exchanges:"}
+                data={markets}
+                exchanges={markets}
+              />
+              <SubNavListItem3
+                marketCap={totalMarketCapFormatted}
+                text={"T"}
+                marketCapChange24h={marketCapChange24h.toFixed(2)}
+                color={marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"}
+              />
+              <SubNavVolumeVsMarketCap
+                totalVolume={totalVolumeFormatted}
+                text={"B"}
+                percent={progressBarsData.totalVolumePercent}
+                totalMarketCap={totalMarketCapLongFormatted}
+              />
+              <SubNavBtcDominance
+                dominancePercent={progressBarsData.btcDominancePercent}
+                percent={progressBarsData}
+                btcMarketCap={btcMarketCapFormatted}
+                totalMarketCap={totalMarketCapLongFormatted}
+                btcDominancePercent={progressBarsData.btcDominancePercent}
+              />
+              <SubNavEthDominance
+                dominancePercent={progressBarsData.ethDominancePercent}
+                percent={progressBarsData}
+                ethMarketCap={ethMarketCapFormatted}
+                totalMarketCap={totalMarketCapLongFormatted}
+                ethDominancePercent={progressBarsData.ethDominancePercent}
+              />
             </StyledListSubNav>
           </ListDiv>
         </SubNavDivCenter>
