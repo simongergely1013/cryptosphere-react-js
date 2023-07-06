@@ -1,20 +1,27 @@
 import axios from "axios";
-import { useEffect, useContext, useReducer } from "react";
+import { useEffect, useContext, useReducer, useState } from "react";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
-import { formatDate, getRandomColor, coinPricesData } from "../../../utilities";
+import {
+  formatDate,
+  getRandomColor,
+  coinPricesData,
+  getThemeColors,
+} from "../../../utilities";
+import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
 import { CoinBox3 } from "../../../components/CoinBox3";
 import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinUrl } from "../../../components/CoinUrl";
-import { PageHeader } from "../../../components/PageHeader";
+import { CoinChartDurationButton } from "../../../components/CoinChartDurationButton";
 import { BigLineChart } from "../../../components/LineChart";
 import {
   CoinPageWrapper,
   SummaryWrapper,
   CoinUrlsRow,
   CurrencyConversionRow,
+  ChartDurationRow,
 } from "./Coin.styles";
 
 const ACTIONS = {
@@ -37,6 +44,30 @@ export const Coin = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleDay = () => {
+    setDays(1);
+    setInterval("hourly");
+  };
+  const handleWeek = () => {
+    setDays(7);
+    setInterval("hourly");
+  };
+  const handleMonth = () => {
+    setDays(30);
+    setInterval("hourly");
+  };
+  const handle3Months = () => {
+    setDays(90);
+    setInterval("daily");
+  };
+  const handleYear = () => {
+    setDays(365);
+    setInterval("daily");
+  };
+  const handleMax = () => {
+    setDays("max");
+    setInterval("daily");
   };
   const reducer = (state, action) => {
     switch (action.type) {
@@ -92,28 +123,20 @@ export const Coin = (props) => {
   };
   const [state, dispatch] = useReducer(reducer, {
     coinData: {
-      days: 1,
-      interval: "hourly",
-      isChartToday: true,
-      isChartWeek: false,
-      isChart1Month: false,
-      isChart3Months: false,
-      isChart1Year: false,
-      isChartAllTime: false,
       color1: getRandomColor(),
       color2: getRandomColor(),
       chartLabels: [],
       coinPrices: [],
     },
   });
+  const [days, setDays] = useState(1);
+  const [interval, setInterval] = useState("hourly");
+  const theme = getThemeColors();
   useEffect(() => {
-    getCoinData(
-      props.match.params.coinId,
-      state.coinData.days,
-      state.coinData.interval
-    );
-  }, [currency]);
+    getCoinData(props.match.params.coinId, days, interval);
+  }, [currency, days, interval]);
   localStorage.setItem("coinCurrentPrice", state.coinData.coinCurrentPrice);
+  console.log(theme);
   return (
     <CoinPageWrapper>
       <PageHeader text={"Summary"} />
@@ -153,6 +176,38 @@ export const Coin = (props) => {
         <CoinUrl blockchainSite={state.coinData.coinBlockChainSite2} />
         <CoinUrl blockchainSite={state.coinData.coinBlockChainSite3} />
       </CoinUrlsRow>
+      <ChartDurationRow>
+        <CoinChartDurationButton
+          onClick={handleDay}
+          duration={"1d"}
+          background={days === 1 ? "#06d554" : theme.background}
+        />
+        <CoinChartDurationButton
+          onClick={handleWeek}
+          duration={"7d"}
+          background={days === 7 ? "#06d554" : theme.background}
+        />
+        <CoinChartDurationButton
+          onClick={handleMonth}
+          duration={"30d"}
+          background={days === 30 ? "#06d554" : theme.background}
+        />
+        <CoinChartDurationButton
+          onClick={handle3Months}
+          duration={"90d"}
+          background={days === 90 ? "#06d554" : theme.background}
+        />
+        <CoinChartDurationButton
+          onClick={handleYear}
+          duration={"1y"}
+          background={days === 365 ? "#06d554" : theme.background}
+        />
+        <CoinChartDurationButton
+          onClick={handleMax}
+          duration={"Max"}
+          background={days === "max" ? "#06d554" : theme.background}
+        />
+      </ChartDurationRow>
       <CurrencyConversionRow>
         <CurrencyConverter coinSymbol={state.coinData.coinSymbol} />
       </CurrencyConversionRow>

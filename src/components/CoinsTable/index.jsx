@@ -8,6 +8,7 @@ import {
   formatNumber,
   formatSupply,
   formatVolumeMarketCap,
+  getThemeColors,
 } from "../../utilities";
 import {
   CoinsTableWrapper,
@@ -39,6 +40,7 @@ export const CoinsTable = (props) => {
   const [coinsData, setCoinsData] = useState([]);
   const [activeCurrencies, setActiveCurrencies] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const theme = getThemeColors();
 
   const getCoinsData = async () => {
     try {
@@ -63,10 +65,6 @@ export const CoinsTable = (props) => {
       setPage(page + 1);
     }, 500);
   };
-  const getThemeColors = () => {
-    const theme = localStorage.getItem("theme");
-    return JSON.parse(theme);
-  };
   const getOneWeekDays = () => {
     let days = [];
     for (let i = 0; i < 8; i++) {
@@ -77,7 +75,6 @@ export const CoinsTable = (props) => {
   useEffect(() => {
     getCoinsData();
   }, [currency, page]);
-  const theme = getThemeColors();
   return (
     <CoinsTableWrapper>
       <CoinsTableContainer>
