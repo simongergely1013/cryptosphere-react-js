@@ -1,25 +1,12 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
+import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { formatNumber } from "../../utilities";
-import {
-  StyledNav,
-  StyledLink,
-  StyledList,
-  ListItemCoins,
-  ListItemPortfolio,
-  NavInnerContainer,
-  SearchWrapper,
-  Search,
-  CurrencyDiv,
-  CurrencySelect,
-  Option,
-  ThemeSwitch,
-  SubNavContainer,
-  SubNavEmptyDiv,
-  SubNavDivCenter,
-  ListDiv,
-  StyledListSubNav,
-} from "./NavBar.styles";
+import { NavBarCoinsLink } from "../NavBarCoinsLink";
+import { NavBarPortfolioLink } from "../NavBarPortfolioLink";
+import { NavBarSearch } from "../NavBarSearch";
+import { NavBarCurrencySelector } from "../NavBarCurrencySelector";
+import { ThemeSwitch } from "../ThemeSwitch";
 import { BlackCircleCurrency } from "../BlackCircleCurrency";
 import { SubNavListItem1 } from "../SubNavListItem1";
 import { SubNavListItem2 } from "../SubNavListItem2";
@@ -27,9 +14,19 @@ import { SubNavListItem3 } from "../SubNavListItem3";
 import { SubNavVolumeVsMarketCap } from "../SubNavVolumeVsMarketCap";
 import { SubNavBtcDominance } from "../SubNavBtcDominance";
 import { SubNavEthDominance } from "../SubNavEthDominance";
-import { CurrencyContext } from "../../contexts/CurrencyContext";
+import {
+  StyledNav,
+  LinksList,
+  NavBarInnerContainer,
+  CurrencyDiv,
+  SubNavContainer,
+  SubNavEmptyDiv,
+  SubNavDivCenter,
+  ListDiv,
+  StyledListSubNav,
+} from "./NavBar.styles";
 
-export const NavBar = (props) => {
+export const NavBar = ({ onClick, onChange }) => {
   const { currency } = useContext(CurrencyContext);
   const [isLoading, setLoading] = useState(false);
   const [btcDominance, setBtcDominance] = useState(0);
@@ -72,7 +69,7 @@ export const NavBar = (props) => {
   };
   const handleCurrnecy = (e) => {
     const newCurrency = e.target.value;
-    props.onChange(newCurrency);
+    onChange(newCurrency);
   };
   useEffect(() => {
     getGlobalData();
@@ -92,32 +89,18 @@ export const NavBar = (props) => {
   return (
     <>
       <StyledNav>
-        <StyledList>
-          <ListItemCoins>
-            <StyledLink to="/">Coins</StyledLink>
-          </ListItemCoins>
-          <ListItemPortfolio>
-            <StyledLink to="/portfolio">Portfolio</StyledLink>
-          </ListItemPortfolio>
-        </StyledList>
-        <NavInnerContainer>
-          <SearchWrapper>
-            <form>
-              <Search />
-            </form>
-          </SearchWrapper>
+        <LinksList>
+          <NavBarCoinsLink />
+          <NavBarPortfolioLink />
+        </LinksList>
+        <NavBarInnerContainer>
+          <NavBarSearch />
           <CurrencyDiv>
             <BlackCircleCurrency />
-            <CurrencySelect onChange={handleCurrnecy}>
-              <Option value="usd">USD</Option>
-              <Option value="gbp">GBP</Option>
-              <Option value="eur">EUR</Option>
-              <Option value="btc">BTC</Option>
-              <Option value="eth">ETH</Option>
-            </CurrencySelect>
+            <NavBarCurrencySelector onChange={handleCurrnecy} />
           </CurrencyDiv>
-          <ThemeSwitch onClick={props.onClick} />
-        </NavInnerContainer>
+          <ThemeSwitch onClick={onClick} />
+        </NavBarInnerContainer>
       </StyledNav>
       <SubNavContainer>
         <SubNavEmptyDiv></SubNavEmptyDiv>

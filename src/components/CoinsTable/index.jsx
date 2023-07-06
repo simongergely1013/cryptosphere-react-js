@@ -2,7 +2,7 @@ import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
-import { useContext, useState, useEffect, useReducer } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   getRandomColor,
   formatNumber,
