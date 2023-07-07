@@ -70,7 +70,7 @@ export const getDate = () => {
   return new Date();
 };
 
-const getThemeColors = () => {
+export const getThemeColors = () => {
   const theme = localStorage.getItem("theme");
   return JSON.parse(theme);
 };

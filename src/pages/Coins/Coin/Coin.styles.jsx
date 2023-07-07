@@ -15,7 +15,6 @@ export const SummaryWrapper = styled.div`
   justify-content: center;
   margin-bottom: 50px;
 `;
-
 export const CoinUrlsRow = styled.div`
   width: 98%;
   display: flex;
@@ -29,5 +28,12 @@ export const CurrencyConversionRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
+`;
+export const ChartDurationRow = styled.div`
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 50px;
 `;
