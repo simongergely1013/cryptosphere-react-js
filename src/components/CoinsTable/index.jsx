@@ -36,11 +36,11 @@ import { SmallLineChart } from "../LineChart";
 
 export const CoinsTable = (props) => {
   const { currency } = useContext(CurrencyContext);
+  const { coinsPercentageBarColor } = getThemeColors();
   const [page, setPage] = useState(20);
   const [coinsData, setCoinsData] = useState([]);
   const [activeCurrencies, setActiveCurrencies] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const theme = getThemeColors();
 
   const getCoinsData = async () => {
     try {
@@ -53,7 +53,7 @@ export const CoinsTable = (props) => {
       const globalData = response.data;
       setCoinsData(data);
       setActiveCurrencies(globalData.data.active_cryptocurrencies);
-      if (coinsData.length >= activeCurrencies) {
+      if (data.length >= activeCurrencies) {
         setHasMore(false);
       }
     } catch (error) {
@@ -65,12 +65,12 @@ export const CoinsTable = (props) => {
       setPage(page + 1);
     }, 500);
   };
-  const getOneWeekDays = () => {
-    let days = [];
-    for (let i = 0; i < 8; i++) {
-      days.push("");
+  const getSmallChartLabels = () => {
+    let labels = [];
+    for (let i = 0; i < 73; i++) {
+      labels.push("");
     }
-    return days;
+    return labels;
   };
   useEffect(() => {
     getCoinsData();
@@ -112,6 +112,25 @@ export const CoinsTable = (props) => {
                 100
               ).toFixed(2);
               const circulatingSupply = formatSupply(obj.circulating_supply);
+
+              // There's a number formatting bug in circulating supply and total supply
+              // I will debug that with these console.logs
+
+              // console.log(
+              //   obj.name,
+              //   "circulating supply",
+              //   obj.circulating_supply,
+              //   "length",
+              //   obj.circulating_supply.toString().length
+              // );
+              // console.log(
+              //   obj.name,
+              //   "total supply",
+              //   obj.total_supply,
+              //   "length",
+              //   obj.total_supply.toString().length
+              // );
+
               const totalSupply = formatSupply(obj.total_supply);
               const totalVolume = formatVolumeMarketCap(
                 obj.total_volume,
@@ -119,25 +138,18 @@ export const CoinsTable = (props) => {
               );
               const marketCap = formatVolumeMarketCap(obj.market_cap, currency);
               const color1 = getRandomColor();
-              const color2 = theme.coinsPercentageBarColor;
-              const sparklineData = [
-                obj.sparkline_in_7d.price[0],
-                obj.sparkline_in_7d.price[24],
-                obj.sparkline_in_7d.price[48],
-                obj.sparkline_in_7d.price[72],
-                obj.sparkline_in_7d.price[96],
-                obj.sparkline_in_7d.price[120],
-                obj.sparkline_in_7d.price[144],
-                obj.sparkline_in_7d.price[167],
-              ];
+              const color2 = coinsPercentageBarColor;
+              const sparklineData = obj.sparkline_in_7d.price.map((el) => el);
               const coinPricesData = {
-                labels: getOneWeekDays(),
+                labels: getSmallChartLabels(),
                 datasets: [
                   {
                     label: "",
                     data: sparklineData,
                     borderColor:
-                      sparklineData[0] < sparklineData[7] ? "#00FF5F" : "red",
+                      sparklineData[0] < sparklineData[sparklineData.length - 1]
+                        ? "#00FF5F"
+                        : "red",
                     pointRadius: 0,
                     borderWidth: 3,
                   },

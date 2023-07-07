@@ -10,7 +10,7 @@ export const formatNumber = (number) => {
   return formattedNumber;
 };
 export const formatDate = (date) => {
-  const formattedDate = new Date(date).getHours() + ":" + "00";
+  const formattedDate = new Date(date).getHours();
   return formattedDate;
 };
 export const getRandomColor = () => {
@@ -82,19 +82,19 @@ export const btcPricesData = (chartHours, btcPrices) => {
     datasets: [
       {
         label: "BTC Price",
-        data: btcPrices.slice(0, 24),
+        data: btcPrices,
         borderColor:
-          btcPrices[0] < btcPrices[24]
+          btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
-            : btcPrices[0] > btcPrices[24]
+            : btcPrices[0] > btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorLoss
             : theme.btcPriceChartBorderColorGain,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-          btcPrices[0] < btcPrices[24]
+          btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
-            : btcPrices[0] > btcPrices[24]
+            : btcPrices[0] > btcPrices[btcPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
             : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
           gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
@@ -115,9 +115,10 @@ export const btcVolumesData = (chartHours, btcVolumes) => {
     datasets: [
       {
         label: "BTC Volume",
-        data: btcVolumes.slice(0, 24),
+        data: btcVolumes,
         borderColor: "#e76f51",
         backgroundColor: theme.btcVolumeChartBackgroundColor,
+        borderRadius: 5,
       },
     ],
   };

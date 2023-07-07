@@ -134,9 +134,8 @@ export const Coin = (props) => {
   const theme = getThemeColors();
   useEffect(() => {
     getCoinData(props.match.params.coinId, days, interval);
-  }, [currency, days, interval]);
+  }, [currency, days]);
   localStorage.setItem("coinCurrentPrice", state.coinData.coinCurrentPrice);
-  console.log(theme);
   return (
     <CoinPageWrapper>
       <PageHeader text={"Summary"} />

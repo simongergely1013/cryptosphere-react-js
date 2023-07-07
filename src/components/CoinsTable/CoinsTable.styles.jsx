@@ -66,6 +66,7 @@ export const CoinsRowsContainer = styled.div`
   overflow: auto;
 `;
 export const TableRow = styled.div`
+  height: 100px;
   margin-bottom: 5px;
   box-shadow: inset 0px 0px 1px 0px ghostwhite;
   display: flex;
