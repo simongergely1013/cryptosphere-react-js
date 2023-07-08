@@ -6,7 +6,7 @@ export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   height: 97px;
-  padding-left: 10px;
+  padding-left: 44px;
   padding-right: 20px;
   background: ${(props) => props.theme.main};
   position: relative;

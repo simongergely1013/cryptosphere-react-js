@@ -26,7 +26,7 @@ import {
   StyledListSubNav,
 } from "./NavBar.styles";
 
-export const NavBar = ({ onClick, onChange }) => {
+export const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
   const { currency } = useContext(CurrencyContext);
   const [isLoading, setLoading] = useState(false);
   const [btcDominance, setBtcDominance] = useState(0);
@@ -67,7 +67,7 @@ export const NavBar = ({ onClick, onChange }) => {
       console.log(error);
     }
   };
-  const handleCurrnecy = (e) => {
+  const handleCurrency = (e) => {
     const newCurrency = e.target.value;
     onChange(newCurrency);
   };
@@ -90,14 +90,14 @@ export const NavBar = ({ onClick, onChange }) => {
     <>
       <StyledNav>
         <LinksList>
-          <NavBarCoinsLink />
-          <NavBarPortfolioLink />
+          <NavBarCoinsLink isCoins={isCoins} />
+          <NavBarPortfolioLink isPortfolio={isPortfolio} />
         </LinksList>
         <NavBarInnerContainer>
           <NavBarSearch />
           <CurrencyDiv>
             <BlackCircleCurrency />
-            <NavBarCurrencySelector onChange={handleCurrnecy} />
+            <NavBarCurrencySelector onChange={handleCurrency} />
           </CurrencyDiv>
           <ThemeSwitch onClick={onClick} />
         </NavBarInnerContainer>

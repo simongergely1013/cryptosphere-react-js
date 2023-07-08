@@ -35,8 +35,8 @@ export const Coins = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [chartHours, setChartHours] = useState([]);
-  const [btcPricesHourly, setBtcPricesHourly] = useState([]);
-  const [btcVolumesHourly, setBtcVolumesHourly] = useState([]);
+  const [btcPrices, setBtcPrices] = useState([]);
+  const [btcVolumes, setBtcVolumes] = useState([]);
 
   const getCoinsData = async () => {
     try {
@@ -61,8 +61,8 @@ export const Coins = () => {
       const search = `&days=${days}&interval=${interval}`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
-      setBtcPricesHourly(data.prices.map((el) => el[1]));
-      setBtcVolumesHourly(data.total_volumes.map((el) => el[1]));
+      setBtcPrices(data.prices.map((el) => el[1]));
+      setBtcVolumes(data.total_volumes.map((el) => el[1]));
       setChartHours(data.prices.map((el) => formatDate(el[0])));
     } catch (error) {
       console.log(error);
@@ -115,8 +115,8 @@ export const Coins = () => {
           />
         </TopChartHeaderRow>
         <ChartsWrapperInner>
-          <LineChart data={btcPricesData(chartHours, btcPricesHourly)} />
-          <BarChart data={btcVolumesData(chartHours, btcVolumesHourly)} />
+          <LineChart data={btcPricesData(chartHours, btcPrices)} />
+          <BarChart data={btcVolumesData(chartHours, btcVolumes)} />
         </ChartsWrapperInner>
       </ChartsWrapper>
       <ChartDurationRow>

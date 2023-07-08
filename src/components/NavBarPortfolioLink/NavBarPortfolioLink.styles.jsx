@@ -3,12 +3,13 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export const ListItemPortfolio = styled.li`
   list-style-type: none;
-  width: 100px;
+  width: 150px;
   height: 53px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px;
+  background: ${(props) => props.background};
   border-radius: 10px;
   z-index: 10;
 `;

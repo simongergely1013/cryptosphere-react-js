@@ -55,6 +55,9 @@ const options = {
         display: false,
         drawBorder: false,
       },
+      ticks: {
+        maxRotation: 0,
+      },
     },
   },
   tension: 0.5,
@@ -114,6 +117,9 @@ const options3 = {
       grid: {
         display: false,
         drawBorder: false,
+      },
+      ticks: {
+        maxRotation: 0,
       },
     },
   },

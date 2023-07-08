@@ -6,6 +6,8 @@ export const CoinsPageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   color: ${(props) => props.theme.text};
+  padding-left: 60px;
+  padding-right: 60px;
 `;
 export const ChartsWrapper = styled.div`
   width: 100%;
@@ -25,7 +27,7 @@ export const TopChartHeaderRow = styled.div`
   display: flex;
   align-items: center;
   z-index: 20;
-  margin-bottom: -130px;
+  margin-bottom: -110px;
 `;
 export const ArrowUp = styled.div`
   width: 0;

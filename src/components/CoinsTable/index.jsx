@@ -16,9 +16,15 @@ import {
   TableHeaderRow,
   NumeroHeader,
   NameHeader,
-  TableHeader1,
+  TableHeaderContainer1,
+  TableHeaderContainer2,
+  Price,
+  OneHourChange,
+  OneDayChange,
+  OneWeekChange,
   TableHeader2,
   TableHeader3,
+  TableHeader4,
   CoinsRowsContainer,
   TableRow,
   CoinName,
@@ -39,21 +45,17 @@ export const CoinsTable = (props) => {
   const { coinsPercentageBarColor } = getThemeColors();
   const [page, setPage] = useState(20);
   const [coinsData, setCoinsData] = useState([]);
-  const [activeCurrencies, setActiveCurrencies] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
   const getCoinsData = async () => {
     try {
       const base =
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
-      const search = `&order=market_cap_desc&per_page=${page}&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
+      const search = `&order=market_cap_desc&per_page=10&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
-      const response = await axios("https://api.coingecko.com/api/v3/global");
-      const globalData = response.data;
-      setCoinsData(data);
-      setActiveCurrencies(globalData.data.active_cryptocurrencies);
-      if (data.length >= activeCurrencies) {
+      setCoinsData([...coinsData, ...data]);
+      if (!data.length) {
         setHasMore(false);
       }
     } catch (error) {
@@ -61,9 +63,7 @@ export const CoinsTable = (props) => {
     }
   };
   const increasePage = () => {
-    setTimeout(() => {
-      setPage(page + 1);
-    }, 500);
+    setPage(page + 1);
   };
   const getSmallChartLabels = () => {
     let labels = [];
@@ -81,12 +81,17 @@ export const CoinsTable = (props) => {
         <TableHeaderRow>
           <NumeroHeader>#</NumeroHeader>
           <NameHeader>Name</NameHeader>
-          <TableHeader1>Price</TableHeader1>
-          <TableHeader1>1h%</TableHeader1>
-          <TableHeader1>24h%</TableHeader1>
-          <TableHeader1>7d%</TableHeader1>
-          <TableHeader2>24h Volume/Market Cap</TableHeader2>
-          <TableHeader3>Last 7d</TableHeader3>
+          <TableHeaderContainer1>
+            <Price>Price</Price>
+            <OneHourChange>1h%</OneHourChange>
+            <OneDayChange>24h%</OneDayChange>
+            <OneWeekChange>7d%</OneWeekChange>
+          </TableHeaderContainer1>
+          <TableHeaderContainer2>
+            <TableHeader2>24h Volume/Market Cap</TableHeader2>
+            <TableHeader3>Circulating/Total Supply</TableHeader3>
+          </TableHeaderContainer2>
+          <TableHeader4>Last 7d</TableHeader4>
         </TableHeaderRow>
         <CoinsRowsContainer>
           <InfiniteScroll
@@ -139,7 +144,11 @@ export const CoinsTable = (props) => {
               const marketCap = formatVolumeMarketCap(obj.market_cap, currency);
               const color1 = getRandomColor();
               const color2 = coinsPercentageBarColor;
-              const sparklineData = obj.sparkline_in_7d.price.map((el) => el);
+              const sparklineData = obj.sparkline_in_7d.price
+                .map((el) => el)
+                .filter((element, index) => {
+                  return index % 2 === 0;
+                });
               const coinPricesData = {
                 labels: getSmallChartLabels(),
                 datasets: [

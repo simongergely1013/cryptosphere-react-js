@@ -12,7 +12,7 @@ export const ChartContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
-  padding-top: 100px;
+  padding-top: 80px;
   background: ${(props) => props.theme.main};
   margin: 10px;
   border-radius: 10px;

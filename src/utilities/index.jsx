@@ -10,7 +10,7 @@ export const formatNumber = (number) => {
   return formattedNumber;
 };
 export const formatDate = (date) => {
-  const formattedDate = new Date(date).getHours();
+  const formattedDate = new Date(date).getHours() + ":" + "00";
   return formattedDate;
 };
 export const getRandomColor = () => {
@@ -78,11 +78,15 @@ export const getThemeColors = () => {
 export const btcPricesData = (chartHours, btcPrices) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours,
+    labels: chartHours.filter((element, index) => {
+      return index % 2 === 0;
+    }),
     datasets: [
       {
         label: "BTC Price",
-        data: btcPrices,
+        data: btcPrices.filter((element, index) => {
+          return index % 2 === 0;
+        }),
         borderColor:
           btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
@@ -111,11 +115,15 @@ export const btcPricesData = (chartHours, btcPrices) => {
 export const btcVolumesData = (chartHours, btcVolumes) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours,
+    labels: chartHours.filter((element, index) => {
+      return index % 2 === 0;
+    }),
     datasets: [
       {
         label: "BTC Volume",
-        data: btcVolumes,
+        data: btcVolumes.filter((element, index) => {
+          return index % 2 === 0;
+        }),
         borderColor: "#e76f51",
         backgroundColor: theme.btcVolumeChartBackgroundColor,
         borderRadius: 5,

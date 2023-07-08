@@ -46,6 +46,9 @@ const options = {
         display: false,
         drawBorder: false,
       },
+      ticks: {
+        maxRotation: 0,
+      },
     },
   },
   tension: 0.5,
