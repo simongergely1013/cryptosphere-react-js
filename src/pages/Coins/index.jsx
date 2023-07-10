@@ -68,29 +68,8 @@ export const Coins = () => {
       console.log(error);
     }
   };
-  const handleDay = () => {
-    setDays(1);
-    setInterval("minutely");
-  };
-  const handleWeek = () => {
-    setDays(7);
-    setInterval("hourly");
-  };
-  const handleMonth = () => {
-    setDays(30);
-    setInterval("hourly");
-  };
-  const handle3Months = () => {
-    setDays(90);
-    setInterval("daily");
-  };
-  const handleYear = () => {
-    setDays(365);
-    setInterval("daily");
-  };
-  const handleMax = () => {
-    setDays("max");
-    setInterval("daily");
+  const handleChartDuration = (dayNum) => {
+    setDays(dayNum);
   };
   useEffect(() => {
     getCoinsData();
@@ -122,32 +101,32 @@ export const Coins = () => {
       <ChartDurationRow>
         <BtcChartDurationButton
           duration={"1d"}
-          onClick={handleDay}
+          onClick={() => handleChartDuration(1)}
           background={days === 1 ? "#06d554" : background}
         />
         <BtcChartDurationButton
           duration={"7d"}
-          onClick={handleWeek}
+          onClick={() => handleChartDuration(7)}
           background={days === 7 ? "#06d554" : background}
         />
         <BtcChartDurationButton
           duration={"30d"}
-          onClick={handleMonth}
+          onClick={() => handleChartDuration(30)}
           background={days === 30 ? "#06d554" : background}
         />
         <BtcChartDurationButton
           duration={"90d"}
-          onClick={handle3Months}
+          onClick={() => handleChartDuration(90)}
           background={days === 90 ? "#06d554" : background}
         />
         <BtcChartDurationButton
           duration={"1y"}
-          onClick={handleYear}
+          onClick={() => handleChartDuration(365)}
           background={days === 365 ? "#06d554" : background}
         />
         <BtcChartDurationButton
           duration={"Max"}
-          onClick={handleMax}
+          onClick={() => handleChartDuration("max")}
           background={days === "max" ? "#06d554" : background}
         />
       </ChartDurationRow>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CurrencySelect = styled.select`
   width: 130px;
   height: 43px;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.navBackground};
   color: ${(props) => props.theme.text};
   text-align: center;
   font-size: 20px;

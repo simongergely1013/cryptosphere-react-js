@@ -45,29 +45,8 @@ export const Coin = (props) => {
       console.log(err);
     }
   };
-  const handleDay = () => {
-    setDays(1);
-    setInterval("hourly");
-  };
-  const handleWeek = () => {
-    setDays(7);
-    setInterval("hourly");
-  };
-  const handleMonth = () => {
-    setDays(30);
-    setInterval("hourly");
-  };
-  const handle3Months = () => {
-    setDays(90);
-    setInterval("daily");
-  };
-  const handleYear = () => {
-    setDays(365);
-    setInterval("daily");
-  };
-  const handleMax = () => {
-    setDays("max");
-    setInterval("daily");
+  const handleChartDuration = (dayNum) => {
+    setDays(dayNum);
   };
   const reducer = (state, action) => {
     switch (action.type) {
@@ -177,32 +156,32 @@ export const Coin = (props) => {
       </CoinUrlsRow>
       <ChartDurationRow>
         <CoinChartDurationButton
-          onClick={handleDay}
+          onClick={() => handleChartDuration(1)}
           duration={"1d"}
           background={days === 1 ? "#06d554" : theme.background}
         />
         <CoinChartDurationButton
-          onClick={handleWeek}
+          onClick={() => handleChartDuration(7)}
           duration={"7d"}
           background={days === 7 ? "#06d554" : theme.background}
         />
         <CoinChartDurationButton
-          onClick={handleMonth}
+          onClick={() => handleChartDuration(30)}
           duration={"30d"}
           background={days === 30 ? "#06d554" : theme.background}
         />
         <CoinChartDurationButton
-          onClick={handle3Months}
+          onClick={() => handleChartDuration(90)}
           duration={"90d"}
           background={days === 90 ? "#06d554" : theme.background}
         />
         <CoinChartDurationButton
-          onClick={handleYear}
+          onClick={() => handleChartDuration(365)}
           duration={"1y"}
           background={days === 365 ? "#06d554" : theme.background}
         />
         <CoinChartDurationButton
-          onClick={handleMax}
+          onClick={() => handleChartDuration("max")}
           duration={"Max"}
           background={days === "max" ? "#06d554" : theme.background}
         />

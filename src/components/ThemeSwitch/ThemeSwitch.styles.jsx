@@ -4,7 +4,7 @@ import React from "react";
 const ThemeSwitchDiv = styled.div`
   width: 43px;
   height: 43px;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.navBackground};
   display: flex;
   justify-content: center;
   align-items: center;

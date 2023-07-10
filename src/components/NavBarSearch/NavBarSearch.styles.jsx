@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const SearchWrapper = styled.div`
   width: 70%;
+  margin-left: -50px;
 `;
 const SearchDiv = styled.div`
   z-index: 10;
@@ -10,7 +12,7 @@ const SearchDiv = styled.div`
 const SearchInput = styled.input`
   width: 410px;
   height: 53px;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.navBackground};
   color: ${(props) => props.theme.text};
   padding-left: 80px;
   font-size: 20px;
@@ -44,11 +46,32 @@ const SearchSvg = () => {
     </StyledSearchSvg>
   );
 };
-export const Search = (props) => {
+export const Search = ({ value, onChange, onBlur }) => {
   return (
     <SearchDiv>
       <SearchSvg />
-      <SearchInput placeholder="Search..." />
+      <SearchInput
+        placeholder="Search..."
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     </SearchDiv>
   );
 };
+export const SearchList = styled.div`
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 60px;
+  padding-left: 20px;
+  position: absolute;
+  z-index: 50;
+  background: ${(props) => props.theme.navBackground};
+  border-radius: 10px;
+`;
+export const StyledLink = styled(Link)`
+  position: relative;
+  z-index: 40;
+  color: ${(props) => props.theme.text};
+`;

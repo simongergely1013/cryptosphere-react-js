@@ -23,11 +23,11 @@ export const ChartsWrapperInner = styled.div`
   align-items: center;
 `;
 export const TopChartHeaderRow = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
   align-items: center;
-  z-index: 20;
-  margin-bottom: -110px;
+  margin-top: -280px;
+  position: absolute;
 `;
 export const ArrowUp = styled.div`
   width: 0;
