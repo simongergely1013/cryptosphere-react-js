@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import {
   CoinBoxContainer,
   CoinBox,
@@ -16,7 +15,7 @@ export const CoinBox1 = ({ src, coinName, coinSymbol, coinHomePage }) => {
 
   const copyUrl = async () => {
     await navigator.clipboard.writeText(url);
-    alert("URL copied");
+    alert("Copied to clipboard!");
   };
   useEffect(() => {
     setUrl(urlRef.current.innerText);
@@ -32,9 +31,7 @@ export const CoinBox1 = ({ src, coinName, coinSymbol, coinHomePage }) => {
         </h2>
       </CoinBox>
       <CoinUrlBox>
-        <CopyToClipboard text={url}>
-          <CopyIcon onClick={copyUrl} />
-        </CopyToClipboard>
+        <CopyIcon onClick={copyUrl} />
         <HomePageDiv ref={urlRef}>{coinHomePage}</HomePageDiv>
       </CoinUrlBox>
     </CoinBoxContainer>

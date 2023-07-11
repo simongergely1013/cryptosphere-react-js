@@ -9,13 +9,14 @@ export const NavBarSearch = () => {
   const [list, setList] = useState([]);
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const getQuery = async () => {
     try {
       const { data } = await axios(
         `https://api.coingecko.com/api/v3/search?query=${value}`
       );
       setIsLoading(true);
-      if (value !== "" && data.coins !== []) {
+      if (value !== "") {
         setList(
           data.coins
             .map((el) => el.name)
@@ -24,7 +25,7 @@ export const NavBarSearch = () => {
             })
         );
         setSearch(true);
-      } else if (value === "" && data.coins === []) {
+      } else {
         setSearch(false);
       }
     } catch (error) {
@@ -54,14 +55,15 @@ export const NavBarSearch = () => {
           onBlur={() => setSearch(false)}
         />
       </form>
-      <SearchList>
-        {search &&
-          list.map((el) => (
+      {search && (
+        <SearchList>
+          {list.map((el) => (
             <StyledLink onClick={handleClick} to={`/coin/${el.toLowerCase()}`}>
               {el}
             </StyledLink>
           ))}
-      </SearchList>
+        </SearchList>
+      )}
     </SearchWrapper>
   );
 };

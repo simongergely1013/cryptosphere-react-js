@@ -14,6 +14,7 @@ export const CoinsTableContainer = styled.div`
   background: ${(props) => props.theme.main};
   border-radius: 10px;
   overflow: auto;
+  transition: background 1s ease-in-out;
 `;
 export const TableHeaderRow = styled.div`
   display: flex;

@@ -5,9 +5,11 @@ export const CoinsPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: ${(props) => props.theme.background};
   color: ${(props) => props.theme.text};
   padding-left: 60px;
   padding-right: 60px;
+  transition: background 1s ease-in-out;
 `;
 export const ChartsWrapper = styled.div`
   width: 100%;
@@ -23,11 +25,11 @@ export const ChartsWrapperInner = styled.div`
   align-items: center;
 `;
 export const TopChartHeaderRow = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-top: -280px;
-  position: absolute;
+  margin-bottom: -120px;
+  z-index: 10;
 `;
 export const ArrowUp = styled.div`
   width: 0;

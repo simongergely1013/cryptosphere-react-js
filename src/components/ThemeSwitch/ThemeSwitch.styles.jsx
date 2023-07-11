@@ -8,9 +8,10 @@ const ThemeSwitchDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 0px;
   border-radius: 10px;
   z-index: 10;
+  transition: background 1s ease-in-out;
 `;
 const StyledMoonSvg = styled.svg`
   width: 28px;

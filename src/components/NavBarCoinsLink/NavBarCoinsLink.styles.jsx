@@ -12,10 +12,12 @@ export const ListItemCoins = styled.li`
   border-radius: 10px;
   z-index: 10;
   background: ${(props) => props.theme.navBackground};
+  transition: background 1s ease-in-out;
 `;
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
   font-size: 20px;
   z-index: 10;
+  transition: color 1s ease-in-out;
 `;

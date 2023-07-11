@@ -18,4 +18,5 @@ export const StyledLink = styled(Link)`
   color: ${(props) => props.theme.text};
   font-size: 20px;
   z-index: 10;
+  transition: color 1s ease-in-out;
 `;

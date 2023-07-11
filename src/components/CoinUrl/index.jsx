@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import { UrlDiv, CopyIcon, NewTabIcon } from "./CoinUrl.styles";
 
 export const CoinUrl = ({ blockchainSite }) => {
@@ -8,7 +7,7 @@ export const CoinUrl = ({ blockchainSite }) => {
 
   const copyUrl = async () => {
     await navigator.clipboard.writeText(url);
-    alert("URL copied");
+    alert("Copied to clipboard!");
   };
   const openInNewTab = () => {
     window.open(url);
@@ -18,9 +17,7 @@ export const CoinUrl = ({ blockchainSite }) => {
   });
   return (
     <UrlDiv>
-      <CopyToClipboard text={url}>
-        <CopyIcon onClick={copyUrl} />
-      </CopyToClipboard>
+      <CopyIcon onClick={copyUrl} />
       <div ref={urlRef}>{blockchainSite}</div>
       <NewTabIcon onClick={openInNewTab} />
     </UrlDiv>

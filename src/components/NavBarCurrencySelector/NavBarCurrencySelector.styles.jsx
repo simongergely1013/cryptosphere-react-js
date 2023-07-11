@@ -10,6 +10,7 @@ export const CurrencySelect = styled.select`
   padding-left: 20px;
   border-radius: 10px;
   z-index: 10;
+  transition: background 1s ease-in-out;
 `;
 export const Option = styled.option`
   padding-left: 15px;

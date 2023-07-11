@@ -9,6 +9,7 @@ export const ChartContainer = styled.div`
   background: ${(props) => props.theme.main};
   margin: 10px;
   border-radius: 10px;
+  transition: background 1s ease-in-out;
 `;
 export const TopChartDiv = styled.div`
   width: 98%;
