@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {
+  EthDominanceDiv,
   ListItemWithProgress,
   EthereumSvgSubNav,
   ProgressBar,
@@ -21,12 +22,13 @@ export const SubNavEthDominance = ({
     <>
       <ListItemWithProgress>
         <EthereumSvgSubNav />
-        <div
+        <EthDominanceDiv
           onMouseEnter={() => setDominanceHovered(true)}
           onMouseLeave={() => setDominanceHovered(false)}
+          color={dominanceHovered && "#BDBDBD"}
         >
           {dominancePercent}% ETH
-        </div>
+        </EthDominanceDiv>
         <ProgressBar
           onMouseEnter={() => setProgressBarHovered(true)}
           onMouseLeave={() => setProgressBarHovered(false)}

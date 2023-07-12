@@ -16,7 +16,7 @@ export const CoinBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinBoxInner = styled.div`
   width: 50%;
@@ -27,7 +27,7 @@ export const CoinBoxInner = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinImage = styled.img`
   width: 50%;
@@ -41,7 +41,7 @@ export const CoinUrlBox = styled.div`
   align-items: center;
   border-radius: 20px;
   margin-top: 15px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 const CopySvg = styled.svg`
   width: 20px;

@@ -7,6 +7,7 @@ export const ListItemWithProgress = styled.li`
   justify-content: center;
   list-style-type: disc;
   cursor: pointer;
+  color: ${(props) => props.color};
 `;
 const HoverDiv3 = styled.div`
   width: 350px;
@@ -17,6 +18,7 @@ const HoverDiv3 = styled.div`
   position: absolute;
   margin-top: 100px;
   margin-left: -300px;
+  transition: all 0.2s ease-in-out;
 `;
 const HoverDivInner = styled.div`
   display: flex;
@@ -26,6 +28,7 @@ const StyledSpan = styled.span`
   font-weigth: bold;
   color: ${(props) => props.color};
   margin-left: 8px;
+  transition: all 0.2s ease-in-out;
 `;
 export const TotalMarketCapHoverDiv = ({
   totalMarketCap,

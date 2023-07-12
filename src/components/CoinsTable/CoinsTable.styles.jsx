@@ -14,7 +14,7 @@ export const CoinsTableContainer = styled.div`
   background: ${(props) => props.theme.main};
   border-radius: 10px;
   overflow: auto;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const TableHeaderRow = styled.div`
   display: flex;
@@ -149,6 +149,7 @@ export const CoinLogo = styled.img`
 export const CoinNameLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
+  transition: all 0.2s ease-in-out;
 `;
 export const TableData1 = styled.div`
   width: 100px;

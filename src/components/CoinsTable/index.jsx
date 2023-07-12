@@ -43,7 +43,7 @@ import { SmallLineChart } from "../LineChart";
 export const CoinsTable = (props) => {
   const { currency } = useContext(CurrencyContext);
   const { coinsPercentageBarColor } = getThemeColors();
-  const [page, setPage] = useState(20);
+  const [page, setPage] = useState(1);
   const [coinsData, setCoinsData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
@@ -117,25 +117,6 @@ export const CoinsTable = (props) => {
                 100
               ).toFixed(2);
               const circulatingSupply = formatSupply(obj.circulating_supply);
-
-              // There's a number formatting bug in circulating supply and total supply
-              // I will debug that with these console.logs
-
-              // console.log(
-              //   obj.name,
-              //   "circulating supply",
-              //   obj.circulating_supply,
-              //   "length",
-              //   obj.circulating_supply.toString().length
-              // );
-              // console.log(
-              //   obj.name,
-              //   "total supply",
-              //   obj.total_supply,
-              //   "length",
-              //   obj.total_supply.toString().length
-              // );
-
               const totalSupply = formatSupply(obj.total_supply);
               const totalVolume = formatVolumeMarketCap(
                 obj.total_volume,

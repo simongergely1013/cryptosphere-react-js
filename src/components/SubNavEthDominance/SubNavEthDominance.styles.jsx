@@ -24,6 +24,7 @@ export const EthDominanceProgeressBar = styled.div`
   width: ${(props) => props.percent.ethDominancePercent}%;
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
+  transition: all 0.2s ease-in-out;
 `;
 export const EthereumSvgSubNav = () => {
   return (
@@ -52,6 +53,7 @@ const HoverDiv7 = styled.div`
   position: absolute;
   margin-top: 100px;
   margin-left: 800px;
+  transition: all 0.2s ease-in-out;
 `;
 export const EthDominanceHoverDiv1 = ({ ethDominance }) => {
   return (
@@ -73,6 +75,7 @@ const HoverDiv8 = styled.div`
   position: absolute;
   margin-top: 200px;
   margin-left: 900px;
+  transition: all 0.2s ease-in-out;
 `;
 const HoverDivInner = styled.div`
   display: flex;
@@ -89,6 +92,10 @@ const EthDominanceProgressBarHover = styled.div`
   width: ${(props) => props.width}%;
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
+  transition: all 0.2s ease-in-out;
+`;
+export const EthDominanceDiv = styled.div`
+  color: ${(props) => props.color};
 `;
 export const EthDominanceHoverDiv2 = ({
   ethMarketCap,

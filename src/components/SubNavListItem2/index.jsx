@@ -21,6 +21,7 @@ export const SubNavListItem2 = ({ text, data, exchanges }) => {
       <StyledListItemSubNav
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        color={hovered && "#BDBDBD"}
       >
         {text}
         {data}

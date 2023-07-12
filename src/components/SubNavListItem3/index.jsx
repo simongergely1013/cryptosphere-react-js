@@ -16,6 +16,7 @@ export const SubNavListItem3 = ({
       <ListItemWithProgress
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        color={hovered && "#BDBDBD"}
       >
         <BulletPoint />
         {marketCap}

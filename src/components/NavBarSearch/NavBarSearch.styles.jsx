@@ -17,7 +17,7 @@ const SearchInput = styled.input`
   border: none;
   border-radius: 10px;
   z-index: 10;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 const StyledSearchSvg = styled.svg`
   width: 30px;
@@ -69,11 +69,11 @@ export const SearchList = styled.div`
   z-index: 50;
   background: ${(props) => props.theme.navBackground};
   border-radius: 10px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const StyledLink = styled(Link)`
   z-index: 50;
   color: ${(props) => props.theme.text};
   margin-bottom: 5px;
-  transition: color 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;

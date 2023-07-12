@@ -19,10 +19,10 @@ export const NavBarSearch = () => {
       if (value !== "") {
         setList(
           data.coins
-            .map((el) => el.name)
             .filter((element, index) => {
               return index < 11;
             })
+            .map((el) => el.name)
         );
         setSearch(true);
       } else {

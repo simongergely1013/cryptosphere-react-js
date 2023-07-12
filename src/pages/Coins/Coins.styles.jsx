@@ -9,7 +9,7 @@ export const CoinsPageWrapper = styled.div`
   color: ${(props) => props.theme.text};
   padding-left: 60px;
   padding-right: 60px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const ChartsWrapper = styled.div`
   width: 100%;

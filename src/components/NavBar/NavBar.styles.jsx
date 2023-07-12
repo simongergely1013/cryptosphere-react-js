@@ -11,7 +11,7 @@ export const StyledNav = styled.nav`
   background: ${(props) => props.theme.main};
   position: relative;
   z-index: 50;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const LinksList = styled.ul`
   display: flex;
@@ -40,7 +40,7 @@ export const SubNavEmptyDiv = styled.div`
   width: 25%;
   height: 100%;
   background: ${(props) => props.theme.background};
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const SubNavDivCenter = styled.div`
   width: 75%;
@@ -51,7 +51,7 @@ export const SubNavDivCenter = styled.div`
   background: ${(props) => props.theme.main};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 export const ListDiv = styled.div`
   width: 100%;
@@ -69,7 +69,7 @@ export const BulletPoint = styled.div`
   border-radius: 50%;
   background: ${(props) => props.theme.bulletPointBackground};
   margin-right: 10px;
-  transition: background 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 const ArrowTrendingDown = styled.svg`
   width: 25px;

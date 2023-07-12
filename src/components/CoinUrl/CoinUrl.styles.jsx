@@ -9,6 +9,7 @@ export const UrlDiv = styled.div`
   justify-content: space-around;
   background: ${(props) => props.theme.main};
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
 `;
 const CopySvg = styled.svg`
   width: 20px;

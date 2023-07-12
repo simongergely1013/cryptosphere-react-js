@@ -12,11 +12,12 @@ export const ListItemPortfolio = styled.li`
   background: ${(props) => props.background};
   border-radius: 10px;
   z-index: 10;
+  transition: all 0.2s ease-in-out;
 `;
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
   font-size: 20px;
   z-index: 10;
-  transition: color 1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
