@@ -5,7 +5,11 @@ export const CoinPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: ${(props) => props.theme.background};
   color: ${(props) => props.theme.text};
+  padding-left: 60px;
+  padding-right: 60px;
+  transition: all 0.2s ease-in-out;
 `;
 export const SummaryWrapper = styled.div`
   width: 100%;
@@ -31,7 +35,6 @@ export const CurrencyConversionRow = styled.div`
   margin-bottom: 50px;
 `;
 export const ChartDurationRow = styled.div`
-  width: 30%;
   display: flex;
   align-items: center;
   justify-content: space-between;

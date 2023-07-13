@@ -20,6 +20,7 @@ export const SubNavVolumeVsMarketCap = ({
       <ListItemWithProgress
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        color={hovered && "#BDBDBD"}
       >
         <BulletPoint />
         {totalVolume}

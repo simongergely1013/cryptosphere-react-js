@@ -50,10 +50,13 @@ const options = {
     x: {
       display: true,
       min: 6,
-      max: 100,
+      max: 365,
       grid: {
         display: false,
         drawBorder: false,
+      },
+      ticks: {
+        maxRotation: 0,
       },
     },
   },
@@ -114,6 +117,9 @@ const options3 = {
       grid: {
         display: false,
         drawBorder: false,
+      },
+      ticks: {
+        maxRotation: 0,
       },
     },
   },

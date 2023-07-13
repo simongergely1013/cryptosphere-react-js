@@ -7,6 +7,7 @@ export const ListItemWithProgress = styled.li`
   justify-content: center;
   list-style-type: disc;
   cursor: pointer;
+  color: ${(props) => props.color};
 `;
 export const ProgressBar = styled.div`
   width: 60px;
@@ -21,6 +22,7 @@ export const TotalVolumeProgressBar = styled.div`
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
   margin-left: 2px;
+  transition: all 0.2s ease-in-out;
 `;
 const HoverDiv4 = styled.div`
   width: 350px;
@@ -31,6 +33,7 @@ const HoverDiv4 = styled.div`
   position: absolute;
   margin-top: 160px;
   margin-left: 100px;
+  transition: all 0.2s ease-in-out;
 `;
 const HoverDivInner = styled.div`
   display: flex;
@@ -48,6 +51,7 @@ const TotalVolumeProgressBarHover = styled.div`
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
   margin-left: 2px;
+  transition: all 0.2s ease-in-out;
 `;
 export const VolumeVsMarketCapDiv = ({
   volume,

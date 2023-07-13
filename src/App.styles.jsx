@@ -15,17 +15,21 @@ export const GlobalStyle = createGlobalStyle`
     background: ${(props) => props.theme.main};
     color: ${(props) => props.theme.text};
     place-items: start;
+    transition: all 0.2s ease-in-out;
   }
   ::placeholder {
     color: ${(props) => props.theme.text};
+    transition: all 0.2s ease-in-out;
   }
 
   :-ms-input-placeholder {
     color: ${(props) => props.theme.text};
+    transition: all 0.2s ease-in-out;
   }
 
   ::-ms-input-placeholder {
     color: ${(props) => props.theme.text};
+    transition: all 0.2s ease-in-out;
   }
   `;
 export const MainWrapper = styled.div`
@@ -36,11 +40,13 @@ export const MainWrapper = styled.div`
   max-width: 1720px;
   height: 100%;
   background: ${(props) => props.theme.background};
+  transition: all 0.2s ease-in-out;
 `;
 export const darkMode = {
   main: "#191B1F",
   text: "#FAFBFB",
   background: "#212121",
+  navBackground: "#2C2F36",
   moonIconFill: "white",
   bulletPointBackground: "white",
   progressBarsBackground: "white",
@@ -56,6 +62,7 @@ export const lightMode = {
   main: "white",
   text: "#191B1F",
   background: "#E0E0E0",
+  navBackground: "#E0E0E0",
   moonIconFill: "black",
   bulletPointBackground: "black",
   progressBarsBackground: "black",

@@ -12,6 +12,9 @@ import { connect } from "react-redux";
 
 export const App = () => {
   const [currency, setCurrency] = useLocalState("currency", "usd");
+  const [isCoinsPage, setIsCoinsPage] = useState(true);
+  const [isCoinPage, setIsCoinPage] = useState(false);
+  const [isPortfolioPage, setIsPortfolioPage] = useState(false);
   const [isDarkMode, setDarkMode] = useState(true);
   const [isLoading, setLoading] = useState(false);
 
@@ -35,7 +38,13 @@ export const App = () => {
         <Router>
           <GlobalStyle />
           <MainWrapper>
-            <NavBar onClick={handleThemeColor} onChange={handleCurrency} />
+            <NavBar
+              onClick={handleThemeColor}
+              onChange={handleCurrency}
+              isCoins={isCoinsPage}
+              isCoin={isCoinPage}
+              isPortfolio={isPortfolioPage}
+            />
             <Switch>
               <Route exact path="/" component={Coins} />
               <Route exact path="/portfolio" component={Portfolio} />

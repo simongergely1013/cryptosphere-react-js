@@ -34,6 +34,10 @@ export const getRandomColor = () => {
 export const formatSupply = (number) => {
   let numberRounded = Math.round(number);
   switch (numberRounded.toString().length) {
+    case 4:
+    case 5:
+    case 6:
+      return (numberRounded / 1000).toFixed(2).toString() + "K";
     case 7:
     case 8:
     case 9:
@@ -42,8 +46,12 @@ export const formatSupply = (number) => {
     case 11:
     case 12:
       return (numberRounded / 1000000000).toFixed(2).toString() + "B";
+    case 13:
+    case 14:
+    case 15:
+      return (numberRounded / 1000000000000).toFixed(2).toString() + "T";
     default:
-      return (numberRounded / 1000).toFixed(2).toString() + "K";
+      return numberRounded;
   }
 };
 
@@ -78,23 +86,27 @@ export const getThemeColors = () => {
 export const btcPricesData = (chartHours, btcPrices) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours,
+    labels: chartHours.filter((element, index) => {
+      return index % 2 === 0;
+    }),
     datasets: [
       {
         label: "BTC Price",
-        data: btcPrices.slice(0, 24),
+        data: btcPrices.filter((element, index) => {
+          return index % 2 === 0;
+        }),
         borderColor:
-          btcPrices[0] < btcPrices[24]
+          btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
-            : btcPrices[0] > btcPrices[24]
+            : btcPrices[0] > btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorLoss
             : theme.btcPriceChartBorderColorGain,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-          btcPrices[0] < btcPrices[24]
+          btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorGain)
-            : btcPrices[0] > btcPrices[24]
+            : btcPrices[0] > btcPrices[btcPrices.length - 1]
             ? gradient.addColorStop(0, theme.btcPriceChartGradienColorLoss)
             : gradient.addColorStop(0, theme.btcPriceChartGradienColorGain);
           gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
@@ -111,13 +123,18 @@ export const btcPricesData = (chartHours, btcPrices) => {
 export const btcVolumesData = (chartHours, btcVolumes) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours,
+    labels: chartHours.filter((element, index) => {
+      return index % 2 === 0;
+    }),
     datasets: [
       {
         label: "BTC Volume",
-        data: btcVolumes.slice(0, 24),
+        data: btcVolumes.filter((element, index) => {
+          return index % 2 === 0;
+        }),
         borderColor: "#e76f51",
         backgroundColor: theme.btcVolumeChartBackgroundColor,
+        borderRadius: 5,
       },
     ],
   };

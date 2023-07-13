@@ -4,6 +4,8 @@ import { useContext, useState, useEffect } from "react";
 import { PageHeader } from "../../components/PageHeader";
 import { TopChartTitlePrice } from "../../components/TopChartTitlePrice";
 import { TopChartTitleVolume } from "../../components/TopChartTitleVolume";
+import { ChartDurationRow } from "./Coin/Coin.styles";
+import { BtcChartDurationButton } from "../../components/BtcChartDurationButton";
 import {
   CoinsPageWrapper,
   ChartsWrapper,
@@ -18,10 +20,14 @@ import {
   getDate,
   btcPricesData,
   btcVolumesData,
+  getThemeColors,
 } from "../../utilities";
 
 export const Coins = () => {
   const { currency } = useContext(CurrencyContext);
+  const { background } = getThemeColors();
+  const [days, setDays] = useState(1);
+  const [interval, setInterval] = useState("minutely");
   const [isLoading, setLoading] = useState(false);
   const [btcCurrentPrice, setBtcCurrentPrice] = useState(0);
   const [btcCurrentVolume, setBtcCurrentVolume] = useState(0);
@@ -29,8 +35,8 @@ export const Coins = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [chartHours, setChartHours] = useState([]);
-  const [btcPricesHourly, setBtcPricesHourly] = useState([]);
-  const [btcVolumesHourly, setBtcVolumesHourly] = useState([]);
+  const [btcPrices, setBtcPrices] = useState([]);
+  const [btcVolumes, setBtcVolumes] = useState([]);
 
   const getCoinsData = async () => {
     try {
@@ -52,23 +58,23 @@ export const Coins = () => {
     try {
       const base =
         "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=";
-      const search = "&days=1&interval=hourly";
+      const search = `&days=${days}&interval=${interval}`;
       const fullURL = `${base}${currency}${search}`;
       const { data } = await axios(fullURL);
-      setBtcPricesHourly(data.prices.map((el) => el[1]));
-      setBtcVolumesHourly(data.total_volumes.map((el) => el[1]));
-      setChartHours(data.prices.map((el) => el[0]));
+      setBtcPrices(data.prices.map((el) => el[1]));
+      setBtcVolumes(data.total_volumes.map((el) => el[1]));
+      setChartHours(data.prices.map((el) => formatDate(el[0])));
     } catch (error) {
       console.log(error);
     }
   };
+  const handleChartDuration = (dayNum) => {
+    setDays(dayNum);
+  };
   useEffect(() => {
     getCoinsData();
     getChartsData();
-  }, [currency]);
-  const chartHoursFormatted = chartHours
-    .map((el) => formatDate(el))
-    .slice(0, 24);
+  }, [currency, days]);
   return (
     <CoinsPageWrapper>
       <PageHeader text={"Overview"} />
@@ -88,14 +94,42 @@ export const Coins = () => {
           />
         </TopChartHeaderRow>
         <ChartsWrapperInner>
-          <LineChart
-            data={btcPricesData(chartHoursFormatted, btcPricesHourly)}
-          />
-          <BarChart
-            data={btcVolumesData(chartHoursFormatted, btcVolumesHourly)}
-          />
+          <LineChart data={btcPricesData(chartHours, btcPrices)} />
+          <BarChart data={btcVolumesData(chartHours, btcVolumes)} />
         </ChartsWrapperInner>
       </ChartsWrapper>
+      <ChartDurationRow>
+        <BtcChartDurationButton
+          duration={"1d"}
+          onClick={() => handleChartDuration(1)}
+          background={days === 1 ? "#06d554" : background}
+        />
+        <BtcChartDurationButton
+          duration={"7d"}
+          onClick={() => handleChartDuration(7)}
+          background={days === 7 ? "#06d554" : background}
+        />
+        <BtcChartDurationButton
+          duration={"30d"}
+          onClick={() => handleChartDuration(30)}
+          background={days === 30 ? "#06d554" : background}
+        />
+        <BtcChartDurationButton
+          duration={"90d"}
+          onClick={() => handleChartDuration(90)}
+          background={days === 90 ? "#06d554" : background}
+        />
+        <BtcChartDurationButton
+          duration={"1y"}
+          onClick={() => handleChartDuration(365)}
+          background={days === 365 ? "#06d554" : background}
+        />
+        <BtcChartDurationButton
+          duration={"Max"}
+          onClick={() => handleChartDuration("max")}
+          background={days === "max" ? "#06d554" : background}
+        />
+      </ChartDurationRow>
       <PageHeader text={"TOP 50 by Market Cap"} />
       <CoinsTable />
     </CoinsPageWrapper>

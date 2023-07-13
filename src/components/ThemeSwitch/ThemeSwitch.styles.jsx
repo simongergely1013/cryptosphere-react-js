@@ -4,19 +4,21 @@ import React from "react";
 const ThemeSwitchDiv = styled.div`
   width: 43px;
   height: 43px;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.navBackground};
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 0px;
   border-radius: 10px;
   z-index: 10;
+  transition: all 0.2s ease-in-out;
 `;
 const StyledMoonSvg = styled.svg`
   width: 28px;
   fill: ${(props) => props.theme.moonIconFill};
   border: none;
   z-index: 10;
+  transition: all 0.2s ease-in-out;
 `;
 export const ThemeSwitchStyled = ({ onClick }) => {
   return (

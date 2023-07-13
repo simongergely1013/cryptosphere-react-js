@@ -11,6 +11,7 @@ export const PriceBoxContainer = styled.div`
   background: ${(props) => props.theme.main};
   margin: 15px;
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
 `;
 export const PriceChangePercentageDiv = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ export const PriceChangePercentage = styled.h3`
   margin-right: 10px;
   font-size: 19px;
   color: ${(props) => props.color};
+  transition: all 0.2s ease-in-out;
 `;
 const SquareStackSvg = styled.svg`
   width: 35px;

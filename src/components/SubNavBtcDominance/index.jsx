@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {
+  BtcDominanceDiv,
   ListItemWithProgress,
   BitcoinSvgSubNav,
   ProgressBar,
@@ -21,12 +22,13 @@ export const SubNavBtcDominance = ({
     <>
       <ListItemWithProgress>
         <BitcoinSvgSubNav />
-        <div
+        <BtcDominanceDiv
           onMouseEnter={() => setDominanceHovered(true)}
           onMouseLeave={() => setDominanceHovered(false)}
+          color={dominanceHovered && "#BDBDBD"}
         >
           {dominancePercent}% BTC
-        </div>
+        </BtcDominanceDiv>
         <div
           onMouseEnter={() => setProgressBarHovered(true)}
           onMouseLeave={() => setProgressBarHovered(false)}

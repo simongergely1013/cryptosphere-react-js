@@ -11,6 +11,7 @@ export const CoinDataBoxContainer = styled.div`
   background: ${(props) => props.theme.main};
   margin: 15px;
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinDataRow = styled.div`
   width: 80%;

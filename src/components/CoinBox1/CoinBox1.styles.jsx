@@ -16,6 +16,7 @@ export const CoinBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinBoxInner = styled.div`
   width: 50%;
@@ -26,6 +27,7 @@ export const CoinBoxInner = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinImage = styled.img`
   width: 50%;
@@ -39,14 +41,16 @@ export const CoinUrlBox = styled.div`
   align-items: center;
   border-radius: 20px;
   margin-top: 15px;
+  transition: all 0.2s ease-in-out;
 `;
-const UrlSvg = styled.svg`
+const CopySvg = styled.svg`
   width: 20px;
   cursor: pointer;
 `;
-export const UrlIcon = () => {
+export const CopyIcon = ({ onClick }) => {
   return (
-    <UrlSvg
+    <CopySvg
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -59,7 +63,7 @@ export const UrlIcon = () => {
         strokeLinejoin="round"
         d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
       />
-    </UrlSvg>
+    </CopySvg>
   );
 };
 export const HomePageDiv = styled.div`

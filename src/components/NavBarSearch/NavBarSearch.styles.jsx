@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const SearchWrapper = styled.div`
   width: 70%;
+  margin-left: -50px;
 `;
-const SearchDiv = styled.div`
-  z-index: 10;
-`;
+const SearchDiv = styled.div``;
 const SearchInput = styled.input`
   width: 410px;
   height: 53px;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.navBackground};
   color: ${(props) => props.theme.text};
   padding-left: 80px;
   font-size: 20px;
   border: none;
   border-radius: 10px;
   z-index: 10;
+  transition: all 0.2s ease-in-out;
 `;
 const StyledSearchSvg = styled.svg`
   width: 30px;
@@ -44,11 +45,35 @@ const SearchSvg = () => {
     </StyledSearchSvg>
   );
 };
-export const Search = (props) => {
+export const Search = ({ value, onChange, onBlur }) => {
   return (
     <SearchDiv>
       <SearchSvg />
-      <SearchInput placeholder="Search..." />
+      <SearchInput
+        placeholder="Search..."
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     </SearchDiv>
   );
 };
+export const SearchList = styled.div`
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3px;
+  margin-left: 60px;
+  padding: 10px 0px 10px 20px;
+  position: absolute;
+  z-index: 50;
+  background: ${(props) => props.theme.navBackground};
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+`;
+export const StyledLink = styled(Link)`
+  z-index: 50;
+  color: ${(props) => props.theme.text};
+  margin-bottom: 5px;
+  transition: all 0.2s ease-in-out;
+`;

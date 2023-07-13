@@ -40,11 +40,14 @@ const options = {
     },
     x: {
       display: true,
-      min: 6,
-      max: 100,
+      min: 1,
+      max: 365,
       grid: {
         display: false,
         drawBorder: false,
+      },
+      ticks: {
+        maxRotation: 0,
       },
     },
   },

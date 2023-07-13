@@ -11,6 +11,7 @@ export const DescriptionWrapper = styled.div`
   padding: 30px;
   margin-bottom: 50px;
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
 `;
 export const CoinDescriptionDiv = styled.div`
   width: 100%;

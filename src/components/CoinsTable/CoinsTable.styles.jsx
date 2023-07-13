@@ -14,9 +14,11 @@ export const CoinsTableContainer = styled.div`
   background: ${(props) => props.theme.main};
   border-radius: 10px;
   overflow: auto;
+  transition: all 0.2s ease-in-out;
 `;
 export const TableHeaderRow = styled.div`
   display: flex;
+  padding-left: 10px;
 `;
 export const NumeroHeader = styled.div`
   height: 65px;
@@ -28,45 +30,104 @@ export const NumeroHeader = styled.div`
 `;
 export const NameHeader = styled.div`
   height: 65px;
-  width: 318px;
+  width: 270px;
   text-align: left;
-  border-bottom: 1px solid #707070;
   padding-left: 72px;
   display: flex;
   align-items: center;
 `;
-export const TableHeader1 = styled.div`
-  height: 65px;
-  width: 100px;
-  text-align: left;
-  border-bottom: 1px solid #707070;
+export const TableHeaderContainer1 = styled.div`
+  width: 440px;
+  display: flex;
+  padding-left: 40px;
+`;
+export const TableHeaderContainer2 = styled.div`
+  width: 580px;
+  display: flex;
   padding-left: 10px;
+  padding-right: 15px;
+  margin-right: -10px;
+`;
+export const Price = styled.div`
+  height: 65px;
+  width: 25%;
+  text-align: left;
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0px 10px 0px 0px;
+`;
+export const OneHourChange = styled.div`
+  height: 65px;
+  width: 25%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding: 0px 10px 0px 15px;
+`;
+export const OneDayChange = styled.div`
+  height: 65px;
+  width: 25%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 0px 0px 10px;
+`;
+export const OneWeekChange = styled.div`
+  height: 65px;
+  width: 25%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 0px 0px 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+`;
+export const TableHeader1 = styled.div`
+  height: 65px;
+  width: 50px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
 `;
 export const TableHeader2 = styled.div`
   height: 65px;
-  width: 270px;
-  text-align: left;
-  border-bottom: 1px solid #707070;
-  padding-left: 10px;
+  width: 50%;
   display: flex;
+  justify-content: center;
   align-items: center;
 `;
 export const TableHeader3 = styled.div`
   height: 65px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const TableHeader4 = styled.div`
+  height: 65px;
   width: 135px;
   text-align: center;
-  border-bottom: 1px solid #707070;
-  padding-left: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+  margin-right: 55px;
 `;
 export const CoinsRowsContainer = styled.div`
   overflow: auto;
 `;
 export const TableRow = styled.div`
+  height: 100px;
   margin-bottom: 5px;
+  padding-left: 10px;
   box-shadow: inset 0px 0px 1px 0px ghostwhite;
   display: flex;
   align-items: center;
@@ -88,6 +149,7 @@ export const CoinLogo = styled.img`
 export const CoinNameLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
+  transition: all 0.2s ease-in-out;
 `;
 export const TableData1 = styled.div`
   width: 100px;

@@ -24,6 +24,7 @@ export const BtcDominanceProgressBar = styled.div`
   width: ${(props) => props.percent.btcDominancePercent}%;
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
+  transition: all 0.2s ease-in-out;
 `;
 export const BitcoinSvgSubNav = () => {
   return (
@@ -53,6 +54,7 @@ const HoverDiv5 = styled.div`
   position: absolute;
   margin-top: 100px;
   margin-left: 400px;
+  transition: all 0.2s ease-in-out;
 `;
 export const BtcDominanceHoverDiv1 = ({ btcDominance }) => {
   return (
@@ -74,6 +76,7 @@ const HoverDiv6 = styled.div`
   position: absolute;
   margin-top: 200px;
   margin-left: 500px;
+  transition: all 0.2s ease-in-out;
 `;
 const HoverDivInner = styled.div`
   display: flex;
@@ -90,6 +93,10 @@ const BtcDominanceProgressBarHover = styled.div`
   width: ${(props) => props.width}%;
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
+  transition: all 0.2s ease-in-out;
+`;
+export const BtcDominanceDiv = styled.div`
+  color: ${(props) => props.color};
 `;
 export const BtcDominanceHoverDiv2 = ({
   btcMarketCap,

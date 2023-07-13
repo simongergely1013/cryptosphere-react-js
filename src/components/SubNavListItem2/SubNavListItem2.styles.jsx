@@ -12,4 +12,5 @@ export const HoverDiv2 = styled.div`
   position: absolute;
   margin-top: 100px;
   margin-left: -600px;
+  transition: all 0.2s ease-in-out;
 `;
