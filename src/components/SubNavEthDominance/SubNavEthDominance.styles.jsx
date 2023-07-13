@@ -96,6 +96,8 @@ const EthDominanceProgressBarHover = styled.div`
 `;
 export const EthDominanceDiv = styled.div`
   color: ${(props) => props.color};
+  font-size: 16px;
+  font-weight: 500;
 `;
 export const EthDominanceHoverDiv2 = ({
   ethMarketCap,

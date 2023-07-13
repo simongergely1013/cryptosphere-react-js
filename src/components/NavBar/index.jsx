@@ -107,9 +107,9 @@ export const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
         <SubNavDivCenter>
           <ListDiv>
             <StyledListSubNav>
-              <SubNavListItem1 text={"Coins:"} data={coins} coins={coins} />
+              <SubNavListItem1 text={"Coins:  "} data={coins} coins={coins} />
               <SubNavListItem2
-                text={"Exchanges:"}
+                text={"Exchanges:  "}
                 data={markets}
                 exchanges={markets}
               />

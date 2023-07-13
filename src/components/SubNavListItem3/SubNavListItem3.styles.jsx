@@ -8,6 +8,8 @@ export const ListItemWithProgress = styled.li`
   list-style-type: disc;
   cursor: pointer;
   color: ${(props) => props.color};
+  font-size: 16px;
+  font-weight: 500;
 `;
 const HoverDiv3 = styled.div`
   width: 350px;

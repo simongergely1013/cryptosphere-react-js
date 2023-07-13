@@ -4,6 +4,8 @@ export const StyledListItemSubNav = styled.li`
   list-style-type: none;
   cursor: pointer;
   color: ${(props) => props.color};
+  font-size: 16px;
+  font-weight: 500;
 `;
 export const HoverDiv1 = styled.div`
   width: 400px;

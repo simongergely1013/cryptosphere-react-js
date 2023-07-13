@@ -7,10 +7,12 @@ export const CoinsTableWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 17px;
+  font-weight: normal;
 `;
 export const CoinsTableContainer = styled.div`
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   background: ${(props) => props.theme.main};
   border-radius: 10px;
   overflow: auto;
@@ -18,31 +20,31 @@ export const CoinsTableContainer = styled.div`
 `;
 export const TableHeaderRow = styled.div`
   display: flex;
-  padding-left: 10px;
 `;
 export const NumeroHeader = styled.div`
   height: 65px;
-  width: 20px;
+  width: 2%;
   text-align: left;
-  padding-left: 10px;
+  padding-left: 15px;
   display: flex;
   align-items: center;
 `;
 export const NameHeader = styled.div`
   height: 65px;
-  width: 270px;
-  text-align: left;
-  padding-left: 72px;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+
   display: flex;
   align-items: center;
 `;
 export const TableHeaderContainer1 = styled.div`
-  width: 440px;
+  width: 30%;
   display: flex;
-  padding-left: 40px;
 `;
 export const TableHeaderContainer2 = styled.div`
-  width: 580px;
+  width: 43%;
   display: flex;
   padding-left: 10px;
   padding-right: 15px;
@@ -113,7 +115,7 @@ export const TableHeader3 = styled.div`
 `;
 export const TableHeader4 = styled.div`
   height: 65px;
-  width: 135px;
+  width: 10%;
   text-align: center;
   display: flex;
   align-items: center;
@@ -127,20 +129,21 @@ export const CoinsRowsContainer = styled.div`
 export const TableRow = styled.div`
   height: 100px;
   margin-bottom: 5px;
-  padding-left: 10px;
-  box-shadow: inset 0px 0px 1px 0px ghostwhite;
+  border-bottom: 1px solid #707070;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 export const CoinName = styled.div`
-  padding-left: 72px;
+  width: 15%;
   display: flex;
   align-items: center;
-  width: 307px;
 `;
 export const CoinNameInnerDiv = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
 `;
 export const CoinLogo = styled.img`
   width: 34px;
@@ -151,21 +154,32 @@ export const CoinNameLink = styled(Link)`
   color: ${(props) => props.theme.text};
   transition: all 0.2s ease-in-out;
 `;
+export const TableData1Container = styled.div`
+  width: 27%;
+  display: flex;
+  justify-content: space-between;
+`;
 export const TableData1 = styled.div`
   width: 100px;
-  margin-left: 10px;
   display: flex;
   align-items: center;
+`;
+export const TableData2Container = styled.div`
+  width: 41%;
+  display: flex;
 `;
 export const TableData2 = styled.div`
-  width: 250px;
+  width: 50%;
   display: flex;
   align-items: center;
-  margin-left: 10px;
-  margin-right: 20px;
+  padding: 0px 10px 0px 10px;
+`;
+export const TableData3Container = styled.div`
+  width: 14%;
+  display: flex;
 `;
 export const TableData3 = styled.div`
-  width: 250px;
+  width: 100%;
   height: 80px;
   display: flex;
   align-items: center;
@@ -175,6 +189,7 @@ export const PercentageChangeDiv = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 export const ArrowUp = styled.div`
   width: 0;

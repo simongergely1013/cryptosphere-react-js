@@ -97,6 +97,8 @@ const BtcDominanceProgressBarHover = styled.div`
 `;
 export const BtcDominanceDiv = styled.div`
   color: ${(props) => props.color};
+  font-size: 16px;
+  font-weight: 500;
 `;
 export const BtcDominanceHoverDiv2 = ({
   btcMarketCap,

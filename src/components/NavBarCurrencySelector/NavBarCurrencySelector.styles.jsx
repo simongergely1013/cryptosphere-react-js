@@ -6,7 +6,8 @@ export const CurrencySelect = styled.select`
   background: ${(props) => props.theme.navBackground};
   color: ${(props) => props.theme.text};
   text-align: center;
-  font-size: 20px;
+  font-size: 17px;
+  font-weight: 500;
   padding-left: 20px;
   border-radius: 10px;
   z-index: 10;

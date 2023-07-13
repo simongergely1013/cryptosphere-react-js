@@ -13,7 +13,8 @@ const SearchInput = styled.input`
   background: ${(props) => props.theme.navBackground};
   color: ${(props) => props.theme.text};
   padding-left: 80px;
-  font-size: 20px;
+  font-size: 17px;
+  font-weight: 500;
   border: none;
   border-radius: 10px;
   z-index: 10;

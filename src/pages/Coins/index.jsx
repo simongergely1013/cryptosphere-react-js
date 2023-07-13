@@ -27,7 +27,7 @@ export const Coins = () => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
   const [days, setDays] = useState(1);
-  const [interval, setInterval] = useState("minutely");
+  const [interval, setInterval] = useState("hourly");
   const [isLoading, setLoading] = useState(false);
   const [btcCurrentPrice, setBtcCurrentPrice] = useState(0);
   const [btcCurrentVolume, setBtcCurrentVolume] = useState(0);

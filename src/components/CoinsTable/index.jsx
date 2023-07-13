@@ -31,6 +31,9 @@ import {
   CoinNameInnerDiv,
   CoinLogo,
   CoinNameLink,
+  TableData1Container,
+  TableData2Container,
+  TableData3Container,
   TableData1,
   TableData2,
   TableData3,
@@ -67,7 +70,7 @@ export const CoinsTable = (props) => {
   };
   const getSmallChartLabels = () => {
     let labels = [];
-    for (let i = 0; i < 73; i++) {
+    for (let i = 0; i < 28; i++) {
       labels.push("");
     }
     return labels;
@@ -126,10 +129,11 @@ export const CoinsTable = (props) => {
               const color1 = getRandomColor();
               const color2 = coinsPercentageBarColor;
               const sparklineData = obj.sparkline_in_7d.price
-                .map((el) => el)
                 .filter((element, index) => {
-                  return index % 2 === 0;
-                });
+                  return index % 6 === 0;
+                })
+                .map((el) => el);
+              console.log("sparklineData length", sparklineData.length);
               const coinPricesData = {
                 labels: getSmallChartLabels(),
                 datasets: [
@@ -160,62 +164,68 @@ export const CoinsTable = (props) => {
                       </CoinNameLink>
                     </CoinNameInnerDiv>
                   </CoinName>
-                  <TableData1>{formatNumber(obj.current_price)}</TableData1>
-                  <TableData1
-                    style={{
-                      color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange1h}%
-                    </PercentageChangeDiv>
-                  </TableData1>
-                  <TableData1
-                    style={{
-                      color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange24h}%
-                    </PercentageChangeDiv>
-                  </TableData1>
-                  <TableData1
-                    style={{
-                      color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
-                    }}
-                  >
-                    <PercentageChangeDiv>
-                      {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
-                      {percentageChange7d}%
-                    </PercentageChangeDiv>
-                  </TableData1>
-                  <TableData2>
-                    <CoinsPercentageBar
-                      num1={totalVolume}
-                      num2={marketCap}
-                      width={percentageVolume24h.toString() + "%"}
-                      color1={color1}
-                      color2={color2}
-                      background1={color1}
-                      background2={color2}
-                    />
-                  </TableData2>
-                  <TableData2>
-                    <CoinsPercentageBar
-                      num1={circulatingSupply}
-                      num2={totalSupply}
-                      width={percentageCirculating.toString() + "%"}
-                      color1={color1}
-                      color2={color2}
-                      background1={color1}
-                      background2={color2}
-                    />
-                  </TableData2>
-                  <TableData3>
-                    <SmallLineChart data={coinPricesData} />
-                  </TableData3>
+                  <TableData1Container>
+                    <TableData1>{formatNumber(obj.current_price)}</TableData1>
+                    <TableData1
+                      style={{
+                        color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange1h}%
+                      </PercentageChangeDiv>
+                    </TableData1>
+                    <TableData1
+                      style={{
+                        color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange24h}%
+                      </PercentageChangeDiv>
+                    </TableData1>
+                    <TableData1
+                      style={{
+                        color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
+                      }}
+                    >
+                      <PercentageChangeDiv>
+                        {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
+                        {percentageChange7d}%
+                      </PercentageChangeDiv>
+                    </TableData1>
+                  </TableData1Container>
+                  <TableData2Container>
+                    <TableData2>
+                      <CoinsPercentageBar
+                        num1={totalVolume}
+                        num2={marketCap}
+                        width={percentageVolume24h.toString() + "%"}
+                        color1={color1}
+                        color2={color2}
+                        background1={color1}
+                        background2={color2}
+                      />
+                    </TableData2>
+                    <TableData2>
+                      <CoinsPercentageBar
+                        num1={circulatingSupply}
+                        num2={totalSupply}
+                        width={percentageCirculating.toString() + "%"}
+                        color1={color1}
+                        color2={color2}
+                        background1={color1}
+                        background2={color2}
+                      />
+                    </TableData2>
+                  </TableData2Container>
+                  <TableData3Container>
+                    <TableData3>
+                      <SmallLineChart data={coinPricesData} />
+                    </TableData3>
+                  </TableData3Container>
                 </TableRow>
               );
             })}
