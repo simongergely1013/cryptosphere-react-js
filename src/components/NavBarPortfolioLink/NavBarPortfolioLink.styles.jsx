@@ -17,7 +17,8 @@ export const ListItemPortfolio = styled.li`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
-  font-size: 20px;
+  font-size: 22px;
+  font-wieght: 500;
   z-index: 10;
   transition: all 0.2s ease-in-out;
 `;

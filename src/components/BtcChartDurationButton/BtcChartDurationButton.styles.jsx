@@ -15,4 +15,6 @@ export const Button = styled.div`
   background: ${(props) => props.background};
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  font-size: 17px;
+  font-weight: 500;
 `;

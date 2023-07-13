@@ -22,8 +22,7 @@ export const SubNavListItem1 = ({ text, data, coins }) => {
         onMouseLeave={() => setHovered(false)}
         color={hovered && "#BDBDBD"}
       >
-        {text}
-        {data}
+        {text} {data}
       </StyledListItemSubNav>
       {hovered && <CoinsHoverDiv coins={coins} />}
     </>

@@ -86,15 +86,11 @@ export const getThemeColors = () => {
 export const btcPricesData = (chartHours, btcPrices) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours.filter((element, index) => {
-      return index % 2 === 0;
-    }),
+    labels: chartHours,
     datasets: [
       {
         label: "BTC Price",
-        data: btcPrices.filter((element, index) => {
-          return index % 2 === 0;
-        }),
+        data: btcPrices,
         borderColor:
           btcPrices[0] < btcPrices[btcPrices.length - 1]
             ? theme.btcPriceChartBorderColorGain
@@ -123,15 +119,11 @@ export const btcPricesData = (chartHours, btcPrices) => {
 export const btcVolumesData = (chartHours, btcVolumes) => {
   const theme = getThemeColors();
   const data = {
-    labels: chartHours.filter((element, index) => {
-      return index % 2 === 0;
-    }),
+    labels: chartHours,
     datasets: [
       {
         label: "BTC Volume",
-        data: btcVolumes.filter((element, index) => {
-          return index % 2 === 0;
-        }),
+        data: btcVolumes,
         borderColor: "#e76f51",
         backgroundColor: theme.btcVolumeChartBackgroundColor,
         borderRadius: 5,
