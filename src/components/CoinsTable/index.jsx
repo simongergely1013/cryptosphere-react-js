@@ -133,7 +133,6 @@ export const CoinsTable = (props) => {
                   return index % 6 === 0;
                 })
                 .map((el) => el);
-              console.log("sparklineData length", sparklineData.length);
               const coinPricesData = {
                 labels: getSmallChartLabels(),
                 datasets: [

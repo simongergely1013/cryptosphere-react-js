@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ListItemWithProgress } from "./SubNavListItem3.styles";
 import { BulletPoint, TrendingUp, TrendingDown } from "../NavBar/NavBar.styles";
 import { TotalMarketCapHoverDiv } from "./SubNavListItem3.styles";
+import { hoverColor } from "../../App.styles";
 
 export const SubNavListItem3 = ({
   marketCap,
@@ -16,7 +17,7 @@ export const SubNavListItem3 = ({
       <ListItemWithProgress
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        color={hovered && "#BDBDBD"}
+        color={hovered && hoverColor}
       >
         <BulletPoint />
         {marketCap}

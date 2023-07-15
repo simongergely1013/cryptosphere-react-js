@@ -56,23 +56,23 @@ export const formatSupply = (number) => {
 };
 
 export const formatVolumeMarketCap = (number) => {
-  let num = number;
-  switch (num.toString().length) {
+  let numberRonded = Math.round(number);
+  switch (numberRonded.toString().length) {
     case 7:
     case 8:
     case 9:
-      num = formatNumber((num / 1000000).toFixed(2)) + "M";
+      numberRonded = formatNumber((numberRonded / 1000000).toFixed(2)) + "M";
       break;
     case 10:
     case 11:
     case 12:
-      num = formatNumber((num / 1000000000).toFixed(2)) + "B";
+      numberRonded = formatNumber((numberRonded / 1000000000).toFixed(2)) + "B";
       break;
     default:
-      num = formatNumber((num / 1000).toFixed(2)) + "K";
+      numberRonded = formatNumber((numberRonded / 1000).toFixed(2)) + "K";
       break;
   }
-  return num;
+  return numberRonded;
 };
 export const getDate = () => {
   return new Date();

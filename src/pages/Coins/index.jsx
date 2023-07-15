@@ -1,11 +1,13 @@
 import axios from "axios";
-import { CoinsTable } from "../../components/CoinsTable";
 import { useContext, useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getCoinsData } from "../../store/coinsData/actions";
 import { PageHeader } from "../../components/PageHeader";
 import { TopChartTitlePrice } from "../../components/TopChartTitlePrice";
 import { TopChartTitleVolume } from "../../components/TopChartTitleVolume";
 import { ChartDurationRow } from "./Coin/Coin.styles";
 import { BtcChartDurationButton } from "../../components/BtcChartDurationButton";
+import { CoinsTable } from "../../components/CoinsTable";
 import {
   CoinsPageWrapper,
   ChartsWrapper,
@@ -23,37 +25,36 @@ import {
   getThemeColors,
 } from "../../utilities";
 
-export const Coins = () => {
+const Coins = (props) => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
   const [days, setDays] = useState(1);
   const [interval, setInterval] = useState("hourly");
-  const [isLoading, setLoading] = useState(false);
-  const [btcCurrentPrice, setBtcCurrentPrice] = useState(0);
-  const [btcCurrentVolume, setBtcCurrentVolume] = useState(0);
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [day, setDay] = useState(getDate().toString().slice(8, 10));
+  const [month, setMonth] = useState(getDate().toString().slice(4, 7));
+  const [year, setYear] = useState(getDate().toString().slice(11, 15));
   const [chartHours, setChartHours] = useState([]);
   const [btcPrices, setBtcPrices] = useState([]);
   const [btcVolumes, setBtcVolumes] = useState([]);
 
-  const getCoinsData = async () => {
-    try {
-      const base =
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
-      const search = `&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
-      const fullURL = `${base}${currency}${search}`;
-      const { data } = await axios(fullURL);
-      setBtcCurrentPrice(data[0].current_price);
-      setBtcCurrentVolume(data[0].total_volume);
-      setDay(getDate().toString().slice(8, 10));
-      setMonth(getDate().toString().slice(4, 7));
-      setYear(getDate().toString().slice(11, 15));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // I just left this here for the moment as reference
+
+  // const getCoinsData = async () => {
+  //   try {
+  //     const base =
+  //       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
+  //     const search = `&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
+  //     const fullURL = `${base}${currency}${search}`;
+  //     const { data } = await axios(fullURL);
+  //     setBtcCurrentPrice(data[0].current_price);
+  //     setBtcCurrentVolume(data[0].total_volume);
+  //     setDay(getDate().toString().slice(8, 10));
+  //     setMonth(getDate().toString().slice(4, 7));
+  //     setYear(getDate().toString().slice(11, 15));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const getChartsData = async () => {
     try {
       const base =
@@ -81,13 +82,13 @@ export const Coins = () => {
       <ChartsWrapper>
         <TopChartHeaderRow>
           <TopChartTitlePrice
-            btcPrice={btcCurrentPrice}
+            btcPrice={props.btcCurrentPrice}
             day={day}
             month={month}
             year={year}
           />
           <TopChartTitleVolume
-            btcVolume={btcCurrentVolume}
+            btcVolume={props.btcCurrentVolume}
             day={day}
             month={month}
             year={year}
@@ -135,3 +136,16 @@ export const Coins = () => {
     </CoinsPageWrapper>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    btcCurrentPrice: state.coinsData.btcCurrentPrice,
+    btcCurrentVolume: state.coinsData.btcCurrentVolume,
+    isLoading: state.coinsData.isLoading,
+    error: state.coinsData.error,
+  };
+};
+const mapDispatchToProps = {
+  getCoinsData,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Coins);

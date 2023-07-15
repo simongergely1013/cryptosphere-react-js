@@ -7,6 +7,7 @@ import {
   VolumeVsMarketCapDiv,
 } from "./SubNavVolumeVsMarketCap.styles";
 import { BulletPoint } from "../NavBar/NavBar.styles";
+import { hoverColor } from "../../App.styles";
 
 export const SubNavVolumeVsMarketCap = ({
   totalVolume,
@@ -20,7 +21,7 @@ export const SubNavVolumeVsMarketCap = ({
       <ListItemWithProgress
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        color={hovered && "#BDBDBD"}
+        color={hovered && hoverColor}
       >
         <BulletPoint />
         {totalVolume}

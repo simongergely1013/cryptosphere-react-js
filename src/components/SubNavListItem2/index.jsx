@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { StyledListItemSubNav } from "../SubNavListItem1/SubNavListItem1.styles";
 import { HoverDiv2 } from "./SubNavListItem2.styles";
+import { hoverColor } from "../../App.styles";
 
 const ExchangesHoverDiv = ({ exchanges }) => {
   return (
@@ -21,7 +22,7 @@ export const SubNavListItem2 = ({ text, data, exchanges }) => {
       <StyledListItemSubNav
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        color={hovered && "#BDBDBD"}
+        color={hovered && hoverColor}
       >
         {text}
         {data}

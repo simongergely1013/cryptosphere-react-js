@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { hoverColor } from "../../App.styles";
 import {
   BtcDominanceDiv,
   ListItemWithProgress,
@@ -25,7 +26,7 @@ export const SubNavBtcDominance = ({
         <BtcDominanceDiv
           onMouseEnter={() => setDominanceHovered(true)}
           onMouseLeave={() => setDominanceHovered(false)}
-          color={dominanceHovered && "#BDBDBD"}
+          color={dominanceHovered && hoverColor}
         >
           {dominancePercent}% BTC
         </BtcDominanceDiv>

@@ -14,5 +14,5 @@ export const Button = styled.div`
   border: 1px solid #06d554;
   background: ${(props) => props.background};
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: color ease-in-out;
 `;
