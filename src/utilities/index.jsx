@@ -1,5 +1,12 @@
-import { CurrencyContext } from "../contexts/CurrencyContext";
 import { useContext } from "react";
+import { CurrencyContext } from "../contexts/CurrencyContext";
+
+const getDate = () => {
+  return new Date();
+};
+export const day = getDate().toString().slice(8, 10);
+export const month = getDate().toString().slice(4, 7);
+export const year = getDate().toString().slice(11, 15);
 
 export const formatNumber = (number) => {
   const { currency } = useContext(CurrencyContext);
@@ -74,15 +81,21 @@ export const formatVolumeMarketCap = (number) => {
   }
   return numberRonded;
 };
-export const getDate = () => {
-  return new Date();
-};
-
 export const getThemeColors = () => {
   const theme = localStorage.getItem("theme");
   return JSON.parse(theme);
 };
-
+export const getLocalStorageItem = (string) => {
+  const item = JSON.parse(localStorage.getItem(string));
+  return item;
+};
+export const getSmallChartLabels = () => {
+  let labels = [];
+  for (let i = 0; i < 28; i++) {
+    labels.push("");
+  }
+  return labels;
+};
 export const btcPricesData = (chartHours, btcPrices) => {
   const theme = getThemeColors();
   const data = {
@@ -132,7 +145,6 @@ export const btcVolumesData = (chartHours, btcVolumes) => {
   };
   return data;
 };
-
 export const coinPricesData = (chartLabels, coinId, coinPrices) => {
   const theme = getThemeColors();
   const data = {
