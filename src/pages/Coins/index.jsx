@@ -103,8 +103,5 @@ const mapStateToProps = (state) => {
     error: state.coins.error,
   };
 };
-const mapDispatchToProps = {
-  getCoinsData,
-  getChartsData,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Coins);
+
+export default connect(mapStateToProps, { getCoinsData, getChartsData })(Coins);

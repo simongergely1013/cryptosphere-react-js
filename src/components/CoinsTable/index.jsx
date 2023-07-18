@@ -220,9 +220,7 @@ const mapStateToProps = (state) => {
     hasMore: state.coinsTable.hasMore,
   };
 };
-const mapDispatchToProps = {
-  getCoinsTableData,
-  increasePage,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoinsTable);
+export default connect(mapStateToProps, { getCoinsTableData, increasePage })(
+  CoinsTable
+);

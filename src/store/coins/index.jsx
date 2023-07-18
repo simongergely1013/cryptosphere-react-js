@@ -55,7 +55,7 @@ const coinsDataReducer = (state = initialState, action) => {
     case ACTIONS.GET_CHARTS_DATA_ERROR:
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: true,
       };
     default:
