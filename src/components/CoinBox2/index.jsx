@@ -10,7 +10,7 @@ import {
   AllTimeDiv,
   AllTimeP,
 } from "./CoinBox2.styles";
-import { formatNumber } from "../../utilities";
+import { formatNumber } from "../../utilities/formatNumber";
 
 export const CoinBox2 = ({
   coinPrice,

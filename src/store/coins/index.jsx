@@ -1,4 +1,4 @@
-import { formatDate } from "../../utilities";
+import { formatDate } from "../../utilities/formatDate";
 
 export const ACTIONS = {
   GET_COINS_DATA_PENDING: "GET_COINS_DATA_PENDING",

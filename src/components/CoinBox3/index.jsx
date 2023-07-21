@@ -1,6 +1,6 @@
 import React from "react";
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
-import { formatNumber } from "../../utilities";
+import { formatNumber } from "../../utilities/formatNumber";
 import {
   CoinDataBoxContainer,
   CoinDataRow,

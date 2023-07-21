@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getLocalStorageItem } from "../../utilities";
+import { getLocalStorageItem } from "../../utilities/getLocalStorageItem";
 import { ACTIONS } from ".";
 
 export const getCoinsTableData = () => async (dispatch, getState) => {

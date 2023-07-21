@@ -1,7 +1,8 @@
 import CoinsTable from "../../components/CoinsTable";
 import { useContext, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocalState } from "../../hooks";
+import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { getCoinsData, getChartsData } from "../../store/coins/actions";
 import { PageHeader } from "../../components/PageHeader";
 import { TopChartTitlePrice } from "../../components/TopChartTitlePrice";
@@ -14,22 +15,29 @@ import {
   ChartsWrapperInner,
   TopChartHeaderRow,
 } from "./Coins.styles";
-import { day, month, year } from "../../utilities";
+import { day, month, year } from "../../utilities/getDate";
 import { LineChart } from "../../components/LineChart";
 import { BarChart } from "../../components/BarChart";
-import { CurrencyContext } from "../../contexts/CurrencyContext";
-import { btcPricesData, btcVolumesData, getThemeColors } from "../../utilities";
+import { btcPricesData } from "../../utilities/btcPricesData";
+import { btcVolumesData } from "../../utilities/btcVolumesData";
+import { getThemeColors } from "../../utilities/getThemeColors";
 
-const Coins = (props) => {
+const Coins = () => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
+  const dispatch = useDispatch();
+  const coinsData = useSelector((state) => state.coins);
+  const chartHours = coinsData.chartHours;
+  const isLoading = coinsData.isLoading;
+  const error = coinsData.error;
+
   const [btcChartDuration, setBtcChartDuration] = useLocalState(
     "btcChartDuration",
     1
   );
   useEffect(() => {
-    props.getCoinsData();
-    props.getChartsData();
+    dispatch(getCoinsData());
+    dispatch(getChartsData());
   }, [currency, btcChartDuration]);
   return (
     <CoinsPageWrapper>
@@ -37,21 +45,21 @@ const Coins = (props) => {
       <ChartsWrapper>
         <TopChartHeaderRow>
           <TopChartTitlePrice
-            btcPrice={props.btcCurrentPrice}
+            btcPrice={coinsData.btcCurrentPrice}
             day={day}
             month={month}
             year={year}
           />
           <TopChartTitleVolume
-            btcVolume={props.btcCurrentVolume}
+            btcVolume={coinsData.btcCurrentVolume}
             day={day}
             month={month}
             year={year}
           />
         </TopChartHeaderRow>
         <ChartsWrapperInner>
-          <LineChart data={btcPricesData(props.chartHours, props.btcPrices)} />
-          <BarChart data={btcVolumesData(props.chartHours, props.btcVolumes)} />
+          <LineChart data={btcPricesData(chartHours, coinsData.btcPrices)} />
+          <BarChart data={btcVolumesData(chartHours, coinsData.btcVolumes)} />
         </ChartsWrapperInner>
       </ChartsWrapper>
       <ChartDurationRow>
@@ -92,16 +100,4 @@ const Coins = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    btcCurrentPrice: state.coins.btcCurrentPrice,
-    btcCurrentVolume: state.coins.btcCurrentVolume,
-    btcPrices: state.coins.btcPrices,
-    btcVolumes: state.coins.btcVolumes,
-    chartHours: state.coins.chartHours,
-    isLoading: state.coins.isLoading,
-    error: state.coins.error,
-  };
-};
-
-export default connect(mapStateToProps, { getCoinsData, getChartsData })(Coins);
+export default Coins;

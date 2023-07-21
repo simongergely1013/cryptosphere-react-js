@@ -1,5 +1,5 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getCoinsTableData,
   increasePage,
@@ -7,14 +7,12 @@ import {
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { useContext, useEffect } from "react";
-import {
-  getRandomColor,
-  formatNumber,
-  formatSupply,
-  formatVolumeMarketCap,
-  getThemeColors,
-  getSmallChartLabels,
-} from "../../utilities";
+import { getRandomColor } from "../../utilities/getRandomColor";
+import { formatNumber } from "../../utilities/formatNumber";
+import { formatSupply } from "../../utilities/formatSupply";
+import { formatVolumeMarketCap } from "../../utilities/formatVolumeMarketCap";
+import { getThemeColors } from "../../utilities/getThemeColors";
+import { getSmallChartLabels } from "../../utilities/getSmallChartLabels";
 import {
   CoinsTableWrapper,
   CoinsTableContainer,
@@ -48,12 +46,17 @@ import {
 } from "./CoinsTable.styles";
 import { SmallLineChart } from "../LineChart";
 
-const CoinsTable = (props) => {
+const CoinsTable = () => {
   const { currency } = useContext(CurrencyContext);
   const { coinsPercentageBarColor } = getThemeColors();
+  const dispatch = useDispatch();
+  const coinsTableData = useSelector((state) => state.coinsTable.coinsData);
+  const page = coinsTableData.page;
+  const isLoading = coinsTableData.hasMore;
+  const error = coinsTableData.error;
   useEffect(() => {
-    props.getCoinsTableData();
-  }, [currency, props.page]);
+    dispatch(getCoinsTableData());
+  }, [currency, page]);
   return (
     <CoinsTableWrapper>
       <CoinsTableContainer>
@@ -74,13 +77,13 @@ const CoinsTable = (props) => {
         </TableHeaderRow>
         <CoinsRowsContainer>
           <InfiniteScroll
-            dataLength={props.coinsData}
-            next={props.increasePage()}
-            hasMore={props.hasMore}
+            dataLength={coinsTableData.length}
+            next={dispatch(increasePage())}
+            hasMore={coinsTableData.hasMore}
             loader={<h3>Loading...</h3>}
             endMessage={<p>No more coins left</p>}
           >
-            {props.coinsData.map((obj, index) => {
+            {coinsTableData.map((obj, index) => {
               const percentageChange1h =
                 obj.price_change_percentage_1h_in_currency.toFixed(2);
               const percentageChange24h =
@@ -211,16 +214,4 @@ const CoinsTable = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.coinsTable.isLoading,
-    error: state.coinsTable.error,
-    coinsData: state.coinsTable.coinsData,
-    page: state.coinsTable.page,
-    hasMore: state.coinsTable.hasMore,
-  };
-};
-
-export default connect(mapStateToProps, { getCoinsTableData, increasePage })(
-  CoinsTable
-);
+export default CoinsTable;

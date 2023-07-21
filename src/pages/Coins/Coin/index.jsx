@@ -1,10 +1,11 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCoinData } from "../../../store/coin/actions";
 import { useLocalState } from "../../../hooks";
 import { useEffect, useContext } from "react";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
-import { coinPricesData, getThemeColors } from "../../../utilities";
+import { coinPricesData } from "../../../utilities/coinPricesData";
+import { getThemeColors } from "../../../utilities/getThemeColors";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
@@ -24,52 +25,60 @@ import {
 const Coin = (props) => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
+  const dispatch = useDispatch();
+  const coinId = props.match.params.coinId;
+  const coinData = useSelector((state) => state.coin.coinData);
+  const isLoading = useSelector((state) => state.coin.isLoading);
+  const error = useSelector((state) => state.coin.error);
   const [coinChartDuration, setCoinChartDuration] = useLocalState(
     "coinChartDuration",
     1
   );
+  // const [coinCurrentPrice, setCoinCurrentPrice] = useLocalState(
+  //   "coinCurrentPrice",
+  //   coinData.coinCurrentPrice
+  // );
   useEffect(() => {
-    props.getCoinData(props.match.params.coinId, coinChartDuration);
+    dispatch(getCoinData(coinId, coinChartDuration));
   }, [currency, coinChartDuration]);
-  localStorage.setItem("coinCurrentPrice", props.coinData.coinCurrentPrice);
   return (
     <CoinPageWrapper>
       <PageHeader text={"Summary"} />
       <SummaryWrapper>
         <CoinBox1
-          src={props.coinData.coinImgSrc}
-          coinName={props.coinData.coinName}
-          coinSymbol={props.coinData.coinSymbol}
-          coinHomePage={props.coinData.coinHomePage}
+          src={coinData.coinImgSrc}
+          coinName={coinData.coinName}
+          coinSymbol={coinData.coinSymbol}
+          coinHomePage={coinData.coinHomePage}
         />
         <CoinBox2
-          coinPrice={props.coinData.coinCurrentPrice}
-          priceChangePercentage={props.coinData.priceChangePercentage24h}
-          ath={props.coinData.coinAth}
-          athDate={props.coinData.coinAthDate}
-          atl={props.coinData.coinAtl}
-          atlDate={props.coinData.coinAtlDate}
+          coinPrice={coinData.coinCurrentPrice}
+          priceChangePercentage={coinData.priceChangePercentage24h}
+          ath={coinData.coinAth}
+          athDate={coinData.coinAthDate}
+          atl={coinData.coinAtl}
+          atlDate={coinData.coinAtlDate}
         />
         <CoinBox3
-          coinMarketCap={props.coinData.coinMarketCap}
-          coinFullyDillutedValuation={props.coinData.coinFullyDillutedValuation}
-          coinVolume24h={props.coinData.coinVolume24h}
-          coinVolumeOverMarketCap={props.coinData.coinVolumeOverMarketCap}
-          coinCirculatingSupply={props.coinData.coinCirculatingSupply}
-          coinSymbol={props.coinData.coinSymbol}
-          coinTotalSupply={props.coinData.coinTotalSupply}
-          num1={props.coinData.num1 + "%"}
-          num2={props.coinData.num2 + "%"}
-          color1={props.coinData.color1}
-          color2={props.coinData.color2}
+          coinMarketCap={coinData.coinMarketCap}
+          coinFullyDillutedValuation={coinData.coinFullyDillutedValuation}
+          coinVolume24h={coinData.coinVolume24h}
+          coinVolumeOverMarketCap={coinData.coinVolumeOverMarketCap}
+          coinCirculatingSupply={coinData.coinCirculatingSupply}
+          coinSymbol={coinData.coinSymbol}
+          coinTotalSupply={coinData.coinTotalSupply}
+          num1={coinData.num1 + "%"}
+          num2={coinData.num2 + "%"}
+          color1={coinData.color1}
+          color2={coinData.color2}
         />
       </SummaryWrapper>
       <PageHeader text={"Description"} />
-      <CoinDescription coinDescription={props.coinData.coinDescription} />
+      <CoinDescription coinDescription={coinData.coinDescription} />
       <CoinUrlsRow>
-        <CoinUrl blockchainSite={props.coinData.coinBlockChainSite1} />
-        <CoinUrl blockchainSite={props.coinData.coinBlockChainSite2} />
-        <CoinUrl blockchainSite={props.coinData.coinBlockChainSite3} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite1} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite2} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite3} />
       </CoinUrlsRow>
       <ChartDurationRow>
         <CoinChartDurationButton
@@ -104,26 +113,13 @@ const Coin = (props) => {
         />
       </ChartDurationRow>
       <CurrencyConversionRow>
-        <CurrencyConverter coinSymbol={props.coinData.coinSymbol} />
+        <CurrencyConverter coinSymbol={coinData.coinSymbol} />
       </CurrencyConversionRow>
       <BigLineChart
-        data={coinPricesData(
-          props.coinData.chartLabels,
-          props.match.params.coinId,
-          props.coinData.coinPrices
-        )}
+        data={coinPricesData(coinData.chartLabels, coinId, coinData.coinPrices)}
       />
     </CoinPageWrapper>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    coinData: state.coin.coinData,
-    isLoading: state.coin.isLoading,
-    error: state.coin.error,
-    chartDuration: state.coin.chartDuration,
-  };
-};
-
-export default connect(mapStateToProps, { getCoinData })(Coin);
+export default Coin;

@@ -1,6 +1,6 @@
 import React from "react";
 import { TopChartHeader, Header2, Header3 } from "./TopChartTitleVolume.styles";
-import { formatVolumeMarketCap } from "../../utilities";
+import { formatVolumeMarketCap } from "../../utilities/formatVolumeMarketCap";
 
 export const TopChartTitleVolume = ({ btcVolume, day, month, year }) => {
   return (

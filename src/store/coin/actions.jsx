@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ACTIONS } from ".";
-import { getLocalStorageItem } from "../../utilities";
+import { getLocalStorageItem } from "../../utilities/getLocalStorageItem";
 
 export const getCoinData = (coinId, chartDuration) => async (dispatch) => {
   try {

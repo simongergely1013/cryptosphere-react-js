@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
-import { formatNumber } from "../../utilities";
+import { formatNumber } from "../../utilities/formatNumber";
 import { NavBarCoinsLink } from "../NavBarCoinsLink";
 import { NavBarPortfolioLink } from "../NavBarPortfolioLink";
 import { NavBarSearch } from "../NavBarSearch";

@@ -1,8 +1,6 @@
-import {
-  getRandomColor,
-  formatDate,
-  getLocalStorageItem,
-} from "../../utilities";
+import { getRandomColor } from "../../utilities/getRandomColor";
+import { formatDate } from "../../utilities/formatDate";
+import { getLocalStorageItem } from "../../utilities/getLocalStorageItem";
 
 export const ACTIONS = {
   GET_COIN_DATA_PENDING: "GET_COIN_DATA_PENDING",
