@@ -8,12 +8,14 @@ import { NavBarSearch } from "../NavBarSearch";
 import { NavBarCurrencySelector } from "../NavBarCurrencySelector";
 import { ThemeSwitch } from "../ThemeSwitch";
 import { BlackCircleCurrency } from "../BlackCircleCurrency";
-import { SubNavListItem1 } from "../SubNavListItem1";
-import { SubNavListItem2 } from "../SubNavListItem2";
-import { SubNavListItem3 } from "../SubNavListItem3";
+import { SubNavListItem } from "../SubNavListItem";
+import { SubNavTotalMarketCap } from "../SubNavTotalMarketCap";
 import { SubNavVolumeVsMarketCap } from "../SubNavVolumeVsMarketCap";
-import { SubNavBtcDominance } from "../SubNavBtcDominance";
-import { SubNavEthDominance } from "../SubNavEthDominance";
+import {
+  BitcoinSvgSubNav,
+  EthereumSvgSubNav,
+} from "../SubNavDominance/SubNavDominance.styles";
+import { SubNavDominance } from "../SubNavDominance";
 import {
   StyledNav,
   LinksList,
@@ -107,13 +109,19 @@ export const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
         <SubNavDivCenter>
           <ListDiv>
             <StyledListSubNav>
-              <SubNavListItem1 text={"Coins:  "} data={coins} coins={coins} />
-              <SubNavListItem2
-                text={"Exchanges:  "}
-                data={markets}
-                exchanges={markets}
+              <SubNavListItem
+                title={"Coins"}
+                data1={coins}
+                data2={coins}
+                text={"Number of existing coins in the markget"}
               />
-              <SubNavListItem3
+              <SubNavListItem
+                title={"Exchanges: "}
+                data1={markets}
+                data2={markets}
+                text={"Number of existing exchange markets to trade at"}
+              />
+              <SubNavTotalMarketCap
                 marketCap={totalMarketCapFormatted}
                 text={"T"}
                 marketCapChange24h={marketCapChange24h.toFixed(2)}
@@ -125,19 +133,25 @@ export const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 percent={progressBarsData.totalVolumePercent}
                 totalMarketCap={totalMarketCapLongFormatted}
               />
-              <SubNavBtcDominance
+              <SubNavDominance
+                coinNameShort={"BTC"}
+                coinNameLong={"Bitcoin"}
+                svg={<BitcoinSvgSubNav />}
+                text={"Market Cap"}
                 dominancePercent={progressBarsData.btcDominancePercent}
                 percent={progressBarsData}
-                btcMarketCap={btcMarketCapFormatted}
+                marketCap={btcMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
-                btcDominancePercent={progressBarsData.btcDominancePercent}
               />
-              <SubNavEthDominance
+              <SubNavDominance
+                coinNameShort={"ETH"}
+                coinNameLong={"Ethereum"}
+                svg={<EthereumSvgSubNav />}
+                text={"Market Cap"}
                 dominancePercent={progressBarsData.ethDominancePercent}
                 percent={progressBarsData}
-                ethMarketCap={ethMarketCapFormatted}
+                marketCap={ethMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
-                ethDominancePercent={progressBarsData.ethDominancePercent}
               />
             </StyledListSubNav>
           </ListDiv>

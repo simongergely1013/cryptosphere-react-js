@@ -1,11 +1,12 @@
+import { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinData } from "../../../store/coin/actions";
 import { useLocalState } from "../../../hooks";
-import { useEffect, useContext } from "react";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { coinPricesData } from "../../../utilities/coinPricesData";
 import { getThemeColors } from "../../../utilities/getThemeColors";
+import { getButtonColor } from "../../../utilities/getButtonColor";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
@@ -34,10 +35,6 @@ const Coin = (props) => {
     "coinChartDuration",
     1
   );
-  // const [coinCurrentPrice, setCoinCurrentPrice] = useLocalState(
-  //   "coinCurrentPrice",
-  //   coinData.coinCurrentPrice
-  // );
   useEffect(() => {
     dispatch(getCoinData(coinId, coinChartDuration));
   }, [currency, coinChartDuration]);
@@ -84,36 +81,39 @@ const Coin = (props) => {
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(1)}
           duration={"1d"}
-          background={coinChartDuration === 1 ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === 1, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(7)}
           duration={"7d"}
-          background={coinChartDuration === 7 ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === 7, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(30)}
           duration={"30d"}
-          background={coinChartDuration === 30 ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === 30, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(90)}
           duration={"90d"}
-          background={coinChartDuration === 90 ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === 90, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(365)}
           duration={"1y"}
-          background={coinChartDuration === 365 ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === 365, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration("max")}
           duration={"Max"}
-          background={coinChartDuration === "max" ? "#06d554" : background}
+          background={getButtonColor(coinChartDuration === "max", background)}
         />
       </ChartDurationRow>
       <CurrencyConversionRow>
-        <CurrencyConverter coinSymbol={coinData.coinSymbol} />
+        <CurrencyConverter
+          coinSymbol={coinData.coinSymbol}
+          coinCurrentPrice={coinData.coinCurrentPrice}
+        />
       </CurrencyConversionRow>
       <BigLineChart
         data={coinPricesData(coinData.chartLabels, coinId, coinData.coinPrices)}

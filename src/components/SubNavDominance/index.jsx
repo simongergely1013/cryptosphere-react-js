@@ -2,51 +2,60 @@ import React from "react";
 import { useState } from "react";
 import { hoverColor } from "../../App.styles";
 import {
-  BtcDominanceDiv,
-  ListItemWithProgress,
-  BitcoinSvgSubNav,
+  LiWithProgress,
+  DominanceDiv,
   ProgressBar,
-  BtcDominanceProgressBar,
-  BtcDominanceHoverDiv1,
-  BtcDominanceHoverDiv2,
-} from "./SubNavBtcDominance.styles";
+  DominanceProgressBar,
+  DominanceHoverDiv1,
+  DominanceHoverDiv2,
+} from "./SubNavDominance.styles";
 
-export const SubNavBtcDominance = ({
+export const SubNavDominance = ({
+  svg,
   dominancePercent,
   percent,
-  btcMarketCap,
+  marketCap,
   totalMarketCap,
+  coinNameShort,
+  coinNameLong,
+  text,
 }) => {
   const [dominanceHovered, setDominanceHovered] = useState(false);
   const [progressBarHovered, setProgressBarHovered] = useState(false);
   return (
     <>
-      <ListItemWithProgress>
-        <BitcoinSvgSubNav />
-        <BtcDominanceDiv
+      <LiWithProgress>
+        {svg}
+        <DominanceDiv
           onMouseEnter={() => setDominanceHovered(true)}
           onMouseLeave={() => setDominanceHovered(false)}
           color={dominanceHovered && hoverColor}
         >
-          {dominancePercent}% BTC
-        </BtcDominanceDiv>
+          {dominancePercent}% {coinNameShort}
+        </DominanceDiv>
         <div
           onMouseEnter={() => setProgressBarHovered(true)}
           onMouseLeave={() => setProgressBarHovered(false)}
         >
           <ProgressBar>
-            <BtcDominanceProgressBar percent={percent} />
+            <DominanceProgressBar percent={percent} />
           </ProgressBar>
         </div>
-      </ListItemWithProgress>
+      </LiWithProgress>
       {dominanceHovered && (
-        <BtcDominanceHoverDiv1 btcDominance={dominancePercent} />
+        <DominanceHoverDiv1
+          coinNameShort={coinNameShort}
+          coinNameLong={coinNameLong}
+          dominance={dominancePercent}
+        />
       )}
       {progressBarHovered && (
-        <BtcDominanceHoverDiv2
-          btcMarketCap={btcMarketCap}
+        <DominanceHoverDiv2
+          coinName={coinNameShort}
+          marketCap={marketCap}
           totalMarketCap={totalMarketCap}
-          btcDominancePercent={dominancePercent}
+          dominancePercent={dominancePercent}
+          text={text}
         />
       )}
     </>

@@ -21,6 +21,7 @@ import { BarChart } from "../../components/BarChart";
 import { btcPricesData } from "../../utilities/btcPricesData";
 import { btcVolumesData } from "../../utilities/btcVolumesData";
 import { getThemeColors } from "../../utilities/getThemeColors";
+import { getButtonColor } from "../../utilities/getButtonColor";
 
 const Coins = () => {
   const { currency } = useContext(CurrencyContext);
@@ -66,32 +67,32 @@ const Coins = () => {
         <BtcChartDurationButton
           duration={"1d"}
           onClick={() => setBtcChartDuration(1)}
-          background={btcChartDuration === 1 ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === 1, background)}
         />
         <BtcChartDurationButton
           duration={"7d"}
           onClick={() => setBtcChartDuration(7)}
-          background={btcChartDuration === 7 ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === 7, background)}
         />
         <BtcChartDurationButton
           duration={"30d"}
           onClick={() => setBtcChartDuration(30)}
-          background={btcChartDuration === 30 ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === 30, background)}
         />
         <BtcChartDurationButton
           duration={"90d"}
           onClick={() => setBtcChartDuration(90)}
-          background={btcChartDuration === 90 ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === 90, background)}
         />
         <BtcChartDurationButton
           duration={"1y"}
           onClick={() => setBtcChartDuration(365)}
-          background={btcChartDuration === 365 ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === 365, background)}
         />
         <BtcChartDurationButton
           duration={"Max"}
           onClick={() => setBtcChartDuration("max")}
-          background={btcChartDuration === "max" ? "#06d554" : background}
+          background={getButtonColor(btcChartDuration === "max", background)}
         />
       </ChartDurationRow>
       <PageHeader text={"TOP 50 by Market Cap"} />
