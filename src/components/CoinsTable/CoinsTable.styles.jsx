@@ -152,7 +152,6 @@ export const CoinLogo = styled.img`
 export const CoinNameLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
-  transition: all 0.2s ease-in-out;
 `;
 export const TableData1Container = styled.div`
   width: 27%;

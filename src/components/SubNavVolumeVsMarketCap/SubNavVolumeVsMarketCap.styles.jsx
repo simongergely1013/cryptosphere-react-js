@@ -20,7 +20,7 @@ export const ProgressBar = styled.div`
 `;
 export const TotalVolumeProgressBar = styled.div`
   height: 100%;
-  width: ${(props) => props.percent.totalVolumePercent}%;
+  width: ${(props) => props.percent}%;
   border-radius: 20px;
   background: ${(props) => props.theme.progressBarsBackground};
   margin-left: 2px;

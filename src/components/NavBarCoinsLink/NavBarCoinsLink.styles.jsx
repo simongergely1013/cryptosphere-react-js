@@ -17,8 +17,8 @@ export const ListItemCoins = styled.li`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.text};
+  text-decoration: none;
   font-size: 22px;
   font-wieght: 500;
   z-index: 10;
-  transition: all 0.2s ease-in-out;
 `;

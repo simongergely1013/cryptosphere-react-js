@@ -1,14 +1,14 @@
-import { combineReducers } from "redux";
+import thunk from "redux-thunk";
+import coins from "./coins";
+import coinsTable from "./coinsTable";
+import coin from "./coin";
+import { combineReducers, applyMiddleware } from "redux";
 import { legacy_createStore as createStore } from "redux";
 
-const initialState = {};
-
-const coinReducer = (state = initialState, action) => {
-  return state;
-};
-
 const reducers = combineReducers({
-  coin: coinReducer,
+  coins,
+  coinsTable,
+  coin,
 });
 
-export const store = createStore(reducers);
+export const store = createStore(reducers, applyMiddleware(thunk));

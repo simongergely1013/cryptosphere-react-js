@@ -8,10 +8,11 @@ import {
   ConversionInput,
 } from "./CurrencyConverter.styles";
 
-export const CurrencyConverter = ({ coinSymbol }) => {
+export const CurrencyConverter = ({ coinSymbol, coinCurrentPrice }) => {
   const { currency } = useContext(CurrencyContext);
   const [currencyValue, setCurrencyValue] = useState("");
   const [coinValue, setCoinValue] = useState("");
+  const [currentPrice, setCurrentPrice] = useState(coinCurrentPrice);
 
   const handleCurrencyChange = (e) => {
     setCurrencyValue(Number(e.target.value));
@@ -23,13 +24,13 @@ export const CurrencyConverter = ({ coinSymbol }) => {
   };
   const executeConversion = () => {
     if (coinValue === null || coinValue === 0 || coinValue === "") {
-      setCoinValue(currencyValue / localStorage.getItem("coinCurrentPrice"));
+      setCoinValue(currencyValue / currentPrice);
     } else if (
       currencyValue === null ||
       currencyValue === 0 ||
       currencyValue === ""
     ) {
-      setCurrencyValue(coinValue * localStorage.getItem("coinCurrentPrice"));
+      setCurrencyValue(coinValue * currentPrice);
     } else {
       return;
     }

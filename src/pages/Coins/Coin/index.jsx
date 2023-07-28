@@ -1,13 +1,12 @@
-import axios from "axios";
-import { useEffect, useContext, useReducer, useState } from "react";
+import { useEffect, useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinData } from "../../../store/coin/actions";
+import { useLocalState } from "../../../hooks";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
-import {
-  formatDate,
-  getRandomColor,
-  coinPricesData,
-  getThemeColors,
-} from "../../../utilities";
+import { coinPricesData } from "../../../utilities/coinPricesData";
+import { getThemeColors } from "../../../utilities/getThemeColors";
+import { getButtonColor } from "../../../utilities/getButtonColor";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
@@ -24,178 +23,103 @@ import {
   ChartDurationRow,
 } from "./Coin.styles";
 
-const ACTIONS = {
-  GET_COIN_DATA: "getCoinData",
-};
-export const Coin = (props) => {
+const Coin = (props) => {
   const { currency } = useContext(CurrencyContext);
-  const getCoinData = async (coinId, days, interval) => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false`
-      );
-      const base = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=`;
-      const search = `&days=${days}&interval=${interval}`;
-      const fullURL = `${base}${currency}${search}`;
-      const response = await axios(fullURL);
-      const data2 = response.data;
-      const dataFull = { ...data, ...data2 };
-      dispatch({ type: ACTIONS.GET_COIN_DATA, payload: dataFull });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const handleChartDuration = (dayNum) => {
-    setDays(dayNum);
-  };
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case ACTIONS.GET_COIN_DATA:
-        const data = action.payload;
-        return {
-          coinData: {
-            ...state.coinData,
-            coinName: data.name,
-            coinSymbol: data.symbol.toUpperCase(),
-            coinImgSrc: data.image.large,
-            coinHomePage: data.links.homepage[0],
-            coinCurrentPrice: data.market_data.current_price[currency],
-            priceChangePercentage24h:
-              data.market_data.price_change_percentage_24h.toFixed(2),
-            coinAth: data.market_data.ath[currency],
-            coinAthDate: data.market_data.ath_date[currency].slice(0, 10),
-            coinAtl: data.market_data.atl[currency],
-            coinAtlDate: data.market_data.atl_date[currency].slice(0, 10),
-            coinMarketCap: data.market_data.market_cap[currency],
-            coinFullyDillutedValuation:
-              data.market_data.fully_diluted_valuation[currency],
-            coinVolume24h: data.market_data.total_volume[currency],
-            coinVolumeOverMarketCap: (
-              data.market_data.total_volume[currency] /
-              data.market_data.market_cap[currency]
-            ).toFixed(2),
-            coinCirculatingSupply: data.market_data.circulating_supply,
-            coinTotalSupply: data.market_data.total_supply,
-            num1:
-              (
-                data.market_data.total_volume[currency] /
-                data.market_data.market_cap[currency]
-              ).toFixed(2) * 100,
-            num2:
-              100 -
-              (
-                data.market_data.total_volume[currency] /
-                data.market_data.market_cap[currency]
-              ).toFixed(2) *
-                100,
-            coinDescription: data.description["en"],
-            coinBlockChainSite1: data.links.blockchain_site[0],
-            coinBlockChainSite2: data.links.blockchain_site[1],
-            coinBlockChainSite3: data.links.blockchain_site[2],
-            coinPrices: data.prices.map((el) => el[1]),
-            chartLabels: data.prices.map((el) => formatDate(el[0])),
-          },
-        };
-      default:
-        return state;
-    }
-  };
-  const [state, dispatch] = useReducer(reducer, {
-    coinData: {
-      color1: getRandomColor(),
-      color2: getRandomColor(),
-      chartLabels: [],
-      coinPrices: [],
-    },
-  });
-  const [days, setDays] = useState(1);
-  const [interval, setInterval] = useState("hourly");
-  const theme = getThemeColors();
+  const { background } = getThemeColors();
+  const dispatch = useDispatch();
+  const coinId = props.match.params.coinId;
+  const coinData = useSelector((state) => state.coin.coinData);
+  const isLoading = useSelector((state) => state.coin.isLoading);
+  const error = useSelector((state) => state.coin.error);
+  const [coinChartDuration, setCoinChartDuration] = useLocalState(
+    "coinChartDuration",
+    1
+  );
   useEffect(() => {
-    getCoinData(props.match.params.coinId, days, interval);
-  }, [currency, days]);
-  localStorage.setItem("coinCurrentPrice", state.coinData.coinCurrentPrice);
+    dispatch(getCoinData(coinId, coinChartDuration));
+  }, [currency, coinChartDuration]);
   return (
     <CoinPageWrapper>
       <PageHeader text={"Summary"} />
       <SummaryWrapper>
         <CoinBox1
-          src={state.coinData.coinImgSrc}
-          coinName={state.coinData.coinName}
-          coinSymbol={state.coinData.coinSymbol}
-          coinHomePage={state.coinData.coinHomePage}
+          src={coinData.coinImgSrc}
+          coinName={coinData.coinName}
+          coinSymbol={coinData.coinSymbol}
+          coinHomePage={coinData.coinHomePage}
         />
         <CoinBox2
-          coinPrice={state.coinData.coinCurrentPrice}
-          priceChangePercentage={state.coinData.priceChangePercentage24h}
-          ath={state.coinData.coinAth}
-          athDate={state.coinData.coinAthDate}
-          atl={state.coinData.coinAtl}
-          atlDate={state.coinData.coinAtlDate}
+          coinPrice={coinData.coinCurrentPrice}
+          priceChangePercentage={coinData.priceChangePercentage24h}
+          ath={coinData.coinAth}
+          athDate={coinData.coinAthDate}
+          atl={coinData.coinAtl}
+          atlDate={coinData.coinAtlDate}
         />
         <CoinBox3
-          coinMarketCap={state.coinData.coinMarketCap}
-          coinFullyDillutedValuation={state.coinData.coinFullyDillutedValuation}
-          coinVolume24h={state.coinData.coinVolume24h}
-          coinVolumeOverMarketCap={state.coinData.coinVolumeOverMarketCap}
-          coinCirculatingSupply={state.coinData.coinCirculatingSupply}
-          coinSymbol={state.coinData.coinSymbol}
-          coinTotalSupply={state.coinData.coinTotalSupply}
-          num1={state.coinData.num1 + "%"}
-          num2={state.coinData.num2 + "%"}
-          color1={state.coinData.color1}
-          color2={state.coinData.color2}
+          coinMarketCap={coinData.coinMarketCap}
+          coinFullyDillutedValuation={coinData.coinFullyDillutedValuation}
+          coinVolume24h={coinData.coinVolume24h}
+          coinVolumeOverMarketCap={coinData.coinVolumeOverMarketCap}
+          coinCirculatingSupply={coinData.coinCirculatingSupply}
+          coinSymbol={coinData.coinSymbol}
+          coinTotalSupply={coinData.coinTotalSupply}
+          num1={coinData.num1 + "%"}
+          num2={coinData.num2 + "%"}
+          color1={coinData.color1}
+          color2={coinData.color2}
         />
       </SummaryWrapper>
       <PageHeader text={"Description"} />
-      <CoinDescription coinDescription={state.coinData.coinDescription} />
+      <CoinDescription coinDescription={coinData.coinDescription} />
       <CoinUrlsRow>
-        <CoinUrl blockchainSite={state.coinData.coinBlockChainSite1} />
-        <CoinUrl blockchainSite={state.coinData.coinBlockChainSite2} />
-        <CoinUrl blockchainSite={state.coinData.coinBlockChainSite3} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite1} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite2} />
+        <CoinUrl blockchainSite={coinData.coinBlockChainSite3} />
       </CoinUrlsRow>
       <ChartDurationRow>
         <CoinChartDurationButton
-          onClick={() => handleChartDuration(1)}
+          onClick={() => setCoinChartDuration(1)}
           duration={"1d"}
-          background={days === 1 ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === 1, background)}
         />
         <CoinChartDurationButton
-          onClick={() => handleChartDuration(7)}
+          onClick={() => setCoinChartDuration(7)}
           duration={"7d"}
-          background={days === 7 ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === 7, background)}
         />
         <CoinChartDurationButton
-          onClick={() => handleChartDuration(30)}
+          onClick={() => setCoinChartDuration(30)}
           duration={"30d"}
-          background={days === 30 ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === 30, background)}
         />
         <CoinChartDurationButton
-          onClick={() => handleChartDuration(90)}
+          onClick={() => setCoinChartDuration(90)}
           duration={"90d"}
-          background={days === 90 ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === 90, background)}
         />
         <CoinChartDurationButton
-          onClick={() => handleChartDuration(365)}
+          onClick={() => setCoinChartDuration(365)}
           duration={"1y"}
-          background={days === 365 ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === 365, background)}
         />
         <CoinChartDurationButton
-          onClick={() => handleChartDuration("max")}
+          onClick={() => setCoinChartDuration("max")}
           duration={"Max"}
-          background={days === "max" ? "#06d554" : theme.background}
+          background={getButtonColor(coinChartDuration === "max", background)}
         />
       </ChartDurationRow>
       <CurrencyConversionRow>
-        <CurrencyConverter coinSymbol={state.coinData.coinSymbol} />
+        <CurrencyConverter
+          coinSymbol={coinData.coinSymbol}
+          coinCurrentPrice={coinData.coinCurrentPrice}
+        />
       </CurrencyConversionRow>
       <BigLineChart
-        data={coinPricesData(
-          state.coinData.chartLabels,
-          props.match.params.coinId,
-          state.coinData.coinPrices
-        )}
+        data={coinPricesData(coinData.chartLabels, coinId, coinData.coinPrices)}
       />
     </CoinPageWrapper>
   );
 };
+
+export default Coin;

@@ -20,5 +20,4 @@ export const StyledLink = styled(Link)`
   font-size: 22px;
   font-wieght: 500;
   z-index: 10;
-  transition: all 0.2s ease-in-out;
 `;

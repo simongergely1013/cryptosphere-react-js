@@ -74,3 +74,4 @@ export const lightMode = {
   coinsPercentageBarColor: "#546E7A",
   darkMode: false,
 };
+export const hoverColor = "#BDBDBD";

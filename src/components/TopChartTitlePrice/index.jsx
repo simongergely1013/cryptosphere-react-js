@@ -1,6 +1,6 @@
 import React from "react";
 import { TopChartHeader, Header2, Header3 } from "./TopChartTitlePrice.styles";
-import { formatNumber } from "../../utilities";
+import { formatNumber } from "../../utilities/formatNumber";
 
 export const TopChartTitlePrice = ({ btcPrice, day, month, year }) => {
   return (

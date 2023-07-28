@@ -1,15 +1,18 @@
-import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCoinsTableData,
+  increasePage,
+} from "../../store/coinsTable/actions";
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
-import { useContext, useState, useEffect } from "react";
-import {
-  getRandomColor,
-  formatNumber,
-  formatSupply,
-  formatVolumeMarketCap,
-  getThemeColors,
-} from "../../utilities";
+import { useContext, useEffect } from "react";
+import { getRandomColor } from "../../utilities/getRandomColor";
+import { formatNumber } from "../../utilities/formatNumber";
+import { formatSupply } from "../../utilities/formatSupply";
+import { formatVolumeMarketCap } from "../../utilities/formatVolumeMarketCap";
+import { getThemeColors } from "../../utilities/getThemeColors";
+import { getSmallChartLabels } from "../../utilities/getSmallChartLabels";
 import {
   CoinsTableWrapper,
   CoinsTableContainer,
@@ -43,40 +46,16 @@ import {
 } from "./CoinsTable.styles";
 import { SmallLineChart } from "../LineChart";
 
-export const CoinsTable = (props) => {
+const CoinsTable = () => {
   const { currency } = useContext(CurrencyContext);
   const { coinsPercentageBarColor } = getThemeColors();
-  const [page, setPage] = useState(1);
-  const [coinsData, setCoinsData] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-
-  const getCoinsData = async () => {
-    try {
-      const base =
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=";
-      const search = `&order=market_cap_desc&per_page=10&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`;
-      const fullURL = `${base}${currency}${search}`;
-      const { data } = await axios(fullURL);
-      setCoinsData([...coinsData, ...data]);
-      if (!data.length) {
-        setHasMore(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const increasePage = () => {
-    setPage(page + 1);
-  };
-  const getSmallChartLabels = () => {
-    let labels = [];
-    for (let i = 0; i < 28; i++) {
-      labels.push("");
-    }
-    return labels;
-  };
+  const dispatch = useDispatch();
+  const coinsTableData = useSelector((state) => state.coinsTable.coinsData);
+  const page = coinsTableData.page;
+  const isLoading = coinsTableData.hasMore;
+  const error = coinsTableData.error;
   useEffect(() => {
-    getCoinsData();
+    dispatch(getCoinsTableData());
   }, [currency, page]);
   return (
     <CoinsTableWrapper>
@@ -98,13 +77,13 @@ export const CoinsTable = (props) => {
         </TableHeaderRow>
         <CoinsRowsContainer>
           <InfiniteScroll
-            dataLength={coinsData.length}
-            next={increasePage}
-            hasMore={hasMore}
+            dataLength={coinsTableData.length}
+            next={dispatch(increasePage())}
+            hasMore={coinsTableData.hasMore}
             loader={<h3>Loading...</h3>}
             endMessage={<p>No more coins left</p>}
           >
-            {coinsData.map((obj, index) => {
+            {coinsTableData.map((obj, index) => {
               const percentageChange1h =
                 obj.price_change_percentage_1h_in_currency.toFixed(2);
               const percentageChange24h =
@@ -133,7 +112,6 @@ export const CoinsTable = (props) => {
                   return index % 6 === 0;
                 })
                 .map((el) => el);
-              console.log("sparklineData length", sparklineData.length);
               const coinPricesData = {
                 labels: getSmallChartLabels(),
                 datasets: [
@@ -235,3 +213,5 @@ export const CoinsTable = (props) => {
     </CoinsTableWrapper>
   );
 };
+
+export default CoinsTable;

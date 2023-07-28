@@ -76,5 +76,5 @@ export const StyledLink = styled(Link)`
   z-index: 50;
   color: ${(props) => props.theme.text};
   margin-bottom: 5px;
-  transition: all 0.2s ease-in-out;
+  transition: color ease-in-out;
 `;

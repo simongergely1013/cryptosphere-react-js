@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 export const StyledListItemSubNav = styled.li`
@@ -7,8 +8,8 @@ export const StyledListItemSubNav = styled.li`
   font-size: 16px;
   font-weight: 500;
 `;
-export const HoverDiv1 = styled.div`
-  width: 400px;
+const HoverDiv1 = styled.div`
+  width: 450px;
   padding: 10px;
   display: flex;
   justify-content: center;
@@ -21,3 +22,13 @@ export const HoverDiv1 = styled.div`
   margin-top: 100px;
   transition: all 0.2s ease-in-out;
 `;
+export const CoinsHoverDiv = ({ coins, text }) => {
+  return (
+    <HoverDiv1>
+      <p>
+        {text}:{" "}
+        <span style={{ color: "#00FC2A", fontWeight: "bold" }}>{coins}</span>
+      </p>
+    </HoverDiv1>
+  );
+};
