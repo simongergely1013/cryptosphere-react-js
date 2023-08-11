@@ -36,7 +36,7 @@ const Coin = (props) => {
     1
   );
   useEffect(() => {
-    dispatch(getCoinData(coinId, coinChartDuration));
+    dispatch(getCoinData(coinId, currency, coinChartDuration));
   }, [currency, coinChartDuration]);
   return (
     <CoinPageWrapper>
@@ -79,33 +79,23 @@ const Coin = (props) => {
       </CoinUrlsRow>
       <ChartDurationRow>
         <CoinChartDurationButton
-          onClick={() => setCoinChartDuration(1)}
-          duration={"1d"}
-          background={getButtonColor(coinChartDuration === 1, background)}
-        />
-        <CoinChartDurationButton
-          onClick={() => setCoinChartDuration(7)}
-          duration={"7d"}
-          background={getButtonColor(coinChartDuration === 7, background)}
-        />
-        <CoinChartDurationButton
           onClick={() => setCoinChartDuration(30)}
-          duration={"30d"}
+          duration={"1 month"}
           background={getButtonColor(coinChartDuration === 30, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(90)}
-          duration={"90d"}
+          duration={"3 months"}
           background={getButtonColor(coinChartDuration === 90, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration(365)}
-          duration={"1y"}
+          duration={"1 year"}
           background={getButtonColor(coinChartDuration === 365, background)}
         />
         <CoinChartDurationButton
           onClick={() => setCoinChartDuration("max")}
-          duration={"Max"}
+          duration={"All time"}
           background={getButtonColor(coinChartDuration === "max", background)}
         />
       </ChartDurationRow>

@@ -37,12 +37,12 @@ const Coins = () => {
     1
   );
   useEffect(() => {
-    dispatch(getCoinsData());
-    dispatch(getChartsData());
+    dispatch(getCoinsData(currency));
+    dispatch(getChartsData(currency, btcChartDuration));
   }, [currency, btcChartDuration]);
   return (
     <CoinsPageWrapper>
-      <PageHeader text={"Overview"} />
+      <PageHeader text={"Your Overview"} />
       <ChartsWrapper>
         <TopChartHeaderRow>
           <TopChartTitlePrice
@@ -65,32 +65,22 @@ const Coins = () => {
       </ChartsWrapper>
       <ChartDurationRow>
         <BtcChartDurationButton
-          duration={"1d"}
-          onClick={() => setBtcChartDuration(1)}
-          background={getButtonColor(btcChartDuration === 1, background)}
-        />
-        <BtcChartDurationButton
-          duration={"7d"}
-          onClick={() => setBtcChartDuration(7)}
-          background={getButtonColor(btcChartDuration === 7, background)}
-        />
-        <BtcChartDurationButton
-          duration={"30d"}
+          duration={"1 month"}
           onClick={() => setBtcChartDuration(30)}
           background={getButtonColor(btcChartDuration === 30, background)}
         />
         <BtcChartDurationButton
-          duration={"90d"}
+          duration={"3 months"}
           onClick={() => setBtcChartDuration(90)}
           background={getButtonColor(btcChartDuration === 90, background)}
         />
         <BtcChartDurationButton
-          duration={"1y"}
+          duration={"1 year"}
           onClick={() => setBtcChartDuration(365)}
           background={getButtonColor(btcChartDuration === 365, background)}
         />
         <BtcChartDurationButton
-          duration={"Max"}
+          duration={"All time"}
           onClick={() => setBtcChartDuration("max")}
           background={getButtonColor(btcChartDuration === "max", background)}
         />
