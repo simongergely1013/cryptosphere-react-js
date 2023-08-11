@@ -39,6 +39,10 @@ export const NavBarSearch = () => {
       setSearch(false);
     }
   };
+  const handleBlur = () => {
+    setSearch(false);
+    setValue("");
+  };
   const handleClick = () => {
     setValue("");
     setSearch(false);
@@ -49,11 +53,7 @@ export const NavBarSearch = () => {
   return (
     <SearchWrapper>
       <form>
-        <Search
-          value={value}
-          onChange={(e) => handleSearch(e.target.value)}
-          onBlur={() => setSearch(false)}
-        />
+        <Search value={value} onChange={(e) => handleSearch(e.target.value)} />
       </form>
       {search && (
         <SearchList>

@@ -26,6 +26,7 @@ export const App = () => {
   const handleCurrency = (value) => {
     setCurrency(value);
   };
+
   if (isDarkMode) {
     setColorTheme(darkMode);
   } else {

@@ -50,12 +50,16 @@ const CoinsTable = () => {
   const { currency } = useContext(CurrencyContext);
   const { coinsPercentageBarColor } = getThemeColors();
   const dispatch = useDispatch();
-  const coinsTableData = useSelector((state) => state.coinsTable.coinsData);
-  const page = coinsTableData.page;
+  const {
+    coinsData: coinsTableData,
+    page,
+    hasMore,
+  } = useSelector((state) => state.coinsTable);
+
   const isLoading = coinsTableData.hasMore;
   const error = coinsTableData.error;
   useEffect(() => {
-    dispatch(getCoinsTableData());
+    dispatch(getCoinsTableData(currency));
   }, [currency, page]);
   return (
     <CoinsTableWrapper>
@@ -78,8 +82,8 @@ const CoinsTable = () => {
         <CoinsRowsContainer>
           <InfiniteScroll
             dataLength={coinsTableData.length}
-            next={dispatch(increasePage())}
-            hasMore={coinsTableData.hasMore}
+            next={() => dispatch(increasePage())}
+            hasMore={hasMore}
             loader={<h3>Loading...</h3>}
             endMessage={<p>No more coins left</p>}
           >
