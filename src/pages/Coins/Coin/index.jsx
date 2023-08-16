@@ -12,6 +12,7 @@ import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
 import { CoinBox3 } from "../../../components/CoinBox3";
 import { CoinDescription } from "../../../components/CoinDescription";
+import { CoinUrlBox } from "../../../components/CoinUrlBox";
 import { CoinUrl } from "../../../components/CoinUrl";
 import { CoinChartDurationButton } from "../../../components/CoinChartDurationButton";
 import { BigLineChart } from "../../../components/LineChart";
@@ -46,7 +47,7 @@ const Coin = (props) => {
           src={coinData.coinImgSrc}
           coinName={coinData.coinName}
           coinSymbol={coinData.coinSymbol}
-          coinHomePage={coinData.coinHomePage}
+          child={<CoinUrlBox coinHomePage={coinData.coinHomePage} />}
         />
         <CoinBox2
           coinPrice={coinData.coinCurrentPrice}

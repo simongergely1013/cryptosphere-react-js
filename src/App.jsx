@@ -1,11 +1,11 @@
 import NavBar from "./components/NavBar";
 import Coins from "./pages/Coins";
 import Coin from "./pages/Coins/Coin";
+import Portfolio from "./pages/Coins/Portfolio";
 import React, { useState } from "react";
 import { useLocalState } from "./hooks";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Portfolio } from "./pages/Coins/Portfolio";
 import { GlobalStyle, MainWrapper, darkMode, lightMode } from "./App.styles";
 import { CurrencyContext } from "./contexts/CurrencyContext";
 
