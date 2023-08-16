@@ -28,6 +28,10 @@ export const getNavBarData = (currency) => async (dispatch, getState) => {
         data.data.total_market_cap[currency]) *
       100
     ).toFixed(2);
+    localStorage.setItem(
+      "totalMarketCap",
+      data.data.total_market_cap[currency]
+    );
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
   } catch (error) {
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_ERROR });

@@ -1,25 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import {
   CoinBoxContainer,
   CoinBox,
   CoinBoxInner,
   CoinImage,
-  CoinUrlBox,
-  CopyIcon,
-  HomePageDiv,
 } from "./CoinBox1.styles";
 
-export const CoinBox1 = ({ src, coinName, coinSymbol, coinHomePage }) => {
-  const [url, setUrl] = useState("");
-  const urlRef = useRef();
-
-  const copyUrl = async () => {
-    await navigator.clipboard.writeText(url);
-    alert("Copied to clipboard!");
-  };
-  useEffect(() => {
-    setUrl(urlRef.current.innerText);
-  });
+export const CoinBox1 = ({ src, coinName, coinSymbol, child }) => {
   return (
     <CoinBoxContainer>
       <CoinBox>
@@ -30,10 +17,7 @@ export const CoinBox1 = ({ src, coinName, coinSymbol, coinHomePage }) => {
           {coinName} ({coinSymbol})
         </h2>
       </CoinBox>
-      <CoinUrlBox>
-        <CopyIcon onClick={copyUrl} />
-        <HomePageDiv ref={urlRef}>{coinHomePage}</HomePageDiv>
-      </CoinUrlBox>
+      {child}
     </CoinBoxContainer>
   );
 };
