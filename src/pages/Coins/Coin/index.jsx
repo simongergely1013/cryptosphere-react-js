@@ -40,7 +40,7 @@ const Coin = (props) => {
   }, [currency, coinChartDuration]);
   return (
     <CoinPageWrapper>
-      <PageHeader text={"Summary"} />
+      <PageHeader text={"Your Summary"} />
       <SummaryWrapper>
         <CoinBox1
           src={coinData.coinImgSrc}
