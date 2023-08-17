@@ -7,7 +7,18 @@ export const ACTIONS = {
 const initialState = {
   isLoading: false,
   error: false,
-  portfolioData: [],
+  assets: [
+    {
+      id: "bitcoin",
+      date: "17-07-2022",
+      amount: 0.67,
+    },
+    {
+      id: "ethereum",
+      date: "17-07-2023",
+      amount: 1,
+    },
+  ],
 };
 
 const portfolioReducer = (state = initialState, action) => {
@@ -21,7 +32,7 @@ const portfolioReducer = (state = initialState, action) => {
     case ACTIONS.GET_PORTFOLIO_DATA_SUCCESS:
       return {
         ...state,
-        portfolioData: action.payload,
+        assets: action.payload,
       };
     case ACTIONS.GET_PORTFOLIO_DATA_ERROR:
       return {
