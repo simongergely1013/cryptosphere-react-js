@@ -1,6 +1,5 @@
 import React from "react";
 import { Div, InnerDiv, Title, Data } from "./PortfolioCoinBox.styles";
-import { ProgressBar } from "../SubNavDominance/SubNavDominance.styles";
 
 export const PortfolioCoinBox = ({
   title1,
@@ -11,22 +10,23 @@ export const PortfolioCoinBox = ({
   data2,
   data3,
   data4,
-  color,
+  color1,
+  color2,
   child,
 }) => {
   return (
     <Div>
       <InnerDiv>
         <Title>{title1}</Title>
-        <Data color={color}>{data1}</Data>
+        <Data color={color1}>{data1}</Data>
       </InnerDiv>
       <InnerDiv>
         <Title>{title2}</Title>
-        <Data color={color}>{data2}</Data>
+        <Data color={color1}>{data2}</Data>
       </InnerDiv>
       <InnerDiv>
         <Title>{title3}</Title>
-        <Data>{data3}</Data>
+        <Data color={color2}>{data3}</Data>
         {child}
       </InnerDiv>
       <InnerDiv>
