@@ -2,11 +2,14 @@ export const ACTIONS = {
   GET_PORTFOLIO_DATA_PENDING: "GET_PORTFOLIO_DATA_PENDING",
   GET_PORTFOLIO_DATA_SUCCESS: "GET_PORTFOLIO_DATA_SUCCESS",
   GET_PORTFOLIO_DATA_ERROR: "GET_PORTFOLIO_DATA_ERROR",
+  OPEN_MODAL: "OPEN_MODAL",
+  CLOSE_MODAL: "CLOSE_MODAL",
 };
 
 const initialState = {
   isLoading: false,
   error: false,
+  isModalOpen: false,
   assets: [
     {
       id: "bitcoin",
@@ -39,6 +42,16 @@ const portfolioReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: true,
+      };
+    case ACTIONS.OPEN_MODAL:
+      return {
+        ...state,
+        isModalOpen: action.payload,
+      };
+    case ACTIONS.CLOSE_MODAL:
+      return {
+        ...state,
+        isModalOpen: action.payload,
       };
     default:
       return state;

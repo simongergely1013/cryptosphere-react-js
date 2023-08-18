@@ -33,3 +33,16 @@ export const CoinProgressBar = styled.div`
   background: ${(props) => props.theme.progressBarsBackground};
   transition: all 0.2s ease-in-out;
 `;
+export const modalStyles = {
+  content: {
+    width: "40%",
+    height: "504px",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    padding: "0",
+  },
+};

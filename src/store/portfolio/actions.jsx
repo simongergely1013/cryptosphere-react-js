@@ -7,7 +7,6 @@ export const getPortfolioData = (currency) => async (dispatch, getState) => {
     dispatch({ type: ACTIONS.GET_PORTFOLIO_DATA_PENDING });
     const state = getState();
     const portfolio = state.portfolio.assets;
-    console.log("portfolio", portfolio);
     const totalMarketCap = getLocalStorageItem("totalMarketCap");
     const portfolioUpdate = await Promise.all(
       portfolio.map(async (el) => {
@@ -66,4 +65,11 @@ export const getPortfolioData = (currency) => async (dispatch, getState) => {
     dispatch({ type: ACTIONS.GET_PORTFOLIO_DATA_ERROR });
     console.log(error);
   }
+};
+
+export const openModal = (dispatch) => {
+  dispatch({ type: ACTIONS.OPEN_MODAL, payload: true });
+};
+export const closeModal = (dispatch) => {
+  dispatch({ type: ACTIONS.CLOSE_MODAL, payload: false });
 };

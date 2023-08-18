@@ -1,3 +1,5 @@
+import React from "react";
+import ReactModal from "react-modal";
 import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
@@ -6,20 +8,27 @@ import {
   CoinRow,
   CoinDataWrapper,
   CoinProgressBar,
+  modalStyles,
 } from "./Portfolio.styles";
 import { AddAssetButton } from "../../../components/AddAssetButton";
+import { AddAssetWindow } from "../../../components/AddAssetWindow";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { PortfolioCoinBox } from "../../../components/PortfolioCoinBox";
 import { PortfolioProgressBar } from "../../../components/PortfolioProgressBar";
 import { Title } from "../../../components/PortfolioCoinBox/PortfolioCoinBox.styles";
 import { getThemeColors } from "../../../utilities/getThemeColors";
-import { getPortfolioData } from "../../../store/portfolio/actions";
+import {
+  getPortfolioData,
+  openModal,
+  closeModal,
+} from "../../../store/portfolio/actions";
 
 const Portfolio = () => {
   const { main, text } = getThemeColors();
   const { currency } = useContext(CurrencyContext);
   const portfolio = useSelector((state) => state.portfolio.assets);
+  const isModalOpen = useSelector((state) => state.portfolio.isModalOpen);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +36,18 @@ const Portfolio = () => {
   }, [currency]);
   return (
     <PortfolioPageWrapper>
-      <AddAssetButton text={"Add Asset"} background={main} borderColor={text} />
+      <AddAssetButton
+        text={"Add Asset"}
+        background={main}
+        borderColor={text}
+        onClick={() => dispatch(openModal)}
+      />
+      <ReactModal isOpen={isModalOpen} style={modalStyles}>
+        <AddAssetWindow
+          onClickX={() => dispatch(closeModal)}
+          onClickCloseButton={() => dispatch(closeModal)}
+        />
+      </ReactModal>
       <PageHeader text={"Your statistics"} />
 
       {portfolio.map((asset) => {
@@ -64,7 +84,7 @@ const Portfolio = () => {
                   />
                 }
               />
-              <Title>Investment:</Title>
+              <Title>Your Investment:</Title>
               <PortfolioCoinBox
                 title1={"Coin amount: "}
                 title2={"Investment value: "}
