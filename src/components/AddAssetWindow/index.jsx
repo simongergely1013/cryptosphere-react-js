@@ -14,6 +14,7 @@ import {
 import { XButtonModal } from "../XButtonModal";
 import { CloseModalButton } from "../CloseModalButton";
 import { SaveModalButton } from "../SaveModalButton";
+import { PortfolioCoinSearch } from "../PortfolioCoinSearch";
 
 export const AddAssetWindow = ({
   onClickX,
@@ -21,7 +22,6 @@ export const AddAssetWindow = ({
   onClickSave,
 }) => {
   const handleSubmit = () => {};
-
   return (
     <Wrapper>
       <TopRow>
@@ -34,7 +34,7 @@ export const AddAssetWindow = ({
         <Box></Box>
         <FormWrapper>
           <Form onSubmit={handleSubmit}>
-            <Input />
+            <PortfolioCoinSearch />
             <Input />
             <Input />
           </Form>
