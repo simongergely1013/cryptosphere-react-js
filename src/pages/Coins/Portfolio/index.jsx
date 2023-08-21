@@ -52,7 +52,7 @@ const Portfolio = () => {
 
       {portfolio.map((asset) => {
         const currentPrice = asset.currentPrice;
-        const priceChange = asset.priceChangePercentage;
+        const priceChange = asset.priceChangePercentage24h;
         const dominancePercent = asset.dominancePercent;
         const supplyPercent = asset.supplyPercent;
         const coinAmount = asset.amount;

@@ -39,10 +39,6 @@ export const NavBarSearch = () => {
       setSearch(false);
     }
   };
-  const handleBlur = () => {
-    setSearch(false);
-    setValue("");
-  };
   const handleClick = () => {
     setValue("");
     setSearch(false);
