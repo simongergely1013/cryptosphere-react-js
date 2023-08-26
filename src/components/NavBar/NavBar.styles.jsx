@@ -10,12 +10,11 @@ export const StyledNav = styled.nav`
   padding-right: 20px;
   background: ${(props) => props.theme.main};
   position: relative;
-  z-index: 50;
   transition: all 0.2s ease-in-out;
 `;
 export const LinksList = styled.ul`
   display: flex;
-  z-index: 10;
+
   width: 50%;
 `;
 export const NavBarInnerContainer = styled.div`
@@ -25,7 +24,6 @@ export const NavBarInnerContainer = styled.div`
   justify-content: space-between;
 `;
 export const CurrencyDiv = styled.div`
-  z-index: 10;
   display: flex;
   align-items: center;
 `;

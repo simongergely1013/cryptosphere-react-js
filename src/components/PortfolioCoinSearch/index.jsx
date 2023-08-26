@@ -2,39 +2,36 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Input, SearchList, ListItem } from "./PortfolioCoinSearch.styles";
 
-export const PortfolioCoinSearch = () => {
+export const PortfolioCoinSearch = ({ setId }) => {
   const [coinList, setCoinList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [search, setSearch] = useState(false);
 
-  const handleSubmit = () => {};
-
   const handleSearch = (value) => {
     setSearchValue(value);
-    if (value === "") {
+    if (value !== "") {
+      setSearch(true);
+    } else {
       setSearch(false);
     }
   };
   const handleClick = (value) => {
-    console.log(value);
+    setId(value.toLowerCase());
+    setSearchValue(value);
+    setSearch(false);
   };
   const searchCoin = async () => {
     try {
       const { data } = await axios(
         `https://api.coingecko.com/api/v3/search?query=${searchValue}`
       );
-      if (searchValue !== "") {
-        setCoinList(
-          data.coins
-            .filter((element, index) => {
-              return index < 11;
-            })
-            .map((el) => el.name)
-        );
-        setSearch(true);
-      } else {
-        setSearch(false);
-      }
+      setCoinList(
+        data.coins
+          .filter((element, index) => {
+            return index < 11;
+          })
+          .map((el) => el.name)
+      );
     } catch (error) {
       console.log(error);
     }
@@ -45,6 +42,7 @@ export const PortfolioCoinSearch = () => {
   return (
     <>
       <Input
+        type="text"
         value={searchValue}
         onChange={(e) => handleSearch(e.target.value)}
         placeholder="Search coin..."
@@ -52,7 +50,7 @@ export const PortfolioCoinSearch = () => {
       {search && (
         <SearchList>
           {coinList.map((el) => (
-            <ListItem onClick={(e) => handleClick(e.target.innerText)}>
+            <ListItem key={el} onClick={(e) => handleClick(e.target.innerText)}>
               {el}
             </ListItem>
           ))}

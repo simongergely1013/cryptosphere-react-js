@@ -1,21 +1,25 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   CoinBoxContainer,
   CoinBox,
   CoinBoxInner,
   CoinImage,
+  CoinName,
 } from "./CoinBox1.styles";
 
-export const CoinBox1 = ({ src, coinName, coinSymbol, child }) => {
+export const CoinBox1 = ({ src, coinName, coinSymbol, child, button }) => {
+  const portfolio = useSelector((state) => state.portfolio.assets);
   return (
     <CoinBoxContainer>
       <CoinBox>
         <CoinBoxInner>
           <CoinImage src={src} />
         </CoinBoxInner>
-        <h2>
+        <CoinName>
           {coinName} ({coinSymbol})
-        </h2>
+        </CoinName>
+        {button}
       </CoinBox>
       {child}
     </CoinBoxContainer>

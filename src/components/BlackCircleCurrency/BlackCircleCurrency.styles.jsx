@@ -8,7 +8,6 @@ export const BlackCircle = styled.div`
   height: 30px;
   border-radius: 50%;
   position: absolute;
-  z-index: 15;
   margin-left: 8px;
   background: #191b1f;
 `;

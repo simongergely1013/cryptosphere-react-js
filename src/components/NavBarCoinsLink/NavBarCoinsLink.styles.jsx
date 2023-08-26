@@ -10,7 +10,6 @@ export const ListItemCoins = styled.li`
   align-items: center;
   margin: 10px 5px 10px 10px;
   border-radius: 10px;
-  z-index: 10;
   background: ${(props) => props.theme.navBackground};
   transition: all 0.2s ease-in-out;
 `;
@@ -20,5 +19,4 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 22px;
   font-wieght: 500;
-  z-index: 10;
 `;

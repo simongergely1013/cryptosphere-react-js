@@ -10,14 +10,13 @@ const ThemeSwitchDiv = styled.div`
   align-items: center;
   margin: 10px 10px 10px 0px;
   border-radius: 10px;
-  z-index: 10;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 `;
 const StyledMoonSvg = styled.svg`
   width: 28px;
   fill: ${(props) => props.theme.moonIconFill};
   border: none;
-  z-index: 10;
   transition: all 0.2s ease-in-out;
 `;
 export const ThemeSwitchStyled = ({ onClick }) => {

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CoinBoxContainer = styled.div`
   width: 25%;
-  height: 100%;
+  height: 350px;
   margin: 15px;
   border-radius: 20px;
   display: flex;
@@ -34,4 +34,9 @@ export const CoinBoxInner = styled.div`
 `;
 export const CoinImage = styled.img`
   width: 50%;
+`;
+export const CoinName = styled.h2`
+  margin-bottom: 10px;
+  font-weight: normal;
+  font-size: 25px;
 `;

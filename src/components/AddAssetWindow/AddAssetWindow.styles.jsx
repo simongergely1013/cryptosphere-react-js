@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  border-radius: 20px;
 `;
 export const TopRow = styled.div`
   width: 100%;
@@ -43,10 +44,18 @@ export const Box = styled.div`
   height: 100%;
   background: ${(props) => props.theme.main};
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  paddin: 0px 5px 0px 5px;
   align-items: center;
   border-radius: 20px;
   margin-right: 20px;
+`;
+export const Text = styled.h2`
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 15px;
 `;
 export const BottomRow = styled.div`
   width: 100%;

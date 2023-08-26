@@ -11,6 +11,7 @@ import {
   modalStyles,
 } from "./Portfolio.styles";
 import { AddAssetButton } from "../../../components/AddAssetButton";
+import { TrashButton } from "../../../components/PortfolioTrashButton";
 import { AddAssetWindow } from "../../../components/AddAssetWindow";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
@@ -22,6 +23,8 @@ import {
   getPortfolioData,
   openModal,
   closeModal,
+  addNewAsset,
+  removeAsset,
 } from "../../../store/portfolio/actions";
 
 const Portfolio = () => {
@@ -34,6 +37,7 @@ const Portfolio = () => {
   useEffect(() => {
     dispatch(getPortfolioData(currency));
   }, [currency]);
+  console.log("portfolio", portfolio);
   return (
     <PortfolioPageWrapper>
       <AddAssetButton
@@ -46,6 +50,9 @@ const Portfolio = () => {
         <AddAssetWindow
           onClickX={() => dispatch(closeModal)}
           onClickCloseButton={() => dispatch(closeModal)}
+          addAsset={(newAsset, currency) =>
+            dispatch(addNewAsset(newAsset, currency))
+          }
         />
       </ReactModal>
       <PageHeader text={"Your statistics"} />
@@ -59,12 +66,16 @@ const Portfolio = () => {
         const investmentValue = asset.currentInvestmentValue;
         const returnOnInvestment = asset.priceChangePercentageSincePurchase;
         const purchaseDate = asset.date;
+        const assetId = asset.id;
         return (
-          <CoinRow>
+          <CoinRow key={asset.name}>
             <CoinBox1
               src={asset.image}
               coinName={asset.name}
               coinSymbol={asset.symbol}
+              button={
+                <TrashButton onClick={() => dispatch(removeAsset(assetId))} />
+              }
             />
             <CoinDataWrapper>
               <Title>Market Price:</Title>

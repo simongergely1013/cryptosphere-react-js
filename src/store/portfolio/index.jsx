@@ -4,6 +4,10 @@ export const ACTIONS = {
   GET_PORTFOLIO_DATA_ERROR: "GET_PORTFOLIO_DATA_ERROR",
   OPEN_MODAL: "OPEN_MODAL",
   CLOSE_MODAL: "CLOSE_MODAL",
+  ADD_ASSET_PENDING: "ADD_ASSET",
+  ADD_ASSET_SUCCESS: "ADD_ASSET_SUCCESS",
+  ADD_ASSET_ERROR: "ADD_ASSET_ERROR",
+  REMOVE_ASSET: "REMOVE_ASSET",
 };
 
 const initialState = {
@@ -53,6 +57,30 @@ const portfolioReducer = (state = initialState, action) => {
         ...state,
         isModalOpen: action.payload,
       };
+    case ACTIONS.ADD_ASSET_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: false,
+      };
+    case ACTIONS.ADD_ASSET_SUCCESS:
+      return {
+        ...state,
+        assets: action.payload,
+        isModalOpen: false,
+      };
+    case ACTIONS.ADD_ASSET_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
+    case ACTIONS.REMOVE_ASSET:
+      return {
+        ...state,
+        assets: action.payload,
+      };
+
     default:
       return state;
   }
