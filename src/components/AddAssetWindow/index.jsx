@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { CurrencyContext } from "../../contexts/CurrencyContext";
 import {
   Wrapper,
   TopRow,
@@ -6,22 +7,36 @@ import {
   EscDiv,
   MiddleRow,
   Box,
+  Text,
   FormWrapper,
   Form,
   BottomRow,
-  Input,
 } from "./AddAssetWindow.styles";
 import { XButtonModal } from "../XButtonModal";
 import { CloseModalButton } from "../CloseModalButton";
 import { SaveModalButton } from "../SaveModalButton";
 import { PortfolioCoinSearch } from "../PortfolioCoinSearch";
+import { PortfolioCoinAmountInput } from "../PortfolioCoinAmountInput";
+import { PortfolioDateInput } from "../PortfolioDateInput";
 
-export const AddAssetWindow = ({
-  onClickX,
-  onClickCloseButton,
-  onClickSave,
-}) => {
-  const handleSubmit = () => {};
+export const AddAssetWindow = ({ onClickX, onClickCloseButton, addAsset }) => {
+  const { currency } = useContext(CurrencyContext);
+  const [newAsset, setNewAsset] = useState({});
+
+  const setCoinId = (id) => {
+    setNewAsset({ ...newAsset, id });
+  };
+  const setCoinAmount = (amount) => {
+    setNewAsset({ ...newAsset, amount });
+  };
+  const setCoinDate = (date) => {
+    date = date.split("-").reverse().join("-");
+    setNewAsset({ ...newAsset, date });
+  };
+  const handleSave = () => {
+    // make sure asset.amount is bigger than 0
+    addAsset(newAsset, currency);
+  };
   return (
     <Wrapper>
       <TopRow>
@@ -31,18 +46,22 @@ export const AddAssetWindow = ({
         </EscDiv>
       </TopRow>
       <MiddleRow>
-        <Box></Box>
+        <Box>
+          <Text>1. Choose a coin.</Text>
+          <Text>2. Enter the amount you want to purchase.</Text>
+          <Text>3. Select the date of purchase.</Text>
+        </Box>
         <FormWrapper>
-          <Form onSubmit={handleSubmit}>
-            <PortfolioCoinSearch />
-            <Input />
-            <Input />
+          <Form>
+            <PortfolioCoinSearch setId={setCoinId} />
+            <PortfolioCoinAmountInput setAmount={setCoinAmount} />
+            <PortfolioDateInput setDate={setCoinDate} />
           </Form>
         </FormWrapper>
       </MiddleRow>
       <BottomRow>
         <CloseModalButton onClick={onClickCloseButton} />
-        <SaveModalButton onClick={onClickSave} />
+        <SaveModalButton onClick={handleSave} />
       </BottomRow>
     </Wrapper>
   );

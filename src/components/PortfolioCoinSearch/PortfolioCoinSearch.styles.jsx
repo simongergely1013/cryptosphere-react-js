@@ -17,7 +17,7 @@ export const SearchList = styled.div`
   position: absolute;
   z-index: 50;
   margin-top: 73px;
-  margin-left: -140px;
+  left: 40%;
   padding: 5px 20px 20px 20px;
 `;
 export const ListItem = styled.li`
