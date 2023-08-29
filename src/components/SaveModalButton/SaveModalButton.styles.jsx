@@ -8,8 +8,9 @@ export const Button = styled.div`
   align-items: center;
   border-radius: 20px;
   background: ${(props) => props.background};
-  color: #ffffff;
+  color: ${(props) => props.text};
   cursor: pointer;
   font-size: 15px;
   font-weight: normal;
+  border: ${(props) => props.border};
 `;

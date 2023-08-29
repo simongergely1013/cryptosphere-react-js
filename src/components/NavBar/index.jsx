@@ -49,7 +49,6 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
   const btcMarketCapFormatted = formatNumber(navBarData.btcMarketCap);
   const ethMarketCapFormatted = formatNumber(navBarData.ethMarketCap);
   const totalVolumeFormatted = formatNumber(navBarData.totalVolume);
-  const totalVolumeLongFormatted = formatNumber(navBarData.totalVolumeLong);
   const progressBarsData = {
     totalVolumePercent: navBarData.totalVolumePercentage,
     btcDominancePercent: navBarData.btcDominance,
@@ -80,7 +79,7 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 title={"Coins"}
                 data1={navBarData.coins}
                 data2={navBarData.coins}
-                text={"Number of existing coins in the markget"}
+                text={"Number of existing coins in the market"}
               />
               <SubNavListItem
                 title={"Exchanges: "}

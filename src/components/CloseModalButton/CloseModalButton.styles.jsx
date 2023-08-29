@@ -13,4 +13,5 @@ export const Button = styled.div`
   font-size: 15px;
   font-weight: normal;
   margin-right: 12px;
+  border: ${(props) => props.border};
 `;

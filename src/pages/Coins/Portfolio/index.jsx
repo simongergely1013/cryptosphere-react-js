@@ -37,7 +37,6 @@ const Portfolio = () => {
   useEffect(() => {
     dispatch(getPortfolioData(currency));
   }, [currency]);
-  console.log("portfolio", portfolio);
   return (
     <PortfolioPageWrapper>
       <AddAssetButton

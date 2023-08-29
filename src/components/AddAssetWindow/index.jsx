@@ -34,8 +34,17 @@ export const AddAssetWindow = ({ onClickX, onClickCloseButton, addAsset }) => {
     setNewAsset({ ...newAsset, date });
   };
   const handleSave = () => {
-    // make sure asset.amount is bigger than 0
-    addAsset(newAsset, currency);
+    if (
+      newAsset === undefined ||
+      newAsset.amount <= 0 ||
+      newAsset.id === undefined ||
+      newAsset.amount === undefined ||
+      newAsset.date === undefined
+    ) {
+      return;
+    } else {
+      addAsset(newAsset, currency);
+    }
   };
   return (
     <Wrapper>

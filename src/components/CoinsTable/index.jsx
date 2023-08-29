@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCoinsTableData,
   increasePage,
+  sortByName,
+  sortByPrice,
+  sortBy1hChange,
+  sortBy24hChange,
+  sortBy7dChange,
 } from "../../store/coinsTable/actions";
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
@@ -12,7 +17,7 @@ import { formatNumber } from "../../utilities/formatNumber";
 import { formatSupply } from "../../utilities/formatSupply";
 import { formatVolumeMarketCap } from "../../utilities/formatVolumeMarketCap";
 import { getThemeColors } from "../../utilities/getThemeColors";
-import { getSmallChartLabels } from "../../utilities/getSmallChartLabels";
+import { getCoinPricesData } from "../../utilities/getCoinPricesData";
 import {
   CoinsTableWrapper,
   CoinsTableContainer,
@@ -44,6 +49,7 @@ import {
   ArrowUp,
   ArrowDown,
 } from "./CoinsTable.styles";
+import { ChevronUpAndDown } from "../ChevronUpAndDown";
 import { SmallLineChart } from "../LineChart";
 
 const CoinsTable = () => {
@@ -56,8 +62,6 @@ const CoinsTable = () => {
     hasMore,
   } = useSelector((state) => state.coinsTable);
 
-  const isLoading = coinsTableData.hasMore;
-  const error = coinsTableData.error;
   useEffect(() => {
     dispatch(getCoinsTableData(currency));
   }, [currency, page]);
@@ -66,12 +70,25 @@ const CoinsTable = () => {
       <CoinsTableContainer>
         <TableHeaderRow>
           <NumeroHeader>#</NumeroHeader>
-          <NameHeader>Name</NameHeader>
+          <NameHeader>
+            Name <ChevronUpAndDown onClick={() => dispatch(sortByName())} />
+          </NameHeader>
           <TableHeaderContainer1>
-            <Price>Price</Price>
-            <OneHourChange>1h%</OneHourChange>
-            <OneDayChange>24h%</OneDayChange>
-            <OneWeekChange>7d%</OneWeekChange>
+            <Price>
+              Price <ChevronUpAndDown onClick={() => dispatch(sortByPrice())} />
+            </Price>
+            <OneHourChange>
+              1h%{" "}
+              <ChevronUpAndDown onClick={() => dispatch(sortBy1hChange())} />
+            </OneHourChange>
+            <OneDayChange>
+              24h%{" "}
+              <ChevronUpAndDown onClick={() => dispatch(sortBy24hChange())} />
+            </OneDayChange>
+            <OneWeekChange>
+              7d%{" "}
+              <ChevronUpAndDown onClick={() => dispatch(sortBy7dChange())} />
+            </OneWeekChange>
           </TableHeaderContainer1>
           <TableHeaderContainer2>
             <TableHeader2>24h Volume/Market Cap</TableHeader2>
@@ -116,21 +133,7 @@ const CoinsTable = () => {
                   return index % 6 === 0;
                 })
                 .map((el) => el);
-              const coinPricesData = {
-                labels: getSmallChartLabels(),
-                datasets: [
-                  {
-                    label: "",
-                    data: sparklineData,
-                    borderColor:
-                      sparklineData[0] < sparklineData[sparklineData.length - 1]
-                        ? "#00FF5F"
-                        : "red",
-                    pointRadius: 0,
-                    borderWidth: 3,
-                  },
-                ],
-              };
+              const coinPricesData = getCoinPricesData(sparklineData);
               return (
                 <TableRow key={obj.name}>
                   <NumeroHeader>{index + 1}</NumeroHeader>
