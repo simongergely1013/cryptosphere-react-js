@@ -46,7 +46,7 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  paddin: 0px 5px 0px 5px;
+  padding: 0px 5px 0px 5px;
   align-items: center;
   border-radius: 20px;
   margin-right: 20px;
@@ -77,7 +77,7 @@ export const Form = styled.form`
   align-items: center;
 `;
 export const Input = styled.input`
-  width: 100%;
+  width: 90%;
   height: 28%;
   background: ${(props) => props.theme.main};
   color: ${(props) => props.theme.text};

@@ -26,12 +26,7 @@ export const App = () => {
   const handleCurrency = (value) => {
     setCurrency(value);
   };
-
-  if (isDarkMode) {
-    setColorTheme(darkMode);
-  } else {
-    setColorTheme(lightMode);
-  }
+  isDarkMode ? setColorTheme(darkMode) : setColorTheme(lightMode);
   return (
     <ThemeProvider theme={isDarkMode ? darkMode : lightMode}>
       <CurrencyContext.Provider value={{ currency, handleCurrency }}>

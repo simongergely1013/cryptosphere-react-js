@@ -44,5 +44,6 @@ export const modalStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     padding: "0",
+    borderRadius: "20px",
   },
 };

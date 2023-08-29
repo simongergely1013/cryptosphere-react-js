@@ -1,50 +1,28 @@
 import React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SearchWrapper, Search, SearchList } from "./NavBarSearch.styles";
 import { StyledLink } from "./NavBarSearch.styles";
+import { searchCoin } from "../../store/navBarSearch/actions";
 
 export const NavBarSearch = () => {
   const [value, setValue] = useState("");
-  const [list, setList] = useState([]);
   const [search, setSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getQuery = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/search?query=${value}`
-      );
-      setIsLoading(true);
-      if (value !== "") {
-        setList(
-          data.coins
-            .filter((element, index) => {
-              return index < 11;
-            })
-            .map((el) => el.name)
-        );
-        setSearch(true);
-      } else {
-        setSearch(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
+  const dispatch = useDispatch();
+  const { list, isLoading, isError } = useSelector(
+    (state) => state.navBarSearch
+  );
   const handleSearch = (value) => {
     setValue(value);
-    if (value === "") {
-      setSearch(false);
-    }
+    setSearch(true);
+    dispatch(searchCoin(value));
   };
   const handleClick = () => {
     setValue("");
     setSearch(false);
   };
   useEffect(() => {
-    getQuery();
+    dispatch(searchCoin(value));
   }, [value]);
   return (
     <SearchWrapper>

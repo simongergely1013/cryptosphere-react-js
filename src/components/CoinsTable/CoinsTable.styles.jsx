@@ -35,6 +35,7 @@ export const NameHeader = styled.div`
   display: flex;
   align-items: center;
   padding-left: 10px;
+  margin-left: 8px;
 
   display: flex;
   align-items: center;
@@ -58,6 +59,7 @@ export const Price = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0px 10px 0px 0px;
+  margin-right: 8px;
 `;
 export const OneHourChange = styled.div`
   height: 65px;
@@ -69,6 +71,7 @@ export const OneHourChange = styled.div`
   margin-right: 20px;
   margin-left: 20px;
   padding: 0px 10px 0px 15px;
+  margin-left: 8px;
 `;
 export const OneDayChange = styled.div`
   height: 65px;
@@ -88,7 +91,6 @@ export const OneWeekChange = styled.div`
   justify-content: center;
   padding: 0px 0px 0px 10px;
   margin-right: 10px;
-  margin-left: 10px;
 `;
 export const TableHeader1 = styled.div`
   height: 65px;

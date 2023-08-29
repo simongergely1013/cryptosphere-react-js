@@ -1,14 +1,16 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Input, SearchList, ListItem } from "./PortfolioCoinSearch.styles";
+import { searchCoin } from "../../store/portfolioSearch/actions";
 
 export const PortfolioCoinSearch = ({ setId }) => {
-  const [coinList, setCoinList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+  const coinList = useSelector((state) => state.portfolioSearch.list);
+  const [value, setValue] = useState("");
   const [search, setSearch] = useState(false);
 
   const handleSearch = (value) => {
-    setSearchValue(value);
+    setValue(value);
     if (value !== "") {
       setSearch(true);
     } else {
@@ -20,30 +22,14 @@ export const PortfolioCoinSearch = ({ setId }) => {
     setSearchValue(value);
     setSearch(false);
   };
-  const searchCoin = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/search?query=${searchValue}`
-      );
-      setCoinList(
-        data.coins
-          .filter((element, index) => {
-            return index < 11;
-          })
-          .map((el) => el.name)
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    searchCoin();
-  }, [searchValue]);
+    dispatch(searchCoin(value));
+  }, [value]);
   return (
     <>
       <Input
         type="text"
-        value={searchValue}
+        value={value}
         onChange={(e) => handleSearch(e.target.value)}
         placeholder="Search coin..."
       />
