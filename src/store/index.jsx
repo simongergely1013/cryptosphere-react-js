@@ -5,6 +5,7 @@ import navBarSearch from "./navBarSearch";
 import coins from "./coins";
 import coinsTable from "./coinsTable";
 import coin from "./coin";
+import currencyConverter from "./currencyConverter";
 import portfolio from "./portfolio";
 import portfolioSearch from "./portfolioSearch";
 import { combineReducers, applyMiddleware } from "redux";
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   coins,
   coinsTable,
   coin,
+  currencyConverter,
   portfolio: persistReducer(portfolioPersistConfig, portfolio),
   portfolioSearch,
 });
@@ -36,6 +38,7 @@ const persistConfig = {
     "coins",
     "coinsTable",
     "coin",
+    "currencyConverter",
     "portfolio",
     "portfolioSearch",
   ],

@@ -33,12 +33,12 @@ export const GlobalStyle = createGlobalStyle`
   }
   `;
 export const MainWrapper = styled.div`
+  width: 100vw;
+  height: 100%;
+  max-width: 1720px;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  width: 100vw;
-  max-width: 1720px;
-  height: 100%;
   background: ${(props) => props.theme.background};
   transition: all 0.2s ease-in-out;
 `;
@@ -75,3 +75,10 @@ export const lightMode = {
   darkMode: false,
 };
 export const hoverColor = "#BDBDBD";
+export const BottomRow = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;

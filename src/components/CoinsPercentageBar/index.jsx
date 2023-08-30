@@ -20,22 +20,17 @@ export const CoinsPercentageBar = ({
   return (
     <Container>
       <NumberContainer>
-        <Number style={{ color: color1 }}>
-          <BulletPoint style={{ background: background1 }} />
+        <Number color={color1}>
+          <BulletPoint background={background1} />
           <p>{num1}</p>
         </Number>
-        <Number style={{ color: color2 }}>
-          <BulletPoint style={{ background: background2 }} />
+        <Number color={color2}>
+          <BulletPoint background={background2} />
           <p>{num2}</p>
         </Number>
       </NumberContainer>
-      <BarMain style={{ background: background2 }}>
-        <BarInner
-          style={{
-            background: background1,
-            width: width,
-          }}
-        />
+      <BarMain background={background2}>
+        <BarInner background={background1} width={width + "%"} />
       </BarMain>
     </Container>
   );

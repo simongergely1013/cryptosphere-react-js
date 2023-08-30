@@ -12,8 +12,6 @@ const initialState = {
   isLoading: false,
   error: false,
   coinData: {
-    color1: getRandomColor(),
-    color2: getRandomColor(),
     chartLabels: [],
     coinPrices: [],
   },
@@ -33,7 +31,9 @@ const coinDataReducer = (state = initialState, action) => {
       return {
         ...state,
         coinData: {
-          ...state.coinsData,
+          ...state.coinData,
+          color1: getRandomColor(),
+          color2: getRandomColor(),
           coinPrices: data.prices.map((el) => el[1]),
           chartLabels: data.prices.map((el) => formatDate(el[0])),
           coinName: data.name,
@@ -55,7 +55,7 @@ const coinDataReducer = (state = initialState, action) => {
             data.market_data.total_volume[currency] /
             data.market_data.market_cap[currency]
           ).toFixed(2),
-          coinCirculatingSupply: data.market_data.circulating_supply,
+          coinCirculatingSupply: data.market_data.circulating_supply.toFixed(2),
           coinTotalSupply: data.market_data.total_supply,
           num1:
             (
