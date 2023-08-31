@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinData } from "../../../store/coin/actions";
+import { addToWatchlist } from "../../../store/watchlist/actions";
 import { useLocalState } from "../../../hooks";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
@@ -14,6 +15,7 @@ import { CoinBox3 } from "../../../components/CoinBox3";
 import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinUrlBox } from "../../../components/CoinUrlBox";
 import { CoinUrl } from "../../../components/CoinUrl";
+import { AddToWatchlistButton } from "../../../components/AddToWatchListButton";
 import { CoinChartDurationButton } from "../../../components/CoinChartDurationButton";
 import { BigLineChart } from "../../../components/LineChart";
 import {
@@ -48,6 +50,13 @@ const Coin = (props) => {
           coinName={coinData.coinName}
           coinSymbol={coinData.coinSymbol}
           child={<CoinUrlBox coinHomePage={coinData.coinHomePage} />}
+          button={
+            <AddToWatchlistButton
+              onClick={() =>
+                dispatch(addToWatchlist(coinData.coinName.toLowerCase()))
+              }
+            />
+          }
         />
         <CoinBox2
           coinPrice={coinData.coinCurrentPrice}

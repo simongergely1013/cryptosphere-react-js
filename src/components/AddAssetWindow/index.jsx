@@ -51,7 +51,7 @@ export const AddAssetWindow = ({ onClickX, onClickCloseButton, addAsset }) => {
       <TopRow>
         <HeaderDiv>Select Coins</HeaderDiv>
         <EscDiv>
-          <XButtonModal onClick={onClickX}>close</XButtonModal>
+          <XButtonModal onClick={onClickX} />
         </EscDiv>
       </TopRow>
       <MiddleRow>

@@ -83,7 +83,6 @@ export const addNewAsset = (asset, currency) => async (dispatch, getState) => {
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${asset.id}&order=market_cap_desc&page=1&price_change_percentage=24h`
     );
     const data1 = response1.data[0];
-    console.log(data1);
     const response2 = await axios(
       `https://api.coingecko.com/api/v3/coins/${asset.id}/history?date=${asset.date}`
     );
