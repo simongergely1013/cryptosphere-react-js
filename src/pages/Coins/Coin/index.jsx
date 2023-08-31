@@ -65,8 +65,8 @@ const Coin = (props) => {
           coinCirculatingSupply={coinData.coinCirculatingSupply}
           coinSymbol={coinData.coinSymbol}
           coinTotalSupply={coinData.coinTotalSupply}
-          num1={coinData.num1 + "%"}
-          num2={coinData.num2 + "%"}
+          num1={coinData.num1}
+          num2={coinData.num2}
           color1={coinData.color1}
           color2={coinData.color2}
         />

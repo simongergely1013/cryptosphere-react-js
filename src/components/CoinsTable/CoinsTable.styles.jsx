@@ -9,6 +9,7 @@ export const CoinsTableWrapper = styled.div`
   align-items: center;
   font-size: 17px;
   font-weight: normal;
+  margin-bottom: 50px;
 `;
 export const CoinsTableContainer = styled.div`
   width: 100%;
@@ -164,6 +165,7 @@ export const TableData1 = styled.div`
   width: 100px;
   display: flex;
   align-items: center;
+  color: ${(props) => props.color};
 `;
 export const TableData2Container = styled.div`
   width: 41%;

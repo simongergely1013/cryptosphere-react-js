@@ -1,57 +1,66 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setCurrencyValue,
+  setCoinValue,
+} from "../../store/currencyConverter/actions";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import {
   ConversionDiv,
-  ConversionIcon,
   CurrencyDiv,
   ConversionInput,
 } from "./CurrencyConverter.styles";
+import { CurrencyConversionIcon } from "../CurrencyConversionIcon";
 
 export const CurrencyConverter = ({ coinSymbol, coinCurrentPrice }) => {
   const { currency } = useContext(CurrencyContext);
-  const [currencyValue, setCurrencyValue] = useState("");
-  const [coinValue, setCoinValue] = useState("");
-  const [currentPrice, setCurrentPrice] = useState(coinCurrentPrice);
+  const { currencyValue, coinValue } = useSelector(
+    (state) => state.currencyConverter
+  );
+  const dispatch = useDispatch();
 
-  const handleCurrencyChange = (e) => {
-    setCurrencyValue(Number(e.target.value));
-    setCoinValue("");
+  const handleCurrencyChange = (value) => {
+    dispatch(setCurrencyValue(value));
+    dispatch(setCoinValue(""));
   };
-  const handleCoinChange = (e) => {
-    setCoinValue(Number(e.target.value));
-    setCurrencyValue("");
+  const handleCoinChange = (value) => {
+    dispatch(setCoinValue(value));
+    dispatch(setCurrencyValue(""));
   };
   const executeConversion = () => {
     if (coinValue === null || coinValue === 0 || coinValue === "") {
-      setCoinValue(currencyValue / currentPrice);
+      dispatch(setCoinValue(currencyValue / coinCurrentPrice));
     } else if (
       currencyValue === null ||
       currencyValue === 0 ||
       currencyValue === ""
     ) {
-      setCurrencyValue(coinValue * currentPrice);
+      dispatch(setCurrencyValue(coinValue * coinCurrentPrice));
     } else {
       return;
     }
   };
   useEffect(() => {
-    setCurrencyValue("");
-    setCoinValue("");
+    dispatch(setCurrencyValue(""));
+    dispatch(setCoinValue(""));
   }, [currency]);
   return (
     <>
       <ConversionDiv>
         <CurrencyDiv currency={currency.toUpperCase()} />
         <ConversionInput
-          onChange={handleCurrencyChange}
+          onChange={(e) => handleCurrencyChange(e.target.value)}
           value={currencyValue}
         />
       </ConversionDiv>
-      <ConversionIcon onClick={executeConversion} />
+      <CurrencyConversionIcon onClick={executeConversion} />
       <ConversionDiv>
         <CurrencyDiv currency={coinSymbol} />
-        <ConversionInput onChange={handleCoinChange} value={coinValue} />
+        <ConversionInput
+          onChange={(e) => handleCoinChange(e.target.value)}
+          value={coinValue}
+        />
       </ConversionDiv>
     </>
   );

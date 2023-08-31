@@ -82,11 +82,11 @@ export const CoinBox3 = ({
         <CoinsPercentageBar
           num1={num1 + "%"}
           num2={num2 + "%"}
-          width={num1 + "%"}
           color1={color1}
           color2={color2}
           background1={color1}
           background2={color2}
+          width={num1}
         />
       </CoinDataRow>
     </CoinDataBoxContainer>

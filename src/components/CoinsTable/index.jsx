@@ -152,9 +152,7 @@ const CoinsTable = () => {
                   <TableData1Container>
                     <TableData1>{formatNumber(obj.current_price)}</TableData1>
                     <TableData1
-                      style={{
-                        color: percentageChange1h > 0 ? "#00FC2A" : "#FE1040",
-                      }}
+                      color={percentageChange1h > 0 ? "#00FC2A" : "#FE1040"}
                     >
                       <PercentageChangeDiv>
                         {percentageChange1h > 0 ? <ArrowUp /> : <ArrowDown />}
@@ -162,9 +160,7 @@ const CoinsTable = () => {
                       </PercentageChangeDiv>
                     </TableData1>
                     <TableData1
-                      style={{
-                        color: percentageChange24h > 0 ? "#00FC2A" : "#FE1040",
-                      }}
+                      color={percentageChange24h > 0 ? "#00FC2A" : "#FE1040"}
                     >
                       <PercentageChangeDiv>
                         {percentageChange24h > 0 ? <ArrowUp /> : <ArrowDown />}
@@ -172,9 +168,7 @@ const CoinsTable = () => {
                       </PercentageChangeDiv>
                     </TableData1>
                     <TableData1
-                      style={{
-                        color: percentageChange7d > 0 ? "#00FC2A" : "#FE1040",
-                      }}
+                      color={percentageChange7d > 0 ? "#00FC2A" : "#FE1040"}
                     >
                       <PercentageChangeDiv>
                         {percentageChange7d > 0 ? <ArrowUp /> : <ArrowDown />}
@@ -187,7 +181,7 @@ const CoinsTable = () => {
                       <CoinsPercentageBar
                         num1={totalVolume}
                         num2={marketCap}
-                        width={percentageVolume24h.toString() + "%"}
+                        width={percentageVolume24h}
                         color1={color1}
                         color2={color2}
                         background1={color1}
@@ -198,7 +192,7 @@ const CoinsTable = () => {
                       <CoinsPercentageBar
                         num1={circulatingSupply}
                         num2={totalSupply}
-                        width={percentageCirculating.toString() + "%"}
+                        width={percentageCirculating}
                         color1={color1}
                         color2={color2}
                         background1={color1}
