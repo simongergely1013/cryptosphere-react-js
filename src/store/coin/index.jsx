@@ -10,7 +10,7 @@ export const ACTIONS = {
 
 const initialState = {
   isLoading: false,
-  error: false,
+  isError: false,
   coinData: {
     chartLabels: [],
     coinPrices: [],
@@ -23,7 +23,7 @@ const coinDataReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: false,
+        isError: false,
       };
     case ACTIONS.GET_COIN_DATA_SUCCESS:
       const currency = getLocalStorageItem("currency");
@@ -79,7 +79,7 @@ const coinDataReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: true,
+        isError: true,
       };
     default:
       return state;

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { WatchListPageWrapper, modalStyles } from "./Watchlist.styles";
 import { AddAssetButton } from "../../../components/AddAssetButton";
+import { WatchlistTrashButton } from "../../../components/WatchlistTrashButton";
 import { AddCoinToWatchlistWindow } from "../../../components/AddCoinToWatchlistWindow";
 import { PageHeader } from "../../../components/PageHeader";
 import {
@@ -45,8 +46,9 @@ import { formatSupply } from "../../../utilities/formatSupply";
 import { formatVolumeMarketCap } from "../../../utilities/formatVolumeMarketCap";
 import { getThemeColors } from "../../../utilities/getThemeColors";
 import { getCoinPricesData } from "../../../utilities/getCoinPricesData";
-import { getWatchlistData } from "../../../store/watchlist/actions";
 import {
+  getWatchlistData,
+  removeFromWatchlist,
   sortByName,
   sortByPrice,
   sortBy1hChange,
@@ -61,12 +63,12 @@ const WatchList = () => {
   const { currency } = useContext(CurrencyContext);
   const { main, text } = getThemeColors();
   const { coinsPercentageBarColor } = getThemeColors();
-  const { data, isModalOpen } = useSelector((state) => state.watchlist);
+  const { assets, data, isModalOpen } = useSelector((state) => state.watchlist);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getWatchlistData(currency));
-  }, []);
+  }, [currency, assets]);
   return (
     <WatchListPageWrapper>
       <AddAssetButton
@@ -144,9 +146,14 @@ const WatchList = () => {
                 })
                 .map((el) => el);
               const coinPricesData = getCoinPricesData(sparklineData);
+              const assetName = obj.name.toLowerCase();
               return (
                 <TableRow key={obj.name}>
-                  <NumeroHeader>{index + 1}</NumeroHeader>
+                  <NumeroHeader>
+                    <WatchlistTrashButton
+                      onClick={() => dispatch(removeFromWatchlist(assetName))}
+                    />
+                  </NumeroHeader>
                   <CoinName>
                     <CoinNameInnerDiv>
                       <CoinLogo src={obj.image} />

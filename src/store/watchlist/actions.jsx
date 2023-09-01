@@ -7,6 +7,14 @@ export const addToWatchlist = (coin) => async (dispatch, getState) => {
   dispatch({ type: ACTIONS.ADD_TO_WATCHLIST, payload: newAssets });
 };
 
+export const removeFromWatchlist =
+  (assetName) => async (dispatch, getState) => {
+    const state = getState();
+    const assets = state.watchlist.assets;
+    const newAssets = assets.filter((asset) => asset !== assetName);
+    dispatch({ type: ACTIONS.REMOVE_FROM_WATCHLIST, payload: newAssets });
+  };
+
 export const getWatchlistData = (currency) => async (dispatch, getState) => {
   try {
     dispatch({ type: ACTIONS.GET_WATCHLIST_DATA_PENDING });
