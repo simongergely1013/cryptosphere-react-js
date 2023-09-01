@@ -5,6 +5,7 @@ import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { formatNumber } from "../../utilities/formatNumber";
 import { NavBarCoinsLink } from "../NavBarCoinsLink";
 import { NavBarPortfolioLink } from "../NavBarPortfolioLink";
+import { NavBarWatchlistLink } from "../NavBarWatchlistLink";
 import { NavBarSearch } from "../NavBarSearch";
 import { NavBarCurrencySelector } from "../NavBarCurrencySelector";
 import { ThemeSwitch } from "../ThemeSwitch";
@@ -60,6 +61,7 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
         <LinksList>
           <NavBarCoinsLink isCoins={isCoins} />
           <NavBarPortfolioLink isPortfolio={isPortfolio} />
+          <NavBarWatchlistLink />
         </LinksList>
         <NavBarInnerContainer>
           <NavBarSearch />

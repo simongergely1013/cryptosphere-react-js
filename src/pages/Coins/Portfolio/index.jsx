@@ -1,6 +1,5 @@
-import React from "react";
 import ReactModal from "react-modal";
-import { useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import {

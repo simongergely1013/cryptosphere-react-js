@@ -14,8 +14,8 @@ export const getCoinsTableData = (currency) => async (dispatch, getState) => {
       dispatch({ type: ACTIONS.NO_MORE_COINS });
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: ACTIONS.GET_COINS_TABLE_DATA_ERROR });
+    console.log(error);
   }
 };
 export const increasePage = () => (dispatch, getState) => {

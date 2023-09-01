@@ -2,6 +2,7 @@ import NavBar from "./components/NavBar";
 import Coins from "./pages/Coins";
 import Coin from "./pages/Coins/Coin";
 import Portfolio from "./pages/Coins/Portfolio";
+import WatchList from "./pages/Coins/Watchlist";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import React, { useState } from "react";
 import { useLocalState } from "./hooks";
@@ -51,6 +52,7 @@ export const App = () => {
               <Route exact path="/" component={Coins} />
               <Route exact path="/portfolio" component={Portfolio} />
               <Route exact path="/coin/:coinId" component={Coin} />
+              <Route exact path="/watchlist" component={WatchList} />
             </Switch>
             <BottomRow>
               <ScrollToTopButton />

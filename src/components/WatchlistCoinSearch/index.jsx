@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, SearchList, ListItem } from "./PortfolioCoinSearch.styles";
-import { searchCoin } from "../../store/portfolioSearch/actions";
+import { Input, SearchList, ListItem } from "./WatchlistCoinSearch.styles";
+import { searchCoin } from "../../store/watchlistSearch/actions";
 
-export const PortfolioCoinSearch = ({ setId }) => {
+export const WatchlistCoinSearch = ({ setId }) => {
   const dispatch = useDispatch();
-  const { list } = useSelector((state) => state.portfolioSearch);
+  const { list } = useSelector((state) => state.watchlistSearch);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(false);
 
@@ -19,7 +19,7 @@ export const PortfolioCoinSearch = ({ setId }) => {
   };
   const handleClick = (value) => {
     setId(value.toLowerCase());
-    setSearchValue(value);
+    setValue(value);
     setSearch(false);
   };
   useEffect(() => {

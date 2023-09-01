@@ -7,6 +7,8 @@ import coinsTable from "./coinsTable";
 import coin from "./coin";
 import currencyConverter from "./currencyConverter";
 import portfolio from "./portfolio";
+import watchlist from "./watchlist";
+import watchlistSearch from "./watchlistSearch";
 import portfolioSearch from "./portfolioSearch";
 import { combineReducers, applyMiddleware } from "redux";
 import { legacy_createStore as createStore } from "redux";
@@ -14,6 +16,12 @@ import { persistStore, persistReducer } from "redux-persist";
 
 const portfolioPersistConfig = {
   key: "portfolio",
+  storage,
+  whitelist: ["assets"],
+};
+
+const watchlistPersistConfig = {
+  key: "watchlist",
   storage,
   whitelist: ["assets"],
 };
@@ -27,6 +35,8 @@ const rootReducer = combineReducers({
   currencyConverter,
   portfolio: persistReducer(portfolioPersistConfig, portfolio),
   portfolioSearch,
+  watchlist: persistReducer(watchlistPersistConfig, watchlist),
+  watchlistSearch,
 });
 
 const persistConfig = {
@@ -41,6 +51,8 @@ const persistConfig = {
     "currencyConverter",
     "portfolio",
     "portfolioSearch",
+    "watchlist",
+    "watchlistSearch",
   ],
 };
 
