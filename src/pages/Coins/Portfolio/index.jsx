@@ -27,10 +27,9 @@ import {
 } from "../../../store/portfolio/actions";
 
 const Portfolio = () => {
-  const { main, text } = getThemeColors();
   const { currency } = useContext(CurrencyContext);
-  const portfolio = useSelector((state) => state.portfolio.assets);
-  const isModalOpen = useSelector((state) => state.portfolio.isModalOpen);
+  const { main, text } = getThemeColors();
+  const { assets, isModalOpen } = useSelector((state) => state.portfolio);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const Portfolio = () => {
       </ReactModal>
       <PageHeader text={"Your statistics"} />
 
-      {portfolio.map((asset) => {
+      {assets.map((asset) => {
         const currentPrice = asset.currentPrice;
         const priceChange = asset.priceChangePercentage24h;
         const dominancePercent = asset.dominancePercent;

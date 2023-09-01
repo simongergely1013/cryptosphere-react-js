@@ -1,5 +1,6 @@
 export const ACTIONS = {
   ADD_TO_WATCHLIST: "ADD_TO_WATCHLIST",
+  REMOVE_FROM_WATCHLIST: "REMOVE_FROM_WATCHLIST",
   GET_WATCHLIST_DATA_PENDING: "GET_WATCHLIST_DATA_PENDING",
   GET_WATCHLIST_DATA_SUCCESS: "GET_WATCHLIST_DATA_SUCCESS",
   GET_WATCHLIST_DATA_ERROR: " GET_WATCHLIST_DATA_ERROR",
@@ -32,6 +33,12 @@ const initialState = {
 const watchlistReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTIONS.ADD_TO_WATCHLIST:
+      return {
+        ...state,
+        assets: action.payload,
+        isModalOpen: false,
+      };
+    case ACTIONS.REMOVE_FROM_WATCHLIST:
       return {
         ...state,
         assets: action.payload,

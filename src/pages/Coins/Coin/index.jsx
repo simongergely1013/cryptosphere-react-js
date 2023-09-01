@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinData } from "../../../store/coin/actions";
 import { addToWatchlist } from "../../../store/watchlist/actions";
@@ -31,9 +31,7 @@ const Coin = (props) => {
   const { background } = getThemeColors();
   const dispatch = useDispatch();
   const coinId = props.match.params.coinId;
-  const coinData = useSelector((state) => state.coin.coinData);
-  const isLoading = useSelector((state) => state.coin.isLoading);
-  const error = useSelector((state) => state.coin.error);
+  const { coinData, isLoading, isError } = useSelector((state) => state.coin);
   const [coinChartDuration, setCoinChartDuration] = useLocalState(
     "coinChartDuration",
     1

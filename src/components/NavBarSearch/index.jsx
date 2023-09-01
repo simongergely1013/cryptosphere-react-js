@@ -14,8 +14,12 @@ export const NavBarSearch = () => {
   );
   const handleSearch = (value) => {
     setValue(value);
-    setSearch(true);
-    dispatch(searchCoin(value));
+    if (value !== "") {
+      setSearch(true);
+      dispatch(searchCoin(value));
+    } else {
+      setSearch(false);
+    }
   };
   const handleClick = () => {
     setValue("");

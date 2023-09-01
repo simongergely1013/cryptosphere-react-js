@@ -29,7 +29,7 @@ export const SubNavDominance = ({
         <DominanceDiv
           onMouseEnter={() => setDominanceHovered(true)}
           onMouseLeave={() => setDominanceHovered(false)}
-          color={dominanceHovered && hoverColor}
+          color={dominanceHovered ? hoverColor : ""}
         >
           {dominancePercent}% {coinNameShort}
         </DominanceDiv>
