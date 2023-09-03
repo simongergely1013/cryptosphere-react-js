@@ -42,7 +42,7 @@ const coinsTableReducer = (state = initialState, action) => {
     case ACTIONS.GET_COINS_TABLE_DATA_ERROR:
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: true,
       };
     case ACTIONS.INCREASE_PAGE:

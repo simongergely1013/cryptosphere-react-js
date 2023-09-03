@@ -10,7 +10,7 @@ export const ACTIONS = {
 };
 const initialState = {
   isLoading: false,
-  error: false,
+  isError: false,
   btcCurrentPrice: 0,
   btcCurrentVolume: 0,
   btcPrices: [],
@@ -24,7 +24,7 @@ const coinsDataReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: false,
+        isError: false,
       };
     case ACTIONS.GET_COINS_DATA_SUCCESS:
       return {
@@ -36,14 +36,14 @@ const coinsDataReducer = (state = initialState, action) => {
     case ACTIONS.GET_COINS_DATA_ERROR:
       return {
         ...state,
-        isLoading: true,
-        error: true,
+        isLoading: false,
+        isError: true,
       };
     case ACTIONS.GET_CHARTS_DATA_PENDING:
       return {
         ...state,
         isLoading: true,
-        error: false,
+        isError: false,
       };
     case ACTIONS.GET_CHARTS_DATA_SUCCESS:
       return {
@@ -56,7 +56,7 @@ const coinsDataReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: true,
+        isError: true,
       };
     default:
       return state;

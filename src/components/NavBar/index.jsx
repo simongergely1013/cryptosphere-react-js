@@ -32,7 +32,7 @@ import {
 
 const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
   const { currency } = useContext(CurrencyContext);
-  const { navBarData } = useSelector((state) => state.navBar);
+  const { navBarData, isLoading } = useSelector((state) => state.navBar);
   const dispatch = useDispatch();
 
   const handleCurrency = (e) => {
@@ -82,12 +82,14 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 data1={navBarData.coins}
                 data2={navBarData.coins}
                 text={"Number of existing coins in the market"}
+                isLoading={isLoading}
               />
               <SubNavListItem
                 title={"Exchanges: "}
                 data1={navBarData.markets}
                 data2={navBarData.markets}
                 text={"Number of existing exchange markets to trade at"}
+                isLoading={isLoading}
               />
               <SubNavTotalMarketCap
                 marketCap={totalMarketCapFormatted}
@@ -96,12 +98,14 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 color={
                   navBarData.marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"
                 }
+                isLoading={isLoading}
               />
               <SubNavVolumeVsMarketCap
                 totalVolume={totalVolumeFormatted}
                 text={"B"}
                 percent={progressBarsData.totalVolumePercent}
                 totalMarketCap={totalMarketCapLongFormatted}
+                isLoading={isLoading}
               />
               <SubNavDominance
                 coinNameShort={"BTC"}
@@ -112,6 +116,7 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 percent={progressBarsData}
                 marketCap={btcMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
+                isLoading={isLoading}
               />
               <SubNavDominance
                 coinNameShort={"ETH"}
@@ -122,6 +127,7 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 percent={progressBarsData}
                 marketCap={ethMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
+                isLoading={isLoading}
               />
             </StyledListSubNav>
           </ListDiv>

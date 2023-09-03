@@ -27,10 +27,15 @@ const Coins = () => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
   const dispatch = useDispatch();
-  const coinsData = useSelector((state) => state.coins);
-  const chartHours = coinsData.chartHours;
-  const isLoading = coinsData.isLoading;
-  const error = coinsData.error;
+  const {
+    isLoading,
+    isError,
+    chartHours,
+    btcCurrentPrice,
+    btcCurrentVolume,
+    btcPrices,
+    btcVolumes,
+  } = useSelector((state) => state.coins);
 
   const [btcChartDuration, setBtcChartDuration] = useLocalState(
     "btcChartDuration",
@@ -46,21 +51,27 @@ const Coins = () => {
       <ChartsWrapper>
         <TopChartHeaderRow>
           <TopChartTitlePrice
-            btcPrice={coinsData.btcCurrentPrice}
+            btcPrice={btcCurrentPrice}
             day={day}
             month={month}
             year={year}
           />
           <TopChartTitleVolume
-            btcVolume={coinsData.btcCurrentVolume}
+            btcVolume={btcCurrentVolume}
             day={day}
             month={month}
             year={year}
           />
         </TopChartHeaderRow>
         <ChartsWrapperInner>
-          <LineChart data={btcPricesData(chartHours, coinsData.btcPrices)} />
-          <BarChart data={btcVolumesData(chartHours, coinsData.btcVolumes)} />
+          <LineChart
+            data={btcPricesData(chartHours, btcPrices)}
+            isLoading={isLoading}
+          />
+          <BarChart
+            data={btcVolumesData(chartHours, btcVolumes)}
+            isLoading={isLoading}
+          />
         </ChartsWrapperInner>
       </ChartsWrapper>
       <ChartDurationRow>

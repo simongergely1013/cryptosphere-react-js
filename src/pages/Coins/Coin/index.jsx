@@ -12,10 +12,10 @@ import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
 import { CoinBox3 } from "../../../components/CoinBox3";
+import { WatchlistPlusButton } from "../../../components/WatchlistPlusButton";
 import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinUrlBox } from "../../../components/CoinUrlBox";
 import { CoinUrl } from "../../../components/CoinUrl";
-import { AddToWatchlistButton } from "../../../components/AddToWatchListButton";
 import { CoinChartDurationButton } from "../../../components/CoinChartDurationButton";
 import { BigLineChart } from "../../../components/LineChart";
 import {
@@ -49,7 +49,7 @@ const Coin = (props) => {
           coinSymbol={coinData.coinSymbol}
           child={<CoinUrlBox coinHomePage={coinData.coinHomePage} />}
           button={
-            <AddToWatchlistButton
+            <WatchlistPlusButton
               onClick={() =>
                 dispatch(addToWatchlist(coinData.coinName.toLowerCase()))
               }
