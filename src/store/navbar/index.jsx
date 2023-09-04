@@ -40,7 +40,7 @@ const navBarReducer = (state = initialState, action) => {
     case ACTIONS.GET_NAVBAR_DATA_ERROR:
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: true,
       };
     default:

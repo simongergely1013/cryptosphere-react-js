@@ -7,6 +7,7 @@ import {
   VolumeVsMarketCapDiv,
 } from "./SubNavVolumeVsMarketCap.styles";
 import { BulletPoint } from "../NavBar/NavBar.styles";
+import { SubNavLoadingBar } from "../SubNavLoadingBar";
 import { hoverColor } from "../../App.styles";
 
 export const SubNavVolumeVsMarketCap = ({
@@ -14,22 +15,27 @@ export const SubNavVolumeVsMarketCap = ({
   text,
   percent,
   totalMarketCap,
+  isLoading,
 }) => {
   const [hovered, setHovered] = useState(false);
   return (
     <>
-      <ListItemWithProgress
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        color={hovered ? hoverColor : ""}
-      >
-        <BulletPoint />
-        {totalVolume}
-        {text}
-        <ProgressBar>
-          <TotalVolumeProgressBar percent={percent} />
-        </ProgressBar>
-      </ListItemWithProgress>
+      {isLoading ? (
+        <SubNavLoadingBar />
+      ) : (
+        <ListItemWithProgress
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          color={hovered ? hoverColor : ""}
+        >
+          <BulletPoint />
+          {totalVolume}
+          {text}
+          <ProgressBar>
+            <TotalVolumeProgressBar percent={percent} />
+          </ProgressBar>
+        </ListItemWithProgress>
+      )}
       {hovered && (
         <VolumeVsMarketCapDiv
           volume={totalVolume}

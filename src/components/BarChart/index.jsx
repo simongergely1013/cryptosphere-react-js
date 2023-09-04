@@ -1,4 +1,5 @@
 import React from "react";
+import { BtcChartLoader } from "../BtcChartLoader";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,12 +55,14 @@ const options = {
   tension: 0.5,
 };
 
-export const BarChart = ({ data }) => {
+export const BarChart = ({ data, isLoading }) => {
   return (
-    <ChartContainer>
-      <TopChartDiv>
-        <Bar data={data} options={options} />
-      </TopChartDiv>
-    </ChartContainer>
+    <>
+      <ChartContainer>
+        <TopChartDiv>
+          <Bar data={data} options={options} />
+        </TopChartDiv>
+      </ChartContainer>
+    </>
   );
 };

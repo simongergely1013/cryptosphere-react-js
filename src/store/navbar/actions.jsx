@@ -32,7 +32,9 @@ export const getNavBarData = (currency) => async (dispatch, getState) => {
       "totalMarketCap",
       data.data.total_market_cap[currency]
     );
-    dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
+    }, 3000);
   } catch (error) {
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_ERROR });
     console.log(error);

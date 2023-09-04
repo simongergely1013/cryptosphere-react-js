@@ -9,6 +9,7 @@ import {
   DominanceHoverDiv1,
   DominanceHoverDiv2,
 } from "./SubNavDominance.styles";
+import { SubNavLoadingBar } from "../SubNavLoadingBar";
 
 export const SubNavDominance = ({
   svg,
@@ -19,29 +20,34 @@ export const SubNavDominance = ({
   coinNameShort,
   coinNameLong,
   text,
+  isLoading,
 }) => {
   const [dominanceHovered, setDominanceHovered] = useState(false);
   const [progressBarHovered, setProgressBarHovered] = useState(false);
   return (
     <>
-      <LiWithProgress>
-        {svg}
-        <DominanceDiv
-          onMouseEnter={() => setDominanceHovered(true)}
-          onMouseLeave={() => setDominanceHovered(false)}
-          color={dominanceHovered ? hoverColor : ""}
-        >
-          {dominancePercent}% {coinNameShort}
-        </DominanceDiv>
-        <div
-          onMouseEnter={() => setProgressBarHovered(true)}
-          onMouseLeave={() => setProgressBarHovered(false)}
-        >
-          <ProgressBar>
-            <DominanceProgressBar percent={percent} />
-          </ProgressBar>
-        </div>
-      </LiWithProgress>
+      {isLoading ? (
+        <SubNavLoadingBar />
+      ) : (
+        <LiWithProgress>
+          {svg}
+          <DominanceDiv
+            onMouseEnter={() => setDominanceHovered(true)}
+            onMouseLeave={() => setDominanceHovered(false)}
+            color={dominanceHovered ? hoverColor : ""}
+          >
+            {dominancePercent}% {coinNameShort}
+          </DominanceDiv>
+          <div
+            onMouseEnter={() => setProgressBarHovered(true)}
+            onMouseLeave={() => setProgressBarHovered(false)}
+          >
+            <ProgressBar>
+              <DominanceProgressBar percent={percent} />
+            </ProgressBar>
+          </div>
+        </LiWithProgress>
+      )}
       {dominanceHovered && (
         <DominanceHoverDiv1
           coinNameShort={coinNameShort}

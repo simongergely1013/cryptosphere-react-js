@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Svg, Div, Text } from "./AddToWatchlistButton.styles";
+import { Div, Text, Svg } from "./WatchlistPlusButton.styles";
 
-export const AddToWatchlistButton = ({ onClick }) => {
+export const WatchlistPlusButton = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Div>
