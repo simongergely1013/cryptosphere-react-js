@@ -6,7 +6,7 @@ export const ACTIONS = {
 
 const initialState = {
   isLoading: false,
-  error: false,
+  isError: false,
   navBarData: {
     btcDominance: 0,
     coins: 0,
@@ -29,7 +29,7 @@ const navBarReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: false,
+        isError: false,
       };
     case ACTIONS.GET_NAVBAR_DATA_SUCCESS:
       return {
@@ -41,7 +41,7 @@ const navBarReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: true,
+        isError: true,
       };
     default:
       return state;

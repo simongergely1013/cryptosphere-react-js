@@ -21,12 +21,13 @@ export const SubNavDominance = ({
   coinNameLong,
   text,
   isLoading,
+  isError,
 }) => {
   const [dominanceHovered, setDominanceHovered] = useState(false);
   const [progressBarHovered, setProgressBarHovered] = useState(false);
   return (
     <>
-      {isLoading ? (
+      {isLoading || isError ? (
         <SubNavLoadingBar />
       ) : (
         <LiWithProgress>

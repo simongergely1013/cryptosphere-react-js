@@ -31,7 +31,7 @@ const Coin = (props) => {
   const { background } = getThemeColors();
   const dispatch = useDispatch();
   const coinId = props.match.params.coinId;
-  const { coinData, isLoading, isError } = useSelector((state) => state.coin);
+  const { coinData } = useSelector((state) => state.coin);
   const [coinChartDuration, setCoinChartDuration] = useLocalState(
     "coinChartDuration",
     1

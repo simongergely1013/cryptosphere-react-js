@@ -1,5 +1,5 @@
 import React from "react";
-import { BtcChartLoader } from "../BtcChartLoader";
+import { LoadingSpinner } from "../LoadingSpinner";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -55,14 +55,16 @@ const options = {
   tension: 0.5,
 };
 
-export const BarChart = ({ data, isLoading }) => {
+export const BarChart = ({ data, isLoading, isError }) => {
   return (
-    <>
-      <ChartContainer>
-        <TopChartDiv>
+    <ChartContainer>
+      <TopChartDiv>
+        {isLoading || isError ? (
+          <LoadingSpinner />
+        ) : (
           <Bar data={data} options={options} />
-        </TopChartDiv>
-      </ChartContainer>
-    </>
+        )}
+      </TopChartDiv>
+    </ChartContainer>
   );
 };

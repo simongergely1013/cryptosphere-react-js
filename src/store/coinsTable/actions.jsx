@@ -9,9 +9,10 @@ export const getCoinsTableData = (currency) => async (dispatch, getState) => {
     const { data } = await axios(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
     );
-    dispatch({ type: ACTIONS.GET_COINS_TABLE_DATA_SUCCESS, payload: data });
     if (!data.length) {
       dispatch({ type: ACTIONS.NO_MORE_COINS });
+    } else {
+      dispatch({ type: ACTIONS.GET_COINS_TABLE_DATA_SUCCESS, payload: data });
     }
   } catch (error) {
     dispatch({ type: ACTIONS.GET_COINS_TABLE_DATA_ERROR });

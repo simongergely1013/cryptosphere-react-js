@@ -12,11 +12,12 @@ export const SubNavTotalMarketCap = ({
   marketCapChange24h,
   color,
   isLoading,
+  isError,
 }) => {
   const [hovered, setHovered] = useState(false);
   return (
     <>
-      {isLoading ? (
+      {isLoading || isError ? (
         <SubNavLoadingBar />
       ) : (
         <ListItemWithProgress

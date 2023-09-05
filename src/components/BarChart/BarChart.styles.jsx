@@ -14,4 +14,8 @@ export const ChartContainer = styled.div`
 `;
 export const TopChartDiv = styled.div`
   width: 80%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

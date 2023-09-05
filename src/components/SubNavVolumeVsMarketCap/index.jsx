@@ -16,11 +16,12 @@ export const SubNavVolumeVsMarketCap = ({
   percent,
   totalMarketCap,
   isLoading,
+  isError,
 }) => {
   const [hovered, setHovered] = useState(false);
   return (
     <>
-      {isLoading ? (
+      {isLoading || isError ? (
         <SubNavLoadingBar />
       ) : (
         <ListItemWithProgress

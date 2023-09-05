@@ -34,7 +34,7 @@ export const getNavBarData = (currency) => async (dispatch, getState) => {
     );
     setTimeout(() => {
       dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
-    }, 3000);
+    }, 2000);
   } catch (error) {
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_ERROR });
     console.log(error);
