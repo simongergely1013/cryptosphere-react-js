@@ -1,5 +1,8 @@
 export const ACTIONS = {
   SET_THEME_COLOR: "SET_THEME_COLOR",
+  SET_COINS_PAGE: "SET_COINS_PAGE",
+  SET_PORTFOLIO_PAGE: "SET_PORTFOLIO_PAGE",
+  SET_WATCHLIST_PAGE: "SET_WATCHLIST_PAGE",
 };
 
 const initialState = {
@@ -15,6 +18,27 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         isDarkMode: action.payload,
+      };
+    case ACTIONS.SET_COINS_PAGE:
+      return {
+        ...state,
+        isCoinsPage: true,
+        isPortfolioPage: false,
+        isWatchlistPage: false,
+      };
+    case ACTIONS.SET_PORTFOLIO_PAGE:
+      return {
+        ...state,
+        isCoinsPage: false,
+        isPortfolioPage: true,
+        isWatchlistPage: false,
+      };
+    case ACTIONS.SET_WATCHLIST_PAGE:
+      return {
+        ...state,
+        isCoinsPage: false,
+        isPortfolioPage: false,
+        isWatchlistPage: true,
       };
     default:
       return state;

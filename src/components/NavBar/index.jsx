@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNavBarData } from "../../store/navbar/actions";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
+import { getThemeColors } from "../../utilities/getThemeColors";
 import { formatNumber } from "../../utilities/formatNumber";
 import { getAppLoading } from "../../utilities/getAppLoading";
 import { getAppError } from "../../utilities/getAppError";
@@ -31,10 +32,19 @@ import {
   ListDiv,
   StyledListSubNav,
 } from "./NavBar.styles";
+import {
+  setCoinsPage,
+  setPortfolioPage,
+  setWatchlisPage,
+} from "../../store/app/actions";
 
-const NavBar = ({ onClick, onChange, isCoins, isPortfolio, isWatchlist }) => {
+const NavBar = ({ onClick, onChange }) => {
   const { currency } = useContext(CurrencyContext);
   const { navBarData } = useSelector((state) => state.navBar);
+  const { navBackground } = getThemeColors();
+  const { isCoinsPage, isPortfolioPage, isWatchlistPage } = useSelector(
+    (state) => state.app
+  );
   const isAppLoading = useSelector((state) => getAppLoading(state));
   const isAppError = useSelector((state) => getAppError(state));
   const dispatch = useDispatch();
@@ -63,9 +73,18 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio, isWatchlist }) => {
     <>
       <StyledNav>
         <LinksList>
-          <NavBarCoinsLink isCoins={isCoins} />
-          <NavBarPortfolioLink isPortfolio={isPortfolio} />
-          <NavBarWatchlistLink />
+          <NavBarCoinsLink
+            onClick={() => dispatch(setCoinsPage())}
+            background={isCoinsPage ? navBackground : ""}
+          />
+          <NavBarPortfolioLink
+            onClick={() => dispatch(setPortfolioPage())}
+            background={isPortfolioPage ? navBackground : ""}
+          />
+          <NavBarWatchlistLink
+            onClick={() => dispatch(setWatchlisPage())}
+            background={isWatchlistPage ? navBackground : ""}
+          />
         </LinksList>
         <NavBarInnerContainer>
           <NavBarSearch />

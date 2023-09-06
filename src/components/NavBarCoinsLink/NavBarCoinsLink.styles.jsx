@@ -10,7 +10,7 @@ export const ListItemCoins = styled.li`
   align-items: center;
   margin: 10px 5px 10px 10px;
   border-radius: 10px;
-  background: ${(props) => props.theme.navBackground};
+  background: ${(props) => props.background};
   transition: all 0.2s ease-in-out;
 `;
 export const StyledLink = styled(Link)`
