@@ -1,10 +1,11 @@
+import React from "react";
 import NavBar from "./components/NavBar";
 import Coins from "./pages/Coins";
 import Coin from "./pages/Coins/Coin";
 import Portfolio from "./pages/Coins/Portfolio";
 import WatchList from "./pages/Coins/Watchlist";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocalState } from "./hooks";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -16,18 +17,14 @@ import {
   BottomRow,
 } from "./App.styles";
 import { CurrencyContext } from "./contexts/CurrencyContext";
+import { setThemeColor } from "./store/app/actions";
 
 export const App = () => {
   const [currency, setCurrency] = useLocalState("currency", "usd");
-  const [isCoinsPage, setIsCoinsPage] = useState(true);
-  const [isCoinPage, setIsCoinPage] = useState(false);
-  const [isPortfolioPage, setIsPortfolioPage] = useState(false);
-  const [isDarkMode, setDarkMode] = useState(true);
-  const [isLoading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { isDarkMode, isCoinsPage, isPortfolioPage, isWatchlistPage } =
+    useSelector((state) => state.app);
 
-  const handleThemeColor = () => {
-    setDarkMode(!isDarkMode);
-  };
   const setColorTheme = (theme) => {
     localStorage.setItem("theme", JSON.stringify(theme));
   };
@@ -42,11 +39,11 @@ export const App = () => {
           <GlobalStyle />
           <MainWrapper>
             <NavBar
-              onClick={handleThemeColor}
+              onClick={() => dispatch(setThemeColor())}
               onChange={handleCurrency}
               isCoins={isCoinsPage}
-              isCoin={isCoinPage}
               isPortfolio={isPortfolioPage}
+              isWatchlist={isWatchlistPage}
             />
             <Switch>
               <Route exact path="/" component={Coins} />

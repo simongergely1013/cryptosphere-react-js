@@ -1,9 +1,9 @@
 import React from "react";
 import { FadeLoader } from "react-spinners";
-import { cssOverride } from "./BtcChartLoader.styles";
+import { cssOverride } from "./LoadingSpinner.styles";
 import { getThemeColors } from "../../utilities/getThemeColors";
 
-export const BtcChartLoader = () => {
+export const LoadingSpinner = () => {
   const { text } = getThemeColors();
   return (
     <FadeLoader

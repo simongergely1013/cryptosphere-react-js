@@ -22,14 +22,16 @@ import { btcPricesData } from "../../utilities/btcPricesData";
 import { btcVolumesData } from "../../utilities/btcVolumesData";
 import { getThemeColors } from "../../utilities/getThemeColors";
 import { getButtonColor } from "../../utilities/getButtonColor";
+import { getAppLoading } from "../../utilities/getAppLoading";
+import { getAppError } from "../../utilities/getAppError";
 
 const Coins = () => {
   const { currency } = useContext(CurrencyContext);
   const { background } = getThemeColors();
   const dispatch = useDispatch();
+  const isAppLoading = useSelector((state) => getAppLoading(state));
+  const isAppError = useSelector((state) => getAppError(state));
   const {
-    isLoading,
-    isError,
     chartHours,
     btcCurrentPrice,
     btcCurrentVolume,
@@ -66,11 +68,13 @@ const Coins = () => {
         <ChartsWrapperInner>
           <LineChart
             data={btcPricesData(chartHours, btcPrices)}
-            isLoading={isLoading}
+            isLoading={isAppLoading}
+            isError={isAppError}
           />
           <BarChart
             data={btcVolumesData(chartHours, btcVolumes)}
-            isLoading={isLoading}
+            isLoading={isAppLoading}
+            isError={isAppError}
           />
         </ChartsWrapperInner>
       </ChartsWrapper>
@@ -97,7 +101,7 @@ const Coins = () => {
         />
       </ChartDurationRow>
       <PageHeader text={"TOP 50 by Market Cap"} />
-      <CoinsTable />
+      <CoinsTable isLoading={isAppLoading} isError={isAppError} />
     </CoinsPageWrapper>
   );
 };

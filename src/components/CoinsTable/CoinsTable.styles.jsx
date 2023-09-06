@@ -161,6 +161,11 @@ export const TableData1Container = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+export const TableDataInnerDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const TableData1 = styled.div`
   width: 100px;
   display: flex;

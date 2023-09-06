@@ -1,5 +1,6 @@
 import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
+import app from "./app";
 import navBar from "./navbar";
 import navBarSearch from "./navBarSearch";
 import coins from "./coins";
@@ -19,7 +20,6 @@ const portfolioPersistConfig = {
   storage,
   whitelist: ["assets"],
 };
-
 const watchlistPersistConfig = {
   key: "watchlist",
   storage,
@@ -27,6 +27,7 @@ const watchlistPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+  app,
   navBar,
   navBarSearch,
   coins,
@@ -43,6 +44,7 @@ const persistConfig = {
   key: "root",
   storage,
   blacklist: [
+    "app",
     "navBar",
     "navBarSearch",
     "coins",

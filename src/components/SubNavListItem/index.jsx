@@ -4,11 +4,18 @@ import { StyledListItemSubNav, CoinsHoverDiv } from "./SubNavListItem.styles";
 import { SubNavLoadingBar } from "../SubNavLoadingBar";
 import { hoverColor } from "../../App.styles";
 
-export const SubNavListItem = ({ title, data1, data2, text, isLoading }) => {
+export const SubNavListItem = ({
+  title,
+  data1,
+  data2,
+  text,
+  isLoading,
+  isError,
+}) => {
   const [hovered, setHovered] = useState(false);
   return (
     <>
-      {isLoading ? (
+      {isLoading || isError ? (
         <SubNavLoadingBar />
       ) : (
         <StyledListItemSubNav

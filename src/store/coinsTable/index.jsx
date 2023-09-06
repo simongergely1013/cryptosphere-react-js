@@ -13,7 +13,7 @@ export const ACTIONS = {
 
 const initialState = {
   isLoading: false,
-  error: false,
+  isError: false,
   coinsData: [],
   labels: [],
   page: 1,
@@ -31,19 +31,19 @@ const coinsTableReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: false,
+        isError: false,
       };
     case ACTIONS.GET_COINS_TABLE_DATA_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        coinsData: action.payload,
+        coinsData: [...action.payload],
       };
     case ACTIONS.GET_COINS_TABLE_DATA_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: true,
+        isError: true,
       };
     case ACTIONS.INCREASE_PAGE:
       return {

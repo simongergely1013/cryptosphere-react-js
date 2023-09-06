@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNavBarData } from "../../store/navbar/actions";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { formatNumber } from "../../utilities/formatNumber";
+import { getAppLoading } from "../../utilities/getAppLoading";
+import { getAppError } from "../../utilities/getAppError";
 import { NavBarCoinsLink } from "../NavBarCoinsLink";
 import { NavBarPortfolioLink } from "../NavBarPortfolioLink";
 import { NavBarWatchlistLink } from "../NavBarWatchlistLink";
@@ -30,9 +32,11 @@ import {
   StyledListSubNav,
 } from "./NavBar.styles";
 
-const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
+const NavBar = ({ onClick, onChange, isCoins, isPortfolio, isWatchlist }) => {
   const { currency } = useContext(CurrencyContext);
-  const { navBarData, isLoading } = useSelector((state) => state.navBar);
+  const { navBarData } = useSelector((state) => state.navBar);
+  const isAppLoading = useSelector((state) => getAppLoading(state));
+  const isAppError = useSelector((state) => getAppError(state));
   const dispatch = useDispatch();
 
   const handleCurrency = (e) => {
@@ -82,14 +86,16 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 data1={navBarData.coins}
                 data2={navBarData.coins}
                 text={"Number of existing coins in the market"}
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
               <SubNavListItem
                 title={"Exchanges: "}
                 data1={navBarData.markets}
                 data2={navBarData.markets}
                 text={"Number of existing exchange markets to trade at"}
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
               <SubNavTotalMarketCap
                 marketCap={totalMarketCapFormatted}
@@ -98,14 +104,16 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 color={
                   navBarData.marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"
                 }
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
               <SubNavVolumeVsMarketCap
                 totalVolume={totalVolumeFormatted}
                 text={"B"}
                 percent={progressBarsData.totalVolumePercent}
                 totalMarketCap={totalMarketCapLongFormatted}
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
               <SubNavDominance
                 coinNameShort={"BTC"}
@@ -116,7 +124,8 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 percent={progressBarsData}
                 marketCap={btcMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
               <SubNavDominance
                 coinNameShort={"ETH"}
@@ -127,7 +136,8 @@ const NavBar = ({ onClick, onChange, isCoins, isPortfolio }) => {
                 percent={progressBarsData}
                 marketCap={ethMarketCapFormatted}
                 totalMarketCap={totalMarketCapLongFormatted}
-                isLoading={isLoading}
+                isLoading={isAppLoading}
+                isError={isAppError}
               />
             </StyledListSubNav>
           </ListDiv>
