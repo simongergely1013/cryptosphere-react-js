@@ -21,9 +21,8 @@ import { setThemeColor } from "./store/app/actions";
 
 export const App = () => {
   const [currency, setCurrency] = useLocalState("currency", "usd");
+  const { isDarkMode } = useSelector((state) => state.app);
   const dispatch = useDispatch();
-  const { isDarkMode, isCoinsPage, isPortfolioPage, isWatchlistPage } =
-    useSelector((state) => state.app);
 
   const setColorTheme = (theme) => {
     localStorage.setItem("theme", JSON.stringify(theme));
@@ -41,9 +40,6 @@ export const App = () => {
             <NavBar
               onClick={() => dispatch(setThemeColor())}
               onChange={handleCurrency}
-              isCoins={isCoinsPage}
-              isPortfolio={isPortfolioPage}
-              isWatchlist={isWatchlistPage}
             />
             <Switch>
               <Route exact path="/" component={Coins} />
