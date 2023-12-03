@@ -2,7 +2,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCoinsTableData,
-  increasePage,
   sortByName,
   sortByPrice,
   sortBy1hChange,
@@ -11,7 +10,7 @@ import {
 } from "../../store/coinsTable/actions";
 import { CoinsPercentageBar } from "../CoinsPercentageBar";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getRandomColor } from "../../utilities/getRandomColor";
 import { formatNumber } from "../../utilities/formatNumber";
 import { formatSupply } from "../../utilities/formatSupply";
@@ -58,15 +57,19 @@ const CoinsTable = ({ isLoading, isError }) => {
   const { currency } = useContext(CurrencyContext);
   const { coinsPercentageBarColor } = getThemeColors();
   const dispatch = useDispatch();
-  const {
-    coinsData: coinsTableData,
-    page,
-    hasMore,
-  } = useSelector((state) => state.coinsTable);
+  const { coinsData: coinsTableData, hasMore } = useSelector(
+    (state) => state.coinsTable
+  );
+  const [page, setPage] = useState(1);
+
+  const handleNext = () => {
+    setPage(page + 1);
+  };
 
   useEffect(() => {
-    dispatch(getCoinsTableData(currency));
+    dispatch(getCoinsTableData(currency, page));
   }, [currency, page]);
+
   return (
     <CoinsTableWrapper>
       {isLoading || isError ? (
@@ -102,13 +105,15 @@ const CoinsTable = ({ isLoading, isError }) => {
             </TableHeaderContainer2>
             <TableHeader4>Last 7d</TableHeader4>
           </TableHeaderRow>
-          <CoinsRowsContainer>
+          <CoinsRowsContainer id="scrollableDiv">
             <InfiniteScroll
               dataLength={coinsTableData.length}
-              next={() => dispatch(increasePage())}
+              next={handleNext}
               hasMore={hasMore}
               loader={<h3>Loading...</h3>}
               endMessage={<p>No more coins left</p>}
+              scrollableTarget="scrollableDiv"
+              height={800}
             >
               {coinsTableData.map((obj, index) => {
                 const percentageChange1h =

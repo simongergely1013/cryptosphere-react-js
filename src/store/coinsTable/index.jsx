@@ -37,7 +37,7 @@ const coinsTableReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        coinsData: [...action.payload],
+        coinsData: action.payload,
       };
     case ACTIONS.GET_COINS_TABLE_DATA_ERROR:
       return {

@@ -1,5 +1,5 @@
-import { useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useContext } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getNavBarData } from "../../store/navbar/actions";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { getThemeColors } from "../../utilities/getThemeColors";
@@ -35,19 +35,19 @@ import {
 import {
   setCoinsPage,
   setPortfolioPage,
-  setWatchlisPage,
+  setWatchlistPage,
 } from "../../store/app/actions";
 
 const NavBar = ({ onClick, onChange }) => {
   const { currency } = useContext(CurrencyContext);
-  const { navBarData } = useSelector((state) => state.navBar);
+  const { navBarData } = useAppSelector((state) => state.navBar);
   const { navBackground } = getThemeColors();
-  const { isCoinsPage, isPortfolioPage, isWatchlistPage } = useSelector(
+  const { isCoinsPage, isPortfolioPage, isWatchlistPage } = useAppSelector(
     (state) => state.app
   );
-  const isAppLoading = useSelector((state) => getAppLoading(state));
-  const isAppError = useSelector((state) => getAppError(state));
-  const dispatch = useDispatch();
+  const isAppLoading = useAppSelector((state) => getAppLoading(state));
+  const isAppError = useAppSelector((state) => getAppError(state));
+  const dispatch = useAppDispatch();
 
   const handleCurrency = (e) => {
     const newCurrency = e.target.value;
@@ -57,17 +57,17 @@ const NavBar = ({ onClick, onChange }) => {
     dispatch(getNavBarData(currency));
   }, [currency]);
 
-  const totalMarketCapFormatted = formatNumber(navBarData.totalMarketCap);
+  const totalMarketCapFormatted = formatNumber(navBarData["totalMarketCap"]);
   const totalMarketCapLongFormatted = formatNumber(
-    navBarData.totalMarketCapLong
+    navBarData["totalMarketCapLong"]
   );
-  const btcMarketCapFormatted = formatNumber(navBarData.btcMarketCap);
-  const ethMarketCapFormatted = formatNumber(navBarData.ethMarketCap);
-  const totalVolumeFormatted = formatNumber(navBarData.totalVolume);
+  const btcMarketCapFormatted = formatNumber(navBarData["btcMarketCap"]);
+  const ethMarketCapFormatted = formatNumber(navBarData["ethMarketCap"]);
+  const totalVolumeFormatted = formatNumber(navBarData["totalVolume"]);
   const progressBarsData = {
-    totalVolumePercent: navBarData.totalVolumePercentage,
-    btcDominancePercent: navBarData.btcDominance,
-    ethDominancePercent: navBarData.ethDominance,
+    totalVolumePercent: navBarData["totalVolumePercentage"],
+    btcDominancePercent: navBarData["btcDominance"],
+    ethDominancePercent: navBarData["ethDominance"],
   };
   return (
     <>
@@ -82,7 +82,7 @@ const NavBar = ({ onClick, onChange }) => {
             background={isPortfolioPage ? navBackground : ""}
           />
           <NavBarWatchlistLink
-            onClick={() => dispatch(setWatchlisPage())}
+            onClick={() => dispatch(setWatchlistPage())}
             background={isWatchlistPage ? navBackground : ""}
           />
         </LinksList>
@@ -102,16 +102,16 @@ const NavBar = ({ onClick, onChange }) => {
             <StyledListSubNav>
               <SubNavListItem
                 title={"Coins"}
-                data1={navBarData.coins}
-                data2={navBarData.coins}
+                data1={navBarData["coins"]}
+                data2={navBarData["coins"]}
                 text={"Number of existing coins in the market"}
                 isLoading={isAppLoading}
                 isError={isAppError}
               />
               <SubNavListItem
                 title={"Exchanges: "}
-                data1={navBarData.markets}
-                data2={navBarData.markets}
+                data1={navBarData["markets"]}
+                data2={navBarData["markets"]}
                 text={"Number of existing exchange markets to trade at"}
                 isLoading={isAppLoading}
                 isError={isAppError}
@@ -119,9 +119,9 @@ const NavBar = ({ onClick, onChange }) => {
               <SubNavTotalMarketCap
                 marketCap={totalMarketCapFormatted}
                 text={"T"}
-                marketCapChange24h={navBarData.marketCapChange24h.toFixed(2)}
+                marketCapChange24h={navBarData["marketCapChange24h"].toFixed(2)}
                 color={
-                  navBarData.marketCapChange24h > 0 ? "#00FC2A" : "#FE1040"
+                  navBarData["marketCapChange24h"] > 0 ? "#00FC2A" : "#FE1040"
                 }
                 isLoading={isAppLoading}
                 isError={isAppError}

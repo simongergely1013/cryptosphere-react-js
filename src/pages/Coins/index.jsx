@@ -47,6 +47,7 @@ const Coins = () => {
     dispatch(getCoinsData(currency));
     dispatch(getChartsData(currency, btcChartDuration));
   }, [currency, btcChartDuration]);
+
   return (
     <CoinsPageWrapper>
       <PageHeader text={"Your Overview"} />
