@@ -4,7 +4,7 @@ import { ACTIONS } from ".";
 export const getNavBarData = (currency: string) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { (): any; new(): any; navBar: { (): any; new(): any; navBarData: any; }; }) => {
   try {
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_PENDING });
-    const data: { data: object } = await axios("https://api.coingecko.com/api/v3/global");
+    const { data } = await axios("https://api.coingecko.com/api/v3/global");
     let navBarData: object = getState().navBar.navBarData;
     navBarData["btcDominance"] = Math.round(
       data.data["market_cap_percentage"].btc

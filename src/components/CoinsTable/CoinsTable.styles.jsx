@@ -127,6 +127,7 @@ export const TableHeader4 = styled.div`
   margin-right: 55px;
 `;
 export const CoinsRowsContainer = styled.div`
+  height: 500;
   overflow: auto;
 `;
 export const TableRow = styled.div`

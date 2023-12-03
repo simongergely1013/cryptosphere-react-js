@@ -39,32 +39,32 @@ import {
 } from "../../store/app/actions";
 
 const NavBar = ({ onClick, onChange }) => {
-  const currency: { currency: string } = useContext(CurrencyContext);
-  const navBarData: { navBarData: object } = useAppSelector((state) => state.navBar);
-  const navBackground: { navBackground: string } = getThemeColors();
-  const {isCoinsPage,isPortfolioPage,isWatchlistPage}: { isCoinsPage: boolean, isPortfolioPage: boolean, isWatchlistPage: boolean } = useAppSelector(
+  const { currency } = useContext(CurrencyContext);
+  const { navBarData } = useAppSelector((state) => state.navBar);
+  const { navBackground } = getThemeColors();
+  const { isCoinsPage, isPortfolioPage, isWatchlistPage } = useAppSelector(
     (state) => state.app
   );
-  const isAppLoading: boolean = useAppSelector((state) => getAppLoading(state));
-  const isAppError: boolean = useAppSelector((state) => getAppError(state));
+  const isAppLoading = useAppSelector((state) => getAppLoading(state));
+  const isAppError = useAppSelector((state) => getAppError(state));
   const dispatch = useAppDispatch();
 
-  const handleCurrency = (e: { target: { value: string; }; }) => {
-    const newCurrency: string = e.target.value;
+  const handleCurrency = (e) => {
+    const newCurrency = e.target.value;
     onChange(newCurrency);
   };
   useEffect(() => {
     dispatch(getNavBarData(currency));
   }, [currency]);
 
-  const totalMarketCapFormatted: string = formatNumber(navBarData["totalMarketCap"]);
-  const totalMarketCapLongFormatted: string = formatNumber(
+  const totalMarketCapFormatted = formatNumber(navBarData["totalMarketCap"]);
+  const totalMarketCapLongFormatted = formatNumber(
     navBarData["totalMarketCapLong"]
   );
-  const btcMarketCapFormatted: string = formatNumber(navBarData["btcMarketCap"]);
-  const ethMarketCapFormatted: string = formatNumber(navBarData["ethMarketCap"]);
-  const totalVolumeFormatted: string = formatNumber(navBarData["totalVolume"]);
-  const progressBarsData: {totalVolumePercent: string, btcDominancePercent: string, ethDominancePercent: string} = {
+  const btcMarketCapFormatted = formatNumber(navBarData["btcMarketCap"]);
+  const ethMarketCapFormatted = formatNumber(navBarData["ethMarketCap"]);
+  const totalVolumeFormatted = formatNumber(navBarData["totalVolume"]);
+  const progressBarsData = {
     totalVolumePercent: navBarData["totalVolumePercentage"],
     btcDominancePercent: navBarData["btcDominance"],
     ethDominancePercent: navBarData["ethDominance"],

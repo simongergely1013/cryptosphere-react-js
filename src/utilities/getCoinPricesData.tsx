@@ -1,6 +1,6 @@
 import { getSmallChartLabels } from "./getSmallChartLabels";
 
-export const getCoinPricesData = (sparklineData: {}) => {
+export const getCoinPricesData = (sparklineData: any) => {
   const coinPricesData = {
     labels: getSmallChartLabels(),
     datasets: [
@@ -8,7 +8,7 @@ export const getCoinPricesData = (sparklineData: {}) => {
         label: "",
         data: sparklineData,
         borderColor:
-          sparklineData[0] < sparklineData["sparklineData"].length - 1
+          sparklineData[0] < sparklineData[sparklineData.length - 1]
             ? "#00FF5F"
             : "red",
         pointRadius: 0,
