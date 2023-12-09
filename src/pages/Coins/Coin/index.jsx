@@ -1,11 +1,10 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinData } from "../../../store/coin/actions";
 import { addToWatchlist } from "../../../store/watchlist/actions";
 import { useLocalState } from "../../../hooks";
 import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
-import { coinPricesData } from "../../../utilities/coinPricesData";
 import { getThemeColors } from "../../../utilities/getThemeColors";
 import { getButtonColor } from "../../../utilities/getButtonColor";
 import { PageHeader } from "../../../components/PageHeader";
@@ -31,59 +30,60 @@ const Coin = (props) => {
   const { background } = getThemeColors();
   const dispatch = useDispatch();
   const coinId = props.match.params.coinId;
-  const { coinData } = useSelector((state) => state.coin);
+  const state = useSelector((state) => state.coin);
   const [coinChartDuration, setCoinChartDuration] = useLocalState(
     "coinChartDuration",
-    1
+    30
   );
   useEffect(() => {
     dispatch(getCoinData(coinId, currency, coinChartDuration));
   }, [currency, coinChartDuration]);
+  console.log("state", state);
   return (
     <CoinPageWrapper>
       <PageHeader text={"Your Summary"} />
       <SummaryWrapper>
         <CoinBox1
-          src={coinData.coinImgSrc}
-          coinName={coinData.coinName}
-          coinSymbol={coinData.coinSymbol}
-          child={<CoinUrlBox coinHomePage={coinData.coinHomePage} />}
+          src={state.coinImgSrc}
+          coinName={state.coinName}
+          coinSymbol={state.coinSymbol}
+          child={<CoinUrlBox coinHomePage={state.coinHomePage} />}
           button={
             <WatchlistPlusButton
               onClick={() =>
-                dispatch(addToWatchlist(coinData.coinName.toLowerCase()))
+                dispatch(addToWatchlist(state.coinName.toLowerCase()))
               }
             />
           }
         />
         <CoinBox2
-          coinPrice={coinData.coinCurrentPrice}
-          priceChangePercentage={coinData.priceChangePercentage24h}
-          ath={coinData.coinAth}
-          athDate={coinData.coinAthDate}
-          atl={coinData.coinAtl}
-          atlDate={coinData.coinAtlDate}
+          coinPrice={state.coinCurrentPrice}
+          priceChangePercentage={state.priceChangePercentage24h}
+          ath={state.coinAth}
+          athDate={state.coinAthDate}
+          atl={state.coinAtl}
+          atlDate={state.coinAtlDate}
         />
         <CoinBox3
-          coinMarketCap={coinData.coinMarketCap}
-          coinFullyDillutedValuation={coinData.coinFullyDillutedValuation}
-          coinVolume24h={coinData.coinVolume24h}
-          coinVolumeOverMarketCap={coinData.coinVolumeOverMarketCap}
-          coinCirculatingSupply={coinData.coinCirculatingSupply}
-          coinSymbol={coinData.coinSymbol}
-          coinTotalSupply={coinData.coinTotalSupply}
-          num1={coinData.num1}
-          num2={coinData.num2}
-          color1={coinData.color1}
-          color2={coinData.color2}
+          coinMarketCap={state.coinMarketCap}
+          coinFullyDillutedValuation={state.coinFullyDillutedValuation}
+          coinVolume24h={state.coinVolume24h}
+          coinVolumeOverMarketCap={state.coinVolumeOverMarketCap}
+          coinCirculatingSupply={state.coinCirculatingSupply}
+          coinSymbol={state.coinSymbol}
+          coinTotalSupply={state.coinTotalSupply}
+          num1={state.num1}
+          num2={state.num2}
+          color1={state.color1}
+          color2={state.color2}
         />
       </SummaryWrapper>
       <PageHeader text={"Description"} />
-      <CoinDescription coinDescription={coinData.coinDescription} />
+      <CoinDescription coinDescription={state.coinDescription} />
       <CoinUrlsRow>
-        <CoinUrl blockchainSite={coinData.coinBlockChainSite1} />
-        <CoinUrl blockchainSite={coinData.coinBlockChainSite2} />
-        <CoinUrl blockchainSite={coinData.coinBlockChainSite3} />
+        <CoinUrl blockchainSite={state.coinBlockChainSite1} />
+        <CoinUrl blockchainSite={state.coinBlockChainSite2} />
+        <CoinUrl blockchainSite={state.coinBlockChainSite3} />
       </CoinUrlsRow>
       <ChartDurationRow>
         <CoinChartDurationButton
@@ -109,13 +109,11 @@ const Coin = (props) => {
       </ChartDurationRow>
       <CurrencyConversionRow>
         <CurrencyConverter
-          coinSymbol={coinData.coinSymbol}
-          coinCurrentPrice={coinData.coinCurrentPrice}
+          coinSymbol={state.coinSymbol}
+          coinCurrentPrice={state.coinCurrentPrice}
         />
       </CurrencyConversionRow>
-      <BigLineChart
-        data={coinPricesData(coinData.chartLabels, coinId, coinData.coinPrices)}
-      />
+      <BigLineChart data={state.lineChartData} />
     </CoinPageWrapper>
   );
 };

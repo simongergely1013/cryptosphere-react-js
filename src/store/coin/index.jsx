@@ -1,6 +1,4 @@
 import { getRandomColor } from "../../utilities/getRandomColor";
-import { formatDate } from "../../utilities/formatDate";
-import { getLocalStorageItem } from "../../utilities/getLocalStorageItem";
 
 export const ACTIONS = {
   GET_COIN_DATA_PENDING: "GET_COIN_DATA_PENDING",
@@ -11,10 +9,8 @@ export const ACTIONS = {
 const initialState = {
   isLoading: false,
   isError: false,
-  coinData: {
-    chartLabels: [],
-    coinPrices: [],
-  },
+  chartLabels: [],
+  coinPrices: [],
 };
 
 const coinDataReducer = (state = initialState, action) => {
@@ -26,54 +22,36 @@ const coinDataReducer = (state = initialState, action) => {
         isError: false,
       };
     case ACTIONS.GET_COIN_DATA_SUCCESS:
-      const currency = getLocalStorageItem("currency");
       const data = action.payload;
       return {
         ...state,
-        coinData: {
-          ...state.coinData,
-          color1: getRandomColor(),
-          color2: getRandomColor(),
-          coinPrices: data.prices.map((el) => el[1]),
-          chartLabels: data.prices.map((el) => formatDate(el[0])),
-          coinName: data.name,
-          coinSymbol: data.symbol.toUpperCase(),
-          coinImgSrc: data.image.large,
-          coinHomePage: data.links.homepage[0],
-          coinCurrentPrice: data.market_data.current_price[currency],
-          priceChangePercentage24h:
-            data.market_data.price_change_percentage_24h.toFixed(2),
-          coinAth: data.market_data.ath[currency],
-          coinAthDate: data.market_data.ath_date[currency].slice(0, 10),
-          coinAtl: data.market_data.atl[currency],
-          coinAtlDate: data.market_data.atl_date[currency].slice(0, 10),
-          coinMarketCap: data.market_data.market_cap[currency],
-          coinFullyDillutedValuation:
-            data.market_data.fully_diluted_valuation[currency],
-          coinVolume24h: data.market_data.total_volume[currency],
-          coinVolumeOverMarketCap: (
-            data.market_data.total_volume[currency] /
-            data.market_data.market_cap[currency]
-          ).toFixed(2),
-          coinCirculatingSupply: data.market_data.circulating_supply.toFixed(2),
-          coinTotalSupply: data.market_data.total_supply,
-          num1:
-            (
-              data.market_data.total_volume[currency] /
-              data.market_data.market_cap[currency]
-            ).toFixed(2) * 100,
-          num2:
-            100 -
-            (
-              data.market_data.total_volume[currency] /
-              data.market_data.market_cap[currency]
-            ).toFixed(2) *
-              100,
-          coinDescription: data.description["en"],
-          coinBlockChainSite1: data.links.blockchain_site[0],
-          coinBlockChainSite2: data.links.blockchain_site[1],
-          coinBlockChainSite3: data.links.blockchain_site[2],
-        },
+        color1: getRandomColor(),
+        color2: getRandomColor(),
+        coinPrices: data.coinPrices,
+        chartLabels: data.chartLabels,
+        lineChartData: data.lineChartData,
+        coinName: data.name,
+        coinSymbol: data.coinSymbol,
+        coinImgSrc: data.coinImgSrc,
+        coinHomePage: data.coinHomePage,
+        coinCurrentPrice: data.coinCurrentPrice,
+        priceChangePercentage24h: data.priceChangePercentage24h,
+        coinAth: data.coinAth,
+        coinAthDate: data.coinAthDate,
+        coinAtl: data.coinAtl,
+        coinAtlDate: data.coinAtlDate,
+        coinMarketCap: data.coinMarketCap,
+        coinFullyDillutedValuation: data.coinFullyDillutedValuation,
+        coinVolume24h: data.coinVolume24h,
+        coinVolumeOverMarketCap: data.coinVolumeOverMarketCap,
+        coinCirculatingSupply: data.coinCirculatingSupply,
+        coinTotalSupply: data.coinTotalSupply,
+        num1: data.num1,
+        num2: data.num2,
+        coinDescription: data.coinDescription,
+        coinBlockChainSite1: data.coinBlockChainSite1,
+        coinBlockChainSite2: data.coinBlockChainSite2,
+        coinBlockChainSite3: data.coinBlockChainSite3,
       };
     case ACTIONS.GET_COIN_DATA_ERROR:
       return {

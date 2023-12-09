@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ACTIONS } from ".";
 
-export const getCoinsData = (currency) => async (dispatch, getState) => {
+export const getCoinsData = (currency) => async (dispatch) => {
   try {
     dispatch({ type: ACTIONS.GET_COINS_DATA_PENDING });
     const { data } = await axios(
@@ -14,7 +14,7 @@ export const getCoinsData = (currency) => async (dispatch, getState) => {
   }
 };
 export const getChartsData =
-  (currency, btcChartDuration) => async (dispatch, getState) => {
+  (currency, btcChartDuration) => async (dispatch) => {
     try {
       dispatch({ type: ACTIONS.GET_COINS_DATA_PENDING });
       const { data } = await axios(

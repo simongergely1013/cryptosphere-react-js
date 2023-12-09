@@ -41,7 +41,7 @@ const options = {
     },
     x: {
       display: true,
-      min: 6,
+      min: 10,
       max: 365,
       grid: {
         display: false,

@@ -1,8 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { AddAsset } from "./AddAssetButton.styles";
+import { type } from "os";
 
-export const AddAssetButton = ({ text, background, borderColor, onClick }) => {
+type AddAssetProps = {
+  text: string,
+  background: string,
+  borderColor: string,
+  onClick: () => void
+}
+
+export const AddAssetButton = ({ text, background, borderColor, onClick } : AddAssetProps) => {
   const [hovered, setHovered] = useState(false);
 
   return (
