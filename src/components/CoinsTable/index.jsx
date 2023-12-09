@@ -1,4 +1,3 @@
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCoinsTableData,
@@ -52,6 +51,7 @@ import {
 import { ChevronUpAndDown } from "../ChevronUpAndDown";
 import { SmallLineChart } from "../LineChart";
 import { CoinsTableLoadingSpinner } from "../CoinsTableLoadingSpinner";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const CoinsTable = ({ isLoading, isError }) => {
   const { currency } = useContext(CurrencyContext);

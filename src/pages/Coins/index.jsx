@@ -41,8 +41,9 @@ const Coins = () => {
 
   const [btcChartDuration, setBtcChartDuration] = useLocalState(
     "btcChartDuration",
-    1
+    30
   );
+
   useEffect(() => {
     dispatch(getCoinsData(currency));
     dispatch(getChartsData(currency, btcChartDuration));

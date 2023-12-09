@@ -21,20 +21,18 @@ export const getNavBarData = (currency: string) => async (dispatch: (arg0: { typ
     navBarData["totalMarketCapLong"] = data.data["total_market_cap"][currency];
     navBarData["btcMarketCap"] = data.data["total_market_cap"]["btc"];
     navBarData["ethMarketCap"] = data.data["total_market_cap"]["eth"];
-    navBarData["totalVolume"] = data.data["total_volume"].currency / 1000000000;
-    navBarData["totalVolumeLong"] = data.data["total_volume"].currency;
+    navBarData["totalVolume"] = data.data.total_volume[currency] / 1000000000;
+    navBarData["totalVolumeLong"] = data.data.total_volume[currency];
     navBarData["totalVolumePercentage"] = (
-      (data.data["total_volume"].currency /
-        data.data["total_market_cap"].currency) *
+      data.data.total_volume[currency] /
+        data.data.total_market_cap[currency] *
       100
     ).toFixed(2);
     localStorage.setItem(
       "totalMarketCap",
-      data.data["total_market_cap"].currency
+      data.data.total_market_cap[currency]
     );
-    setTimeout(() => {
-      dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
-    }, 2000);
+    dispatch({ type: ACTIONS.GET_NAVBAR_DATA_SUCCESS, payload: navBarData });
   } catch (error) {
     dispatch({ type: ACTIONS.GET_NAVBAR_DATA_ERROR });
     console.log(error);
