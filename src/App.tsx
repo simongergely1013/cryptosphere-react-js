@@ -8,7 +8,7 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { useLocalState } from "./hooks";
 import { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   GlobalStyle,
   MainWrapper,
@@ -27,6 +27,11 @@ export const App = () => {
   const setColorTheme = (theme: {}) => {
     localStorage.setItem("theme", JSON.stringify(theme));
   };
+
+  const handleThemeChange = () => {
+    dispatch(setThemeColor())
+  }
+
   const handleCurrency = (value: string) => {
     setCurrency(value);
   };
@@ -38,15 +43,15 @@ export const App = () => {
           <GlobalStyle />
           <MainWrapper>
             <NavBar
-              onClick={() => dispatch(setThemeColor())}
+              onClick={handleThemeChange}
               onChange={handleCurrency}
             />
-            <Switch>
-              <Route exact path="/" component={Coins} />
-              <Route exact path="/portfolio" component={Portfolio} />
-              <Route exact path="/coin/:coinId" component={Coin} />
-              <Route exact path="/watchlist" component={WatchList} />
-            </Switch>
+            <Routes>
+              <Route path="/" element={Coins} />
+              <Route path="/portfolio" element={Portfolio} />
+              <Route path="/coin/:coinId" element={Coin} />
+              <Route path="/watchlist" element={WatchList} />
+            </Routes>
             <BottomRow>
               <ScrollToTopButton />
             </BottomRow>
