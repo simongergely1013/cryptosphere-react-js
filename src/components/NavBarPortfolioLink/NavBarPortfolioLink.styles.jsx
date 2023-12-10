@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
-export const ListItemWatchlist = styled.li`
+export const ListItemPortfolio = styled.li`
   list-style-type: none;
   width: 150px;
   height: 53px;

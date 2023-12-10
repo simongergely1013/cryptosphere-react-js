@@ -24,13 +24,13 @@ export const App = () => {
   const { isDarkMode } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
-  const setColorTheme = (theme: {}) => {
+  const setColorTheme = (theme : {}) => {
     localStorage.setItem("theme", JSON.stringify(theme));
   };
 
   const handleThemeChange = () => {
-    dispatch(setThemeColor())
-  }
+    dispatch(setThemeColor());
+  };
 
   const handleCurrency = (value: string) => {
     setCurrency(value);
@@ -42,15 +42,12 @@ export const App = () => {
         <Router>
           <GlobalStyle />
           <MainWrapper>
-            <NavBar
-              onClick={handleThemeChange}
-              onChange={handleCurrency}
-            />
+            <NavBar onClick={handleThemeChange} onChange={handleCurrency} />
             <Routes>
-              <Route path="/" element={Coins} />
-              <Route path="/portfolio" element={Portfolio} />
-              <Route path="/coin/:coinId" element={Coin} />
-              <Route path="/watchlist" element={WatchList} />
+              <Route path="/" element={<Coins />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/coin/:coinId" element={<Coin />} />
+              <Route path="/watchlist" element={<WatchList />} />
             </Routes>
             <BottomRow>
               <ScrollToTopButton />
