@@ -147,10 +147,10 @@ export const SmallLineChart = ({ data }) => {
     </SmallChartWrapper>
   );
 };
-export const BigLineChart = ({ data }) => {
+export const BigLineChart = ({ data, isError }) => {
   return (
     <BigChartWrapper>
-      <Line options={options3} data={data} />
+      {isError ? <LoadingSpinner /> : <Line options={options3} data={data} />}
     </BigChartWrapper>
   );
 };

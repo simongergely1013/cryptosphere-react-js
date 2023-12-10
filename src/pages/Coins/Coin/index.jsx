@@ -7,6 +7,7 @@ import { CurrencyConverter } from "../../../components/CurrencyConverter";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 import { getThemeColors } from "../../../utilities/getThemeColors";
 import { getButtonColor } from "../../../utilities/getButtonColor";
+import { getAppError } from "../../../utilities/getAppError";
 import { PageHeader } from "../../../components/PageHeader";
 import { CoinBox1 } from "../../../components/CoinBox1";
 import { CoinBox2 } from "../../../components/CoinBox2";
@@ -31,6 +32,7 @@ const Coin = (props) => {
   const dispatch = useDispatch();
   const coinId = props.match.params.coinId;
   const state = useSelector((state) => state.coin);
+  const isAppError = useSelector((state) => getAppError(state));
   const [coinChartDuration, setCoinChartDuration] = useLocalState(
     "coinChartDuration",
     30
@@ -38,7 +40,7 @@ const Coin = (props) => {
   useEffect(() => {
     dispatch(getCoinData(coinId, currency, coinChartDuration));
   }, [currency, coinChartDuration]);
-  console.log("state", state);
+
   return (
     <CoinPageWrapper>
       <PageHeader text={"Your Summary"} />
@@ -113,7 +115,7 @@ const Coin = (props) => {
           coinCurrentPrice={state.coinCurrentPrice}
         />
       </CurrencyConversionRow>
-      <BigLineChart data={state.lineChartData} />
+      <BigLineChart data={state.lineChartData} isError={isAppError} />
     </CoinPageWrapper>
   );
 };

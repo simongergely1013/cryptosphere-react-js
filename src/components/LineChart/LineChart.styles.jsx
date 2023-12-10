@@ -28,7 +28,9 @@ export const TopChartDiv = styled.div`
 `;
 export const BigChartWrapper = styled.div`
   width: 100%;
+  min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 16px;
 `;
